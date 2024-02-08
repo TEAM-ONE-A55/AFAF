@@ -6,6 +6,9 @@ import Home from './views/Home/Home';
 import Newest from './views/Threads/Newest/Newest';
 import AllThreads from './views/Threads/AllThreads/AllThreads';
 import Popular from './views/Threads/Popular/Popular';
+import Login from './views/Login/Login';
+import Profile from './views/Profile/Profile';
+import Register from './views/Register/Register';
  
 
 function App() {
@@ -15,13 +18,17 @@ function App() {
       <Header/>
       <Routes>
         <Route path='/' element={<Home/>}/>
-        <Route path='/newest' element={<Newest/>}/>
-        <Route path='/all-threads' element={<AllThreads/>}/>
-        <Route path='/popular' element={<Popular/>}/>
+        <Route path='/newest' element={<Home/>}/>
+        <Route path='/all-threads' element={<Home/>}/>
+        <Route path='/popular' element={<Home/>}/>
+        <Route path='/login' element={<Login/>}/>
+        <Route path='/register' element={<Register/>}/>
+        <Route path='/profile' element={<Profile/>}/>
       </Routes>
       <Footer/>
     </BrowserRouter>
   )   
 }
+
 
 export default App

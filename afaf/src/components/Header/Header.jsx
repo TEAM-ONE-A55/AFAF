@@ -1,9 +1,10 @@
 export default function Header () {
     return (
         <div>
-            <p>Logo</p>
-            <p>Input</p>
-            <p>Login</p>
+            <h1>Header</h1>
+            {/* <p>Logo</p> */}
+            {/* <p>Input</p>
+            <p>Login</p> */}
         </div>
     )
 }
