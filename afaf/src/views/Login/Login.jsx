@@ -1,16 +1,29 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { loginUser } from "../../services/auth.service";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { AppContext } from "../../context/AppContext";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { user, setContext } = useContext(AppContext);
 
-  const login = (e) => {
-    e.preventDefault();
-    loginUser(email, password).catch((error) => {
-      console.log(error);
-    });
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (user) {
+      navigate(location.state?.from.pathname || "/");
+    }
+  }, [user]);
+
+  const login = async () => {
+    try {
+      const credentials = await loginUser(email, password);
+      setContext({ user: credentials.user});
+    } catch (e) {
+      console.log(e.message);
+    }
   };
   return (
     <div>
