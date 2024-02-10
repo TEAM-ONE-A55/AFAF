@@ -12,23 +12,23 @@ import Register from './views/Register/Register';
 import SingleThread from './views/Threads/SingleThread/SingleThread';
 import SimpleThread from './views/Threads/SimpleThread/SimpleThread';
 import CreateThread from './views/Threads/CreateThread/CreateThread';
+import Authenticated from './hoc/Authenticated/Authenticated';
  
-
 function App() {
 
   return (
     <BrowserRouter>
       <Header/>
       <Routes>
-        <Route path='/' element={<Popular navigation={<Navi/>}/>}/>
-        <Route path='/newest' element={<Newest navigation={<Navi/>}/>}/>
-        <Route path='/all-threads' element={<AllThreads navigation={<Navi/>}/>}/>
-        <Route path='/popular' element={<Popular navigation={<Navi/>}/>}/>
+        <Route path='/' element={<Authenticated><Popular navigation={<Navi/>}/></Authenticated>}/>
+        <Route path='/newest' element={<Authenticated><Newest navigation={<Navi/>}/></Authenticated>}/>
+        <Route path='/all-threads' element={<Authenticated><AllThreads navigation={<Navi/>}/></Authenticated>}/>
+        <Route path='/popular' element={<Authenticated><Popular navigation={<Navi/>}/></Authenticated>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/register' element={<Register/>}/>
-        <Route path='/profile' element={<Profile/>}/>
-        <Route path='/single-thread/:id' element={<SingleThread/>}/>
-        <Route path='/create-thread' element={<CreateThread/>}/>
+        <Route path='/profile' element={<Authenticated><Profile/></Authenticated>}/>
+        <Route path='/single-thread/:id' element={<Authenticated><SingleThread/></Authenticated>}/>
+        <Route path='/create-thread' element={<Authenticated><CreateThread/></Authenticated>}/>
       </Routes>
       <Footer/>
     </BrowserRouter>
