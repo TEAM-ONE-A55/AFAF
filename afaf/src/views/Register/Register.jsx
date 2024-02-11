@@ -5,6 +5,7 @@ import {
   getUserByHandle,
 } from "../../services/users.service";
 import { registerUser } from "../../services/auth.service";
+import Button from "../../components/Button/Button";
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -65,7 +66,7 @@ export default function Register() {
       />
       <br />
       <br />
-      <button onClick={register}>Create account</button>
+      <Button onClick={register}>Create account</Button>
     </div>
   );
 }
