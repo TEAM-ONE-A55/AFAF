@@ -26,7 +26,7 @@ export const getAllTopics = async (key = "createdOn") => {
       ? Object.keys(snapshot.val()[key].likedBy)
       : [],
     commentedBy: snapshot.val()[key].commentedBy
-      ? Object.keys(snapshot.val()[key].commentedBy)
+      ? Object.keys(snapshot.val()[key].likedBy)
       : [],
   }));
   return topics;
