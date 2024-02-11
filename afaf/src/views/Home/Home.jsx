@@ -15,19 +15,30 @@ import SimpleThread from "../Threads/SimpleThread/SimpleThread";
 
 export default function Navi() {
   const [topics, setTopics] = useState([]);
+
   useEffect(() => {
     getAllTopics().then(setTopics);
   }, []);
 
   const topicLike = async (handle, id) => {
+    if (topics.find((topic) => topic.id === id && topic.likedBy.includes(handle))) return;
     await likeTopic(handle, id);
-    getAllTopics().then(setTopics);
+
+    setTopics(prevTopics => prevTopics.map((topic) => {
+        if (topic.id === id) return { ...topic, likedBy: [...topic.likedBy, handle] };
+        return topic;
+    }));
   };
 
   const topicDislike = async (handle, id) => {
     await dislikeTopic(handle, id);
-    getAllTopics().then(setTopics);
+
+    setTopics(prevTopics => prevTopics.map((topic) => {
+        if (topic.id === id)return {...topic,likedBy: topic.likedBy.filter((user) => user !== handle)};
+        return topic;
+      }));
   };
+
   return (
     <div>
       <span>

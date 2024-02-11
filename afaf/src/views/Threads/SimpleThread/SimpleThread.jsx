@@ -30,7 +30,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
 }
 
 SimpleThread.propTypes = {
-  topics: PropTypes.object,
+  topic: PropTypes.object.isRequired,
   topicLike: PropTypes.func.isRequired,
   topicDislike: PropTypes.func.isRequired,
 };
