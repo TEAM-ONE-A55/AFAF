@@ -13,7 +13,26 @@ export const addTopic = async (title, content, author) => {
 
 // key could be title, author, etc... and it would replace 'title' => equalTo(search, key)
 // eslint-disable-next-line no-unused-vars
-export const getAllTopics = async (search, key = "createdOn") => {
+export const getAllTopics = async (key = "createdOn") => {
+  const snapshot = await get(query(ref(db, "topics"), orderByChild(key)));
+  if (!snapshot.exists()) {
+    return [];
+  }
+  const topics = Object.keys(snapshot.val()).map((key) => ({
+    id: key,
+    ...snapshot.val()[key],
+    createdOn: new Date(snapshot.val()[key].createdOn).toLocaleString(),
+    likedBy: snapshot.val()[key].likedBy
+      ? Object.keys(snapshot.val()[key].likedBy)
+      : [],
+    commentedBy: snapshot.val()[key].commentedBy
+      ? Object.keys(snapshot.val()[key].likedBy)
+      : [],
+  }));
+  return topics;
+};
+
+export const getAllTopicsBySearch = async (search, key = "createdOn") => {
   const snapshot = await get(query(ref(db, "topics"), orderByChild(key)));
   if (!snapshot.exists()) {
     return [];
@@ -33,7 +52,7 @@ export const getAllTopics = async (search, key = "createdOn") => {
     .filter((topic) =>
       topic.title.toLowerCase().includes(search.toLowerCase())
     );
-  // console.log(topics);
+  console.log(topics);
   return topics;
 };
 

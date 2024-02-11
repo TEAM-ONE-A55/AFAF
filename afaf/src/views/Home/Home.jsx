@@ -11,7 +11,7 @@ import {
 export default function Navi() {
   const [topics, setTopics] = useState([]);
   useEffect(() => {
-    getAllTopics("").then(setTopics);
+    getAllTopics().then(setTopics);
   }, []);
 
   return (
