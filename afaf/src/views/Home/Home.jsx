@@ -48,8 +48,7 @@ export default function Navi() {
             topicLike={topicLike}
             topicDislike={topicDislike}
           />
-          )   
-        )}
+        ))}
       </div>
     </div>
   );
