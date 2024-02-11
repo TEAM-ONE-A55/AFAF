@@ -26,7 +26,6 @@ function App() {
   });
 
   const [user] = useAuthState(auth);
-  console.log(user);
   useEffect(() => {
     if (user) {
       getUserData(user.uid).then((snapshot) => {
