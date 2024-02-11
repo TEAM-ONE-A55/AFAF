@@ -18,8 +18,12 @@ export default function Navi() {
     <div>
       <span>
         <Link onClick={() => allThreads(topics, setTopics)}>All Threads</Link>
-        <Link onClick={() => popularByLikes(topics, setTopics)}>Most Liked</Link>
-        <Link onClick={() => popularByComments(topics, setTopics)}>Most commented</Link>
+        <Link onClick={() => popularByLikes(topics, setTopics)}>
+          Most Liked
+        </Link>
+        <Link onClick={() => popularByComments(topics, setTopics)}>
+          Most commented
+        </Link>
         <Link onClick={() => newest(topics, setTopics)}>Newest</Link>
       </span>
       <div>
