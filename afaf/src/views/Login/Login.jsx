@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { loginUser } from "../../services/auth.service";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
+import Button from "../../components/Button/Button";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -20,7 +21,8 @@ export default function Login() {
   const login = async () => {
     try {
       const credentials = await loginUser(email, password);
-      setContext({ user: credentials.user});
+      // TODO validations and client errors
+      setContext({ user: credentials.user, userData: null });
       navigate(location.state?.from.pathname || "/");
     } catch (e) {
       console.log(e.message);
@@ -29,22 +31,25 @@ export default function Login() {
   return (
     <div>
       <h1>Login</h1>
-      <form>
-        <input
-          type="text"
-          placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
-        />{" "}
-        <br />
-        <input
-          type="password"
-          placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)}
-        />{" "}
-        <br />
-        <button onClick={login}>Login</button> No account yet?
-        <NavLink to="/register">Register now</NavLink>
-      </form>
+
+      <input
+        type="text"
+        placeholder="Email"
+        onChange={(e) => setEmail(e.target.value)}
+        value={email}
+      />
+      <br />
+      <input
+        type="password"
+        placeholder="Password"
+        onChange={(e) => setPassword(e.target.value)}
+        value={password}
+      />
+      <br />
+      <Button onClick={login}>Login</Button>
+      <p>
+        No account yet? <NavLink to="/register">Register now</NavLink>
+      </p>
     </div>
   );
 }
