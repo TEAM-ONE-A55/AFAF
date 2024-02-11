@@ -15,12 +15,13 @@ export default function Login() {
     if (user) {
       navigate(location.state?.from.pathname || "/");
     }
-  }, [user]);
+  }, [location.state?.from.pathname, navigate, user]);
 
   const login = async () => {
     try {
       const credentials = await loginUser(email, password);
       setContext({ user: credentials.user});
+      navigate(location.state?.from.pathname || "/");
     } catch (e) {
       console.log(e.message);
     }
