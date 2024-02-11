@@ -1,4 +1,4 @@
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   dislikeTopic,
   getAllTopics,
@@ -11,17 +11,13 @@ import {
   popularByComments,
   popularByLikes,
 } from "../../functions/filterFunctions";
-import { useContext } from "react";
-import { AppContext } from "../../context/AppContext";
-import Button from "../../components/Button/Button";
+import SimpleThread from "../Threads/SimpleThread/SimpleThread";
 
 export default function Navi() {
   const [topics, setTopics] = useState([]);
   useEffect(() => {
     getAllTopics().then(setTopics);
   }, []);
-
-  const { user, userData } = useContext(AppContext);
 
   const topicLike = async (handle, id) => {
     await likeTopic(handle, id);
@@ -45,33 +41,15 @@ export default function Navi() {
         <Link onClick={() => newest(topics, setTopics)}>Newest</Link>
       </span>
       <div>
-        {topics.map((topic) => {
-          return (
-            <div key={topic.id} style={{ border: "solid" }}>
-              <h3>{topic.title}</h3>
-              <p>{topic.content}</p>
-              <p>{topic.createdOn}</p>
-              <p>
-                {topic.likedBy.length} likes{" "}
-                {user && (
-                  <div>
-                    <Button
-                      onClick={() => topicLike(userData.handle, topic.id)}
-                    >
-                      Like
-                    </Button>
-                    <Button
-                      onClick={() => topicDislike(userData.handle, topic.id)}
-                    >
-                      Dislike
-                    </Button>
-                  </div>
-                )}
-              </p>
-              <p>{topic.commentedBy.length} comments</p>
-            </div>
-          );
-        })}
+        {topics.map((topic) => (
+          <SimpleThread
+            key={topic.id}
+            topic={topic}
+            topicLike={topicLike}
+            topicDislike={topicDislike}
+          />
+          )   
+        )}
       </div>
     </div>
   );
