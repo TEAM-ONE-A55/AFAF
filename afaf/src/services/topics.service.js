@@ -26,7 +26,7 @@ export const getAllTopics = async (key = "createdOn") => {
       ? Object.keys(snapshot.val()[key].likedBy)
       : [],
     commentedBy: snapshot.val()[key].commentedBy
-      ? Object.keys(snapshot.val()[key].likedBy)
+      ? Object.keys(snapshot.val()[key].commentedBy)
       : [],
   }));
   return topics;
@@ -46,7 +46,7 @@ export const getAllTopicsBySearch = async (search, key = "createdOn") => {
         ? Object.keys(snapshot.val()[key].likedBy)
         : [],
       commentedBy: snapshot.val()[key].commentedBy
-        ? Object.keys(snapshot.val()[key].likedBy)
+        ? Object.keys(snapshot.val()[key].commentedBy)
         : [],
     }))
     .filter((topic) =>
@@ -67,7 +67,7 @@ export const getTopicById = async (id) => {
     createdOn: new Date(snapshot.val().createdOn).toLocaleString(),
     likedBy: snapshot.val().likedBy ? Object.keys(snapshot.val().likedBy) : [],
     commentedBy: snapshot.val().commentedBy
-      ? Object.keys(snapshot.val().likedBy)
+      ? Object.keys(snapshot.val().commentedBy)
       : [],
   };
 
