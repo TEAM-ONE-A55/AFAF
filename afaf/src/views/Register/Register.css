@@ -1,0 +1,9 @@
+.registration {
+  border-radius: 20px;
+  border: 1px solid white;
+  display: grid;
+  place-items: center;
+  height: 500px;
+  margin: 50px;
+  width: 500px;
+}
