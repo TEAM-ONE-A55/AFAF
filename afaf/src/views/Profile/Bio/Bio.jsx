@@ -19,38 +19,65 @@ export default function Bio() {
     setBio("");
   };
 
+  const formBio = (
+    <>
+      <textarea
+        name="profile-bio"
+        id="profile-bio"
+        cols="30"
+        rows="10"
+        value={bio}
+        onChange={(e) => {
+          setBio(e.target.value);
+        }}
+      ></textarea>
+    </>
+  );
+
+  const updateButtonText = (inputText) => {
+    return <Button
+    onClick={() => {
+      updateBio(bio);
+      setOnChange(false);
+    }}
+  >
+    {inputText}
+  </Button>
+  }
+
+  const hasBio = (
+    <>
+      <p>Update bio:</p>
+      {formBio}
+      <br />
+      <Button onClick={() => setOnChange(false)}>Back</Button>
+      {updateButtonText('Save Changes')}
+    </>
+  );
+
+  const missingBio = (
+    <>
+      <p>Add bio: </p>
+      {formBio}
+     {updateButtonText('Publish')}
+    </>
+  );
+
   return (
     <>
-      <p>
-        Bio: {userData.bio} <Link onClick={handleEditLinkBio}>Edit</Link>
-      </p>
-      {onChange && (
-        <>
-          <label htmlFor="profile-bio">New bio:</label>
-          <br />
-          <textarea
-            name="profile-bio"
-            id="profile-bio"
-            cols="30"
-            rows="10"
-            value={bio}
-            onChange={(e) => {
-              setBio(e.target.value);
-            }}
-          ></textarea>
-          <br />
-          <Button onClick={() => setOnChange(false)}>Back</Button>
-          <Button
-            onClick={() => {
-              updateBio(bio);
-              setOnChange(false);
-            }}
-          >
-            Save Changes
-          </Button>
-        </>
+      {userData.bio 
+      ? (
+        onChange 
+          ? (
+          hasBio
+        ) : (
+          <p>
+            Bio: {userData.bio} <Link onClick={handleEditLinkBio}>Edit</Link>
+          </p>
+        )
+      ) : (
+        missingBio
       )}
-      <br />
     </>
   );
 }

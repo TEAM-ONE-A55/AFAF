@@ -15,7 +15,5 @@ export const getUserData = (uid) => {
 
 export const updateUserData = async (handle, key, value) => {
     const path = `users/${handle}/${key}`;
-    const test = await update(ref(db), { [path]: value });
-    console.log(handle)
-    return test
+    return update(ref(db), { [path]: value });
 }
