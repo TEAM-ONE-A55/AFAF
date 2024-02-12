@@ -1,4 +1,4 @@
-import { get, set, ref, query, equalTo, orderByChild } from 'firebase/database';
+import { get, set, ref, query, equalTo, orderByChild, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
 
 export const getUserByHandle = (handle) => {
@@ -11,4 +11,11 @@ export const createUserHandle = (handle, uid, email) => {
 
 export const getUserData = (uid) => {
     return get(query(ref(db, 'users'), orderByChild('uid'), equalTo(uid)))
+}
+
+export const updateUserData = async (handle, key, value) => {
+    const path = `users/${handle}/${key}`;
+    const test = await update(ref(db), { [path]: value });
+    console.log(handle)
+    return test
 }
