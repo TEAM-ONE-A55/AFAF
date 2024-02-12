@@ -4,7 +4,7 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Home from "./views/Home/Home";
 import Login from "./views/Login/Login";
-import Profile from "./views/Profile/Profile";
+import Profile from "./views/Profile/ProfilePage/ProfilePage";
 import Register from "./views/Register/Register";
 import SingleThread from "./views/Threads/SingleThread/SingleThread";
 import CreateThread from "./views/Threads/CreateThread/CreateThread";
@@ -44,16 +44,71 @@ function App() {
       <AppContext.Provider value={{ ...context, setContext: setContext }}>
         <Header />
         <Routes>
-          <Route path="/" element={<Home> <MostCommented /> </Home> } />
-          <Route path="/threads/all" element={<Home><AllThreads /></Home>}/>
-          <Route path="/threads/newest" element={ <Home> <Newest /> </Home> }/>
-          <Route path="/threads/popular/likes" element={ <Home> <MostLiked /> </Home> }/>
-          <Route path="/threads/popular/comments" element={ <Home> <MostCommented /> </Home> }/>
+          <Route
+            path="/"
+            element={
+              <Home>
+                {" "}
+                <MostCommented />{" "}
+              </Home>
+            }
+          />
+          <Route
+            path="/threads/all"
+            element={
+              <Home>
+                <AllThreads />
+              </Home>
+            }
+          />
+          <Route
+            path="/threads/newest"
+            element={
+              <Home>
+                {" "}
+                <Newest />{" "}
+              </Home>
+            }
+          />
+          <Route
+            path="/threads/popular/likes"
+            element={
+              <Home>
+                {" "}
+                <MostLiked />{" "}
+              </Home>
+            }
+          />
+          <Route
+            path="/threads/popular/comments"
+            element={
+              <Home>
+                {" "}
+                <MostCommented />{" "}
+              </Home>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/profile" element={ <Authenticated> <Profile /> </Authenticated> }/>
+          <Route
+            path="/profile"
+            element={
+              <Authenticated>
+                {" "}
+                <Profile />{" "}
+              </Authenticated>
+            }
+          />
           <Route path="/single-thread/:id" element={<SingleThread />} />
-          <Route path="/create-thread" element={ <Authenticated> <CreateThread /> </Authenticated> }/>
+          <Route
+            path="/create-thread"
+            element={
+              <Authenticated>
+                {" "}
+                <CreateThread />{" "}
+              </Authenticated>
+            }
+          />
         </Routes>
         <Footer />
       </AppContext.Provider>
