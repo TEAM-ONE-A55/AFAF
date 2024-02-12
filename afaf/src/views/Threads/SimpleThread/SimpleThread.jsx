@@ -2,6 +2,9 @@ import Button from "../../../components/Button/Button";
 import PropTypes from "prop-types";
 import { useContext } from "react";
 import { AppContext } from "../../../context/AppContext";
+import { NavLink, Navigate } from "react-router-dom";
+import SingleThread from "../SingleThread/SingleThread";
+
 
 export default function SimpleThread({ topic, topicLike, topicDislike }) {
   const { user, userData } = useContext(AppContext);
@@ -21,6 +24,9 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
             <Button onClick={() => topicDislike(userData.handle, topic.id)}>
               Dislike
             </Button>
+            <NavLink to={`/single-thread/${topic.id}`}>
+              View
+            </NavLink>
           </>
         )}
       </p>
