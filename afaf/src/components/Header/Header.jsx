@@ -8,7 +8,7 @@ export default function Header() {
 
   return (
     <header>
-      <span onClick={() => navigate("/")}>Logo</span>
+      <span onClick={() => navigate("/")} className="logo-img">Logo</span>
       <input type="text" />
       {user ? (
         <>
