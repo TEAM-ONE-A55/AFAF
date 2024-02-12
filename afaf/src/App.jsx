@@ -14,6 +14,10 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./config/firebase-config";
 import { getUserData } from "./services/users.service";
 import { AppContext } from "./context/AppContext";
+import AllThreads from "./views/Threads/AllThreads/AllThreads";
+import Newest from "./views/Threads/Newest/Newest";
+import MostCommented from "./views/Threads/MostCommented/MostCommented";
+import MostLiked from "./views/Threads/MostLiked/MostLiked";
 
 function App() {
   const [context, setContext] = useState({
@@ -40,26 +44,16 @@ function App() {
       <AppContext.Provider value={{ ...context, setContext: setContext }}>
         <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home> <MostCommented /> </Home> } />
+          <Route path="/threads/all" element={<Home><AllThreads /></Home>}/>
+          <Route path="/threads/newest" element={ <Home> <Newest /> </Home> }/>
+          <Route path="/threads/popular/likes" element={ <Home> <MostLiked /> </Home> }/>
+          <Route path="/threads/popular/comments" element={ <Home> <MostCommented /> </Home> }/>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route
-            path="/profile"
-            element={
-              <Authenticated>
-                <Profile />
-              </Authenticated>
-            }
-          />
+          <Route path="/profile" element={ <Authenticated> <Profile /> </Authenticated> }/>
           <Route path="/single-thread/:id" element={<SingleThread />} />
-          <Route
-            path="/create-thread"
-            element={
-              <Authenticated>
-                <CreateThread />
-              </Authenticated>
-            }
-          />
+          <Route path="/create-thread" element={ <Authenticated> <CreateThread /> </Authenticated> }/>
         </Routes>
         <Footer />
       </AppContext.Provider>
