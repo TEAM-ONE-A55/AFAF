@@ -13,16 +13,17 @@ export default function SingleThread() {
 
   const topicLike = async (handle, id) => {
     await likeTopic(handle, id);
-    getAllTopics().then(setTopics);
+    getTopicById(id).then(setThread);
   };
 
   const topicDislike = async (handle, id) => {
     await dislikeTopic(handle, id);
-    getAllTopics().then(setTopics);
+    getTopicById(id).then(setThread);
   };
 
   useEffect(() => {
     getTopicById(id).then(setThread);
+    console.log(thread);
   }, [id]);
   return (
     <div>
