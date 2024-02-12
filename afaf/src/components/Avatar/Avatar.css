@@ -1,0 +1,7 @@
+img {
+    object-fit: cover;
+    border-radius: 50%;
+}
+.avatar-container {
+  border-radius: 50%;
+} 

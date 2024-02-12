@@ -18,7 +18,7 @@ import AllThreads from "./views/Threads/AllThreads/AllThreads";
 import Newest from "./views/Threads/Newest/Newest";
 import MostCommented from "./views/Threads/MostCommented/MostCommented";
 import MostLiked from "./views/Threads/MostLiked/MostLiked";
-import {Toaster} from "react-hot-toast"
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const [context, setContext] = useState({
@@ -43,7 +43,7 @@ function App() {
   return (
     <BrowserRouter>
       <AppContext.Provider value={{ ...context, setContext: setContext }}>
-      <Toaster position="bottom-right" reverseOrder={true}/>
+        <Toaster position="bottom-right" reverseOrder={true} />
         <Header />
         <Routes>
           <Route
