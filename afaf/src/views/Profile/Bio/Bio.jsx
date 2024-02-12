@@ -30,6 +30,7 @@ export default function Bio() {
         onChange={(e) => {
           setBio(e.target.value);
         }}
+        placeholder="Zombie ipsum brains reversus..."
       ></textarea>
     </>
   );
