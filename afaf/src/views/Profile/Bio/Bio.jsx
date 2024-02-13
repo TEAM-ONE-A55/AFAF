@@ -60,7 +60,9 @@ export default function Bio() {
     <>
       <p>Add bio: </p>
       {formBio}
+      <br/>
      {updateButtonText('Publish')}
+     <br/>
     </>
   );
 

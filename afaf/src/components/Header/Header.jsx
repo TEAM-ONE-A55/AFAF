@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 import Avatar from "../Avatar/Avatar";
-import { defaultAvatar } from "../../constants/constants";
 import "./Header.css";
 
 export default function Header() {
@@ -22,7 +21,7 @@ export default function Header() {
             <Avatar
               Width="25px"
               Height="25px"
-              url={defaultAvatar}
+              url={userData.avatar}
               onClick={() => navigate("/profile")}
             />
           </span>

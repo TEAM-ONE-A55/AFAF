@@ -14,6 +14,6 @@ export default function Avatar({ Width, Height, url, onClick }) {
 Avatar.propTypes = {
   Width: PropTypes.string,
   Height: PropTypes.string,
-  url: PropTypes.string,
+  url: PropTypes.any,
   onClick: PropTypes.func,
 };
