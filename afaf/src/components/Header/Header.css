@@ -1,0 +1,18 @@
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header input {
+    height: 30px;
+    flex-grow: .5;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+}
+
+.header-logo {
+    height: 40px;
+    border-radius: 0;
+}

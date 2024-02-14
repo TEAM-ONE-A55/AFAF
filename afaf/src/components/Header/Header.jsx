@@ -11,7 +11,7 @@ export default function Header() {
   return (
     <header>
       <span onClick={() => navigate("/")} className="logo-img">
-        Logo
+        <img className="header-logo" src="../../img/LOGO.png" alt="logo" />
       </span>
       <input type="text" />
       {user ? (
@@ -28,9 +28,12 @@ export default function Header() {
           <h4>Welcome, {userData && userData.handle}!</h4>
         </span>
       ) : (
-        <NavLink to="/login">Login</NavLink>
+        <>
+          <NavLink to="/create-thread">New Thread</NavLink>
+          <NavLink to="/login">Login</NavLink>
+        </>
+
       )}
-      <hr/>
     </header>
   );
 }
