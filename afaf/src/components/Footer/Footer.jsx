@@ -1,3 +1,5 @@
+import "./Footer.css";
+
 export default function Footer() {
-  return <div>Footer</div>;
+  return <footer>&copy; 2024 AFAF</footer>;
 }
