@@ -4,6 +4,7 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 import Button from "../../components/Button/Button";
 import toast from "react-hot-toast";
+import "./Login.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -53,7 +54,7 @@ export default function Login() {
   };
 
   return (
-    <div>
+    <div className="login-container">
       <h1>Login</h1>
       <label htmlFor="login-email">Email: </label>
       <input

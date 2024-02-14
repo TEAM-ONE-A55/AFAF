@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 export default function Avatar({ Width, Height, url, onClick }) {
   return (
     <img
+      className="avatar-img"
       onClick={() => onClick()}
       style={{ width: Width, height: Height }}
       src={url}

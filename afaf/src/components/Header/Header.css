@@ -2,11 +2,22 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    right: 50%;
+    z-index: 100;
+    white-space: nowrap;
+    padding: 1em 0;
+}
+
+header img {
+    cursor: pointer;
 }
 
 header input {
     height: 30px;
-    flex-grow: .5;
+    min-width: 300px;
     outline: none;
     border: none;
     border-radius: 3px;
@@ -15,4 +26,5 @@ header input {
 .header-logo {
     height: 40px;
     border-radius: 0;
+    margin-right: 1em;
 }

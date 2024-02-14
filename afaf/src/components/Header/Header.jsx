@@ -15,18 +15,18 @@ export default function Header() {
       </span>
       <input type="text" />
       {user ? (
-        <span>
+        <>
+          <NavLink to="/create-thread">New Thread</NavLink>
           <NavLink to="/profile">Profile</NavLink>
           <span>
             <Avatar
-              Width="25px"
-              Height="25px"
+              Width="40px"
+              Height="40px"
               url={userData.avatar}
               onClick={() => navigate("/profile")}
             />
           </span>
-          <h4>Welcome, {userData && userData.handle}!</h4>
-        </span>
+        </>
       ) : (
         <>
           <NavLink to="/create-thread">New Thread</NavLink>

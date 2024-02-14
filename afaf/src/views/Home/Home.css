@@ -1,0 +1,12 @@
+.home-container {
+    margin: 0 auto;
+    margin-top: 3em;
+    max-width: 1200px;
+}
+
+.home-container > nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1em;
+}
