@@ -2,10 +2,11 @@ import Button from "../../../components/Button/Button";
 import PropTypes from "prop-types";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../../context/AppContext";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "./SimpleThread.css";
 import Avatar from "../../../components/Avatar/Avatar";
 import { getUserByHandle } from "../../../services/users.service";
+import toast from "react-hot-toast";
 
 export default function SimpleThread({ topic, topicLike, topicDislike }) {
   const { user, userData } = useContext(AppContext);
@@ -28,7 +29,9 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
   }, [author, topic.author]);
 
   const seeAuthorProfile = async () => {
-    // TODO - go to user's profile + authentication on profile
+    toast("TODO! To implement 'See Author's Profile' functionality", {
+      icon: "⚠️",
+    });
   };
 
   return (
@@ -36,13 +39,26 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
       <span className="author-info">
         <Avatar
           onClick={seeAuthorProfile}
-          Width={"40px"}
-          Height={"40px"}
+          Width={"70px"}
+          Height={"70px"}
           url={author.avatar}
         />
-        <p>Author: @{author.username}</p>
+        <p>
+          Author: <Link onClick={seeAuthorProfile}>@{author.username}</Link>
+        </p>
         <p>Member from: {author.createdOn}</p>
-        <p>Total threads: {author.threads}</p>
+        <p>
+          Total threads:{" "}
+          <Link
+            onClick={() => {
+              toast("TODO! To implement 'treads created' as a key in users/ after creating thread functionality", {
+                icon: "⚠️",
+              });
+            }}
+          >
+            {author.threads}
+          </Link>
+        </p>
       </span>
       <hr />
       <h3>{topic.title}</h3>
