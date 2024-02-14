@@ -90,6 +90,7 @@ function App() {
               </Home>
             }
           />
+          <Route path="/create-thread" element={<CreateThread />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route
