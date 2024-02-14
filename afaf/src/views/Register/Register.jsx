@@ -93,7 +93,7 @@ export default function Register() {
           name="registration-username"
           value={form.username}
           onChange={updateForm("username")}
-          placeholder="Pick your username"
+          placeholder="Enter username"
         />
         <br />
         <br />
@@ -104,7 +104,7 @@ export default function Register() {
           name="registration-email"
           value={form.email}
           onChange={updateForm("email")}
-          placeholder="Type in your email"
+          placeholder="Enter your email"
         />
         <br />
         <br />

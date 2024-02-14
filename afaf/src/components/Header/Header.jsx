@@ -30,6 +30,7 @@ export default function Header() {
       ) : (
         <NavLink to="/login">Login</NavLink>
       )}
+      <hr/>
     </header>
   );
 }
