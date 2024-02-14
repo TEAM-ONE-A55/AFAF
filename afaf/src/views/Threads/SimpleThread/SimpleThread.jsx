@@ -46,7 +46,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
         <p>
           Author: <Link onClick={seeAuthorProfile}>@{author.username}</Link>
         </p>
-        <p>Member from: {author.createdOn}</p>
+        <p>Member since: {author.createdOn}</p>
         <p>
           Total threads:{" "}
           <Link
