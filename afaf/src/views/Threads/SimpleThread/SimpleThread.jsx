@@ -1,21 +1,62 @@
 import Button from "../../../components/Button/Button";
 import PropTypes from "prop-types";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../../context/AppContext";
-import { NavLink, Navigate } from "react-router-dom";
-import SingleThread from "../SingleThread/SingleThread";
-
+import { NavLink } from "react-router-dom";
+import "./SimpleThread.css";
+import Avatar from "../../../components/Avatar/Avatar";
+import { getUserByHandle } from "../../../services/users.service";
 
 export default function SimpleThread({ topic, topicLike, topicDislike }) {
   const { user, userData } = useContext(AppContext);
+  const [author, setAuthor] = useState({
+    avatar: "",
+    username: "",
+    createdOn: "",
+    threads: null,
+  });
+
+  useEffect(() => {
+    getUserByHandle(topic.author).then((snapshot) => {
+      setAuthor({
+        avatar: snapshot.val().avatar,
+        username: snapshot.val().handle,
+        createdOn: new Date(snapshot.val().createdOn).toDateString(),
+        threads: "TODO!!!",
+      });
+    });
+  }, [author, topic.author]);
+
+  const seeAuthorProfile = async () => {
+    // TODO - go to user's profile + authentication on profile
+  };
 
   return (
-    <div style={{ border: "solid" }}>
+    <div className="simple-thread-container">
+      <span className="author-info">
+        <Avatar
+          onClick={seeAuthorProfile}
+          Width={"40px"}
+          Height={"40px"}
+          url={author.avatar}
+        />
+        <p>Author: @{author.username}</p>
+        <p>Member from: {author.createdOn}</p>
+        <p>Total threads: {author.threads}</p>
+      </span>
+      <hr />
       <h3>{topic.title}</h3>
       <p>{topic.content}</p>
-      <p>{topic.createdOn}</p>
       <p>
-        {topic.likedBy.length} likes
+        Created on: {new Date(topic.createdOn).toDateString()} at{" "}
+        {new Date(topic.createdOn).toLocaleTimeString("us-us")}{" "}
+      </p>
+      {topic.likedBy.length === 1 ? (
+        <p>{topic.likedBy.length} like</p>
+      ) : (
+        <p>{topic.likedBy.length} likes</p>
+      )}
+      <p>
         {user && (
           <>
             <Button onClick={() => topicLike(userData.handle, topic.id)}>
@@ -24,13 +65,15 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
             <Button onClick={() => topicDislike(userData.handle, topic.id)}>
               Dislike
             </Button>
-            <NavLink to={`/single-thread/${topic.id}`}>
-              View
-            </NavLink>
+            <NavLink to={`/single-thread/${topic.id}`}>View</NavLink>
           </>
         )}
       </p>
-      <p>{topic.commentedBy.length} comments</p>
+      {topic.commentedBy.length === 1 ? (
+        <p>{topic.commentedBy.length} comment</p>
+      ) : (
+        <p>{topic.commentedBy.length} comments</p>
+      )}
     </div>
   );
 }

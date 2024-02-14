@@ -5,6 +5,7 @@ import { AppContext } from "../../../context/AppContext";
 import toast from "react-hot-toast";
 import {updateUserData} from "../../../services/users.service";
 import { uploadAvatar } from "../../../services/storage.service";
+import { defaultAvatar } from "../../../constants/constants";
 
 export default function SetAvatar() {
   const { userData } = useContext(AppContext);
@@ -14,13 +15,23 @@ export default function SetAvatar() {
   const uploadImg = async () => {
      const url = await uploadAvatar(attachImg, userData.handle, "avatar")
      setImgUpload(url)
+     setTimeout(() => {
+        window.location.reload()
+     },1000)
      toast.success("Your image was successfully uploaded!");
-     window.location.reload()
+     
   }
    useEffect(() => {
     updateUserData(userData.handle, "avatar", imgUpload)
-   }, [imgUpload])
+   }, [imgUpload, userData.handle])
 
+   const deleteAvatar = () => {
+    setImgUpload(defaultAvatar)
+    setTimeout(() => {
+        window.location.reload()
+     },1000)
+     toast.success("Your image was deleted successfully!");
+   }
 
 
   return (
@@ -36,6 +47,11 @@ export default function SetAvatar() {
         onClick={uploadImg}
       >
         Upload
+      </Button>
+      <Button
+        onClick={deleteAvatar}
+      >
+        Delete
       </Button>
     </>
   );

@@ -3,6 +3,7 @@ import { db } from "../config/firebase-config";
 
 // Create new topic
 export const addTopic = async (title, content, author) => {
+  
   return push(ref(db, "topics"), {
     content,
     title,
