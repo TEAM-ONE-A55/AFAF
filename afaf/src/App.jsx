@@ -8,6 +8,7 @@ import Profile from "./views/Profile/ProfilePage/ProfilePage";
 import Register from "./views/Register/Register";
 import SingleThread from "./views/Threads/SingleThread/SingleThread";
 import CreateThread from "./views/Threads/CreateThread/CreateThread";
+import NotFound from "./views/NotFound/NotFound";
 import Authenticated from "./hoc/Authenticated/Authenticated";
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -116,6 +117,7 @@ function App() {
               </Authenticated>
             }
           />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
       </AppContext.Provider>

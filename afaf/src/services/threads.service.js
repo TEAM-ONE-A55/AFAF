@@ -2,13 +2,14 @@ import { ref, push, get, query, orderByChild, update } from "firebase/database";
 import { db } from "../config/firebase-config";
 
 // Create new topic
-export const addTopic = async (title, content, author) => {
-  
+export const addThread = async ( title, content, author ) => {
   return push(ref(db, "topics"), {
     content,
     title,
     author,
     createdOn: Date.now(),
+    commentedBy: {},
+    likedBy: {}
   });
 };
 
