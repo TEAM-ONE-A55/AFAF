@@ -4,7 +4,7 @@ import {
   dislikeTopic,
   getTopicById,
   likeTopic,
-} from "../../../services/topics.service";
+} from "../../../services/threads.service";
 import SimpleThread from "../SimpleThread/SimpleThread";
 
 export default function SingleThread() {
