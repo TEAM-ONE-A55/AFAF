@@ -3,7 +3,7 @@ import { db } from "../config/firebase-config";
 
 // Create new topic
 export const addThread = async ( title, content, author ) => {
-  return push(ref(db, "topics"), {
+  const topic = push(ref(db, "topics"), {
     content,
     title,
     author,
@@ -11,6 +11,13 @@ export const addThread = async ( title, content, author ) => {
     commentedBy: {},
     likedBy: {}
   });
+  
+  const topicId = topic.key;
+
+  const userRef = ref(db, `users/${author}/createdTopics`);
+  await push(userRef, topicId); 
+
+  return topicId;
 };
 
 // key could be title, author, etc... and it would replace 'title' => equalTo(search, key)

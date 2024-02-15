@@ -24,8 +24,8 @@ export default function SingleThread() {
   useEffect(() => {
     getTopicById(id).then(setThread);
     // console.log(thread);
-  }, []);
-  console.log(thread);
+  }, [id]);
+  // console.log(thread);
   return (
     <div>
       <h1>Single Thread</h1>
