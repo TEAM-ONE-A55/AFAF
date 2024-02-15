@@ -22,7 +22,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
       setAuthor({
         avatar: snapshot.val().avatar,
         username: snapshot.val().handle,
-        createdOn: new Date(snapshot.val().createdOn).toDateString(),
+        createdOn: new Date(snapshot.val().createdOn).toLocaleDateString(),
         threads: "TODO!!!",
       });
     });
@@ -64,7 +64,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
       <h3>{topic.title}</h3>
       <p>{topic.content}</p>
       <p>
-        Created on: {new Date(topic.createdOn).toDateString()} at{" "}
+        Created on: {new Date(topic.createdOn).toLocaleDateString()} at{" "}
         {new Date(topic.createdOn).toLocaleTimeString("us-us")}{" "}
       </p>
       {topic.likedBy.length === 1 ? (
