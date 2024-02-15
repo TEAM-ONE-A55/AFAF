@@ -26,6 +26,7 @@ export const createUserHandle = (handle, uid, email, name) => {
     postReplies: {},
     avatar: defaultAvatar,
     role: "user",
+    blocked: false
   });
 };
 
