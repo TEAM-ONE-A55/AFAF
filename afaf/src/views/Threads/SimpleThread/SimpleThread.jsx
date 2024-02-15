@@ -51,9 +51,12 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
           Total threads:{" "}
           <Link
             onClick={() => {
-              toast("TODO! To implement 'treads created' as a key in users/ after creating thread functionality", {
-                icon: "⚠️",
-              });
+              toast(
+                "TODO! To implement 'treads created' as a key in users/ after creating thread functionality",
+                {
+                  icon: "⚠️",
+                }
+              );
             }}
           >
             {author.threads}
@@ -64,8 +67,9 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
       <h3>{topic.title}</h3>
       <p>{topic.content}</p>
       <p>
-        Created on: {new Date(topic.createdOn).toLocaleDateString()} at{" "}
-        {new Date(topic.createdOn).toLocaleTimeString("us-us")}{" "}
+        Created on: {topic.createdOn}
+        {/* {new Date(topic.createdOn).toLocaleDateString()} at{" "} */}
+        {/* {new Date(topic.createdOn)} */}
       </p>
       {topic.likedBy.length === 1 ? (
         <p>{topic.likedBy.length} like</p>

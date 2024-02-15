@@ -4,7 +4,6 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { AppContext } from "../../../context/AppContext";
 import { addThread } from "../../../services/threads.service";
 import Avatar from "../../../components/Avatar/Avatar";
-import Button from "../../../components/Button/Button";
 import toast from "react-hot-toast";
 
 export default function CreateThread () {
