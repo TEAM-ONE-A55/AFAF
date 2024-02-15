@@ -7,7 +7,7 @@ export const getUserByHandle = (handle) => {
 }
 
 export const createUserHandle = (handle, uid, email, name) => {
-    return set(ref(db, `users/${handle}`), { handle, uid, email, name, createdOn: new Date().valueOf(), likedTopics: {}, createdTopic: {}, postReplies: {}, avatar: defaultAvatar })
+    return set(ref(db, `users/${handle}`), { handle, uid, email, name, createdOn: new Date().valueOf(), likedTopics: {}, createdTopic: {}, postReplies: {}, avatar: defaultAvatar, role: 'user' })
 }
 
 export const getUserData = (uid) => {

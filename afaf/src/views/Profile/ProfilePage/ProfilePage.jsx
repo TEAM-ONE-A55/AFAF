@@ -11,6 +11,7 @@ export default function Profile() {
     <div className="profile-container">
       <SetAvatar />
       <h3>{userData.handle}</h3>
+      <p>Role: {userData.role}</p>
       <p>Email: {userData.email}</p>
       <p>Full name: {userData.name}</p>
       <Bio />

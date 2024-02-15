@@ -94,7 +94,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route
-            path="/profile"
+            path="/profile/:handle"
             element={
               <Authenticated>
                 {" "}
