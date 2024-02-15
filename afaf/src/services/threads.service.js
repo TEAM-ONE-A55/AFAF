@@ -11,12 +11,6 @@ export const addThread = async ( title, content, author ) => {
     commentedBy: {},
     likedBy: {}
   });
-
-  // if (result.ok) {
-  //   return "Thread posted successfully!";
-  // } else {
-  //   throw new Error("Something went wrong!");
-  // }
 };
 
 // key could be title, author, etc... and it would replace 'title' => equalTo(search, key)
