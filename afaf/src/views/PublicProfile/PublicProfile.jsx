@@ -29,7 +29,7 @@ export default function PublicProfile() {
         handle: snapshot.val().handle,
         bio: snapshot.val().bio,
         createdOn: new Date(snapshot.val().createdOn).toLocaleDateString(),
-        threads: Object.keys(snapshot.val().createdTopics).length,
+        threads: snapshot.val().createdTopics && Object.keys(snapshot.val().createdTopics).length,
         blocked: snapshot.val().blocked,
       });
     });
