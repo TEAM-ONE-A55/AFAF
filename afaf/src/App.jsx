@@ -20,6 +20,8 @@ import Newest from "./views/Threads/Newest/Newest";
 import MostCommented from "./views/Threads/MostCommented/MostCommented";
 import MostLiked from "./views/Threads/MostLiked/MostLiked";
 import { Toaster } from "react-hot-toast";
+import { Admin } from "./views/Admin/Admin";
+import PublicProfile from "./views/PublicProfile/PublicProfile";
 
 function App() {
   const [context, setContext] = useState({
@@ -93,9 +95,11 @@ function App() {
           />
           <Route path="/create-thread" element={<CreateThread />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/profile/:handle" element={<PublicProfile />} />
           <Route
-            path="/profile/:handle"
+            path="/profile/"
             element={
               <Authenticated>
                 {" "}
