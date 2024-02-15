@@ -4,7 +4,7 @@ import Button from "../../../components/Button/Button";
 import { AppContext } from "../../../context/AppContext";
 import toast from "react-hot-toast";
 import { updateUserData } from "../../../services/users.service";
-import { uploadAvatar } from "../../../services/storage.service";
+import { deleteAvatar, uploadAvatar } from "../../../services/storage.service";
 import { defaultAvatar } from "../../../constants/constants";
 
 export default function SetAvatar() {
@@ -26,8 +26,8 @@ export default function SetAvatar() {
     updateUserData(userData.handle, "avatar", imgUpload);
   }, [imgUpload, userData.handle]);
 
-
-  const deleteAvatar = () => {
+  const deleteImg = () => {
+    deleteAvatar(userData.handle, "avatar");
     setImgUpload(defaultAvatar);
     toast.promise(window.location.reload(), {
       loading: "Saving...",
@@ -58,7 +58,7 @@ export default function SetAvatar() {
       )}
 
       {userData.avatar !== defaultAvatar && (
-        <Button onClick={deleteAvatar}>Delete</Button>
+        <Button onClick={deleteImg}>Delete</Button>
       )}
     </>
   );
