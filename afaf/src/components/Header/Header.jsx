@@ -17,13 +17,15 @@ export default function Header() {
       {user ? (
         <>
           <NavLink to="/create-thread">New Thread</NavLink>
-          <NavLink to={`/profile/${userData.handle}`}>Profile</NavLink>
+          <NavLink to="/profile">Profile</NavLink>
           <span>
             <Avatar
               Width="40px"
               Height="40px"
               url={userData.avatar}
-              onClick={() => navigate(`/profile/${userData.handle}`)}
+              onClick={() => {
+                navigate("/profile");
+              }}
             />
           </span>
         </>
@@ -32,7 +34,6 @@ export default function Header() {
           <NavLink to="/create-thread">New Thread</NavLink>
           <NavLink to="/login">Login</NavLink>
         </>
-
       )}
     </header>
   );
