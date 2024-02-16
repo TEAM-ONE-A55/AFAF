@@ -14,10 +14,10 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
     username: "",
     createdOn: "",
     threads: [],
-    role: ''
+    role: "",
   });
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     getUserByHandle(topic.author).then((snapshot) => {
@@ -26,57 +26,77 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
         username: snapshot.val().handle,
         createdOn: new Date(snapshot.val().createdOn).toLocaleDateString(),
         threads: Object.keys(snapshot.val().createdTopics).length,
-        role: snapshot.val().role
+        role: snapshot.val().role,
       });
     });
   }, [author, topic.author]);
 
   return (
-    <div className="simple-thread-container">
-      <span className="author-info">
-        <Avatar
-          onClick={() => navigate(`/profile/${author.username}`)}
-          Width={"70px"}
-          Height={"70px"}
-          url={author.avatar}
-        />
-        <p>
-          <b>Author: </b><Link to={`/profile/${author.username}`}>@{author.username}</Link>
-        </p>
-        <p><b>Role: </b>{author.role === 'admin' ? <span style={{color: "pink"}}>{author.role}</span> : author.role }</p>
-        <p><b>Member since: </b>{author.createdOn}</p>
-        <p>
-          <b>Total threads: </b>{author.threads}
-        </p>
-      </span>
-      <hr />
-      <h3>{topic.title}</h3>
-      <p>{topic.content}</p>
-      <p> <b>Created on: </b>{topic.createdOn}</p>
-      {topic.likedBy.length === 1 ? (
-        <p>{topic.likedBy.length} like</p>
-      ) : (
-        <p>{topic.likedBy.length} likes</p>
+    <>
+      {author.username && (
+        <div className="simple-thread-container">
+          <span className="author-info">
+            <Avatar
+              onClick={() => navigate(`/profile/${author.username}`)}
+              Width={"70px"}
+              Height={"70px"}
+              url={author.avatar}
+            />
+            <p>
+              <b>Author: </b>
+              <Link to={`/profile/${author.username}`}>@{author.username}</Link>
+            </p>
+            <p>
+              <b>Role: </b>
+              {author.role === "admin" ? (
+                <span style={{ color: "pink" }}>{author.role}</span>
+              ) : (
+                author.role
+              )}
+            </p>
+            <p>
+              <b>Member since: </b>
+              {author.createdOn}
+            </p>
+            <p>
+              <b>Total threads: </b>
+              {author.threads}
+            </p>
+          </span>
+          <hr />
+          <h3>{topic.title}</h3>
+          <p>{topic.content}</p>
+          <p>
+            {" "}
+            <b>Created on: </b>
+            {topic.createdOn}
+          </p>
+          {topic.likedBy.length === 1 ? (
+            <p>{topic.likedBy.length} like</p>
+          ) : (
+            <p>{topic.likedBy.length} likes</p>
+          )}
+          <p>
+            {user && (
+              <>
+                <Button onClick={() => topicLike(userData.handle, topic.id)}>
+                  Like
+                </Button>
+                <Button onClick={() => topicDislike(userData.handle, topic.id)}>
+                  Dislike
+                </Button>
+                <NavLink to={`/single-thread/${topic.id}`}>View</NavLink>
+              </>
+            )}
+          </p>
+          {topic.commentedBy.length === 1 ? (
+            <p>{topic.commentedBy.length} comment</p>
+          ) : (
+            <p>{topic.commentedBy.length} comments</p>
+          )}
+        </div>
       )}
-      <p>
-        {user && (
-          <>
-            <Button onClick={() => topicLike(userData.handle, topic.id)}>
-              Like
-            </Button>
-            <Button onClick={() => topicDislike(userData.handle, topic.id)}>
-              Dislike
-            </Button>
-            <NavLink to={`/single-thread/${topic.id}`}>View</NavLink>
-          </>
-        )}
-      </p>
-      {topic.commentedBy.length === 1 ? (
-        <p>{topic.commentedBy.length} comment</p>
-      ) : (
-        <p>{topic.commentedBy.length} comments</p>
-      )}
-    </div>
+    </>
   );
 }
 

@@ -6,6 +6,7 @@ import {
   equalTo,
   orderByChild,
   update,
+  remove
 } from "firebase/database";
 import { db } from "../config/firebase-config";
 import { defaultAvatar } from "../constants/constants";
@@ -52,3 +53,8 @@ export const getAllUsers = async () => {
 
   return Promise.all(users);
 };
+
+
+export const deleteUser = async (handle) => {
+  return remove(ref(db, `users/${handle}`))
+}
