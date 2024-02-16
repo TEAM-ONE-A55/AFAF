@@ -31,11 +31,11 @@ export const uploadThreadImage = async (image, uuid) => {
 }
 
 // Unimplemented, but would be used to delete thread images
-// export const deleteThreadImage = (uuid) => {
-//   const lastFolderRef = ref(storage, `thread-images/${uuid}`);
-//   listAll(lastFolderRef)
-//     .then((res) => deleteObject(res.items[0]))
-//     .catch((error) => {
-//       console.log(error.message);
-//     });
-// };
+export const deleteThreadImage = (uuid) => {
+  const lastFolderRef = ref(storage, `thread-images/${uuid}`);
+  listAll(lastFolderRef)
+    .then((res) => deleteObject(res.items[0]))
+    .catch((error) => {
+      console.log(error.message);
+    });
+};
