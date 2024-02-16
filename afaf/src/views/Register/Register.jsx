@@ -8,7 +8,8 @@ import { registerUser } from "../../services/auth.service";
 import Button from "../../components/Button/Button";
 import "./Register.css";
 import toast from "react-hot-toast";
-import { MAX_Name_Length, MIN_Name_Length } from "../../constants/constants";
+import { MAX_NAME_LENGTH, MIN_NAME_LENGTH } from "../../constants/constants";
+
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -25,8 +26,8 @@ export default function Register() {
 
   const register = async () => {
     if (
-      form.name.length < MIN_Name_Length ||
-      form.name.length > MAX_Name_Length
+      form.name.length < MIN_NAME_LENGTH ||
+      form.name.length > MAX_NAME_LENGTH
     ) {
       return toast.error(
         "Please enter a full name that is between 4 and 32 characters long."

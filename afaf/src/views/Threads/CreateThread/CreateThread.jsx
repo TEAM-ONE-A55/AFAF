@@ -8,7 +8,6 @@ import { MIN_CONTENT_LENGTH, MAX_CONTENT_LENGTH, MIN_TITLE_LENGTH, MAX_TITLE_LEN
 import Avatar from "../../../components/Avatar/Avatar";
 import toast from "react-hot-toast";
 import { v4 } from "uuid";
-import { MAX_Thread_Content_Length, MAX_Thread_Title_Length, MIN_Thread_Content_Length, MIN_Thread_Title_Length } from "../../../constants/constants";
 
 export default function CreateThread() {
   const { user, userData } = useContext(AppContext);
