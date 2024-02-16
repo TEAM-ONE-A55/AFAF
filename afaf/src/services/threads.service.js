@@ -1,21 +1,43 @@
-import { ref, push, get, query, orderByChild, update } from "firebase/database";
+import {
+  ref,
+  push,
+  get,
+  query,
+  orderByChild,
+  update,
+  equalTo,
+  remove,
+} from "firebase/database";
 import { db } from "../config/firebase-config";
 
+const fromTopicsDocument = (snapshot) => {
+  const tweetsDocument = snapshot.val();
+
+  return Object.keys(tweetsDocument).map((key) => {
+    const topic = tweetsDocument[key];
+
+    return {
+      ...topic,
+      id: key,
+    };
+  });
+};
+
 // Create new topic
-export const addThread = async ( title, content, author ) => {
+export const addThread = async (title, content, author) => {
   const topic = push(ref(db, "topics"), {
     content,
     title,
     author,
     createdOn: Date.now(),
     commentedBy: {},
-    likedBy: {}
+    likedBy: {},
   });
-  
+
   const topicId = topic.key;
 
   const userRef = ref(db, `users/${author}/createdTopics`);
-  await push(userRef, topicId); 
+  await push(userRef, topicId);
 
   return topicId;
 };
@@ -30,7 +52,6 @@ export const getAllTopics = async (key = "createdOn") => {
   const topics = Object.keys(snapshot.val()).map((key) => ({
     id: key,
     ...snapshot.val()[key],
-    createdOn: new Date(snapshot.val()[key].createdOn).toLocaleString(),
     likedBy: snapshot.val()[key].likedBy
       ? Object.keys(snapshot.val()[key].likedBy)
       : [],
@@ -111,6 +132,14 @@ export const getLikedTopics = async (handle) => {
   });
 };
 
+export const getTopicsByAuthor = async (handle) => {
+  const snapshot = await get(
+    query(ref(db, "topics"), orderByChild("author"), equalTo(handle))
+  );
+  if (!snapshot.exists()) return [];
+  return fromTopicsDocument(snapshot);
+};
+
 export const likeTopic = (handle, topicId) => {
   const updateLikes = {};
   updateLikes[`/topics/${topicId}/likedBy/${handle}`] = true;
@@ -125,4 +154,13 @@ export const dislikeTopic = (handle, topicId) => {
   updateLikes[`/users/${handle}/likedTopics/${topicId}`] = null;
 
   return update(ref(db), updateLikes);
+};
+
+export const deleteTopic = async (handle) => {
+  // await getAllTopics('author')
+  const topicsToRemove = await getTopicsByAuthor(handle);
+  topicsToRemove.filter(topic => remove(ref(db, `topics/${topic.id}`)))
+  // remove(ref(db))
+  console.log(topicsToRemove)
+
 };

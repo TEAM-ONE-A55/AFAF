@@ -10,6 +10,7 @@ import "./PublicProfile.css";
 import { AppContext } from "../../context/AppContext";
 import Button from "../../components/Button/Button";
 import toast from "react-hot-toast";
+import { deleteTopic } from "../../services/threads.service";
 
 export default function PublicProfile() {
   const { userData } = useContext(AppContext);
@@ -69,6 +70,7 @@ export default function PublicProfile() {
   };
 
   const removeUser = async (handle) => {
+    await deleteTopic(handle)
     await deleteUser(handle);
     toast.success(`User ${handle} has been successfully deleted`);
     navigate(-1);

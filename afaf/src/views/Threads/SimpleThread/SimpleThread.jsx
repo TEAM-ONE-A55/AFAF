@@ -6,12 +6,13 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./SimpleThread.css";
 import Avatar from "../../../components/Avatar/Avatar";
 import { getUserByHandle } from "../../../services/users.service";
+import { deleteTopic } from "../../../services/threads.service";
 
 export default function SimpleThread({ topic, topicLike, topicDislike }) {
   const { user, userData } = useContext(AppContext);
   const [author, setAuthor] = useState({
-    avatar: "",
     username: "",
+    avatar: "",
     createdOn: "",
     threads: [],
     role: "",
@@ -29,7 +30,11 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
         role: snapshot.val().role,
       });
     });
-  }, [author, topic.author]);
+  }, [topic.author, author]);
+
+  const test = async (author) => {
+    console.log(await deleteTopic(author))
+  }
 
   return (
     <>
@@ -69,7 +74,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
           <p>
             {" "}
             <b>Created on: </b>
-            {topic.createdOn}
+            {new Date(topic.createdOn).toLocaleString()}
           </p>
           {topic.likedBy.length === 1 ? (
             <p>{topic.likedBy.length} like</p>
@@ -94,6 +99,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
           ) : (
             <p>{topic.commentedBy.length} comments</p>
           )}
+          <button onClick={() => test(author.username)}>Click</button>
         </div>
       )}
     </>
