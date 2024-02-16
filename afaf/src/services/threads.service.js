@@ -165,3 +165,9 @@ export const deleteTopic = async (handle) => {
   console.log(topicsToRemove)
 
 };
+
+
+export const updateUserData = async (handle, key, value) => {
+  const path = `users/${handle}/${key}`;
+  return update(ref(db), { [path]: value });
+};
