@@ -23,3 +23,9 @@ export const deleteAvatar = (handle, key) => {
       console.log(error.message);
     });
 };
+
+export const uploadThreadImage = async (image, key) => {
+  const imageRef = ref(storage, `thread-images/${key}/${image.name + v4()}`);
+  await uploadBytes(imageRef, image);
+  return getDownloadURL(imageRef);
+}

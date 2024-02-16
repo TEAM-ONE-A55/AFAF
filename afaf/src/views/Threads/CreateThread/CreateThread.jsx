@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { AppContext } from "../../../context/AppContext";
 import { addThread } from "../../../services/threads.service";
+import { uploadThreadImage } from "../../../services/storage.service";
 import Avatar from "../../../components/Avatar/Avatar";
 import toast from "react-hot-toast";
 
@@ -19,6 +20,8 @@ export default function CreateThread () {
         title: '',
     });
 
+    const [attachedImg, setAttachedImg] = useState('');
+
     const updateThread = (key, value) => {
         setThread({
             ...thread,
@@ -27,9 +30,14 @@ export default function CreateThread () {
     }
 
     const handleThreadTypeNav = type => {
-        setSelected(type);
+        setSelected(prev => {
+            if (prev === type) return prev;
+            setAttachedImg(null);
+            return type;
+        });
     }
 
+    // console.log(attachedImg);
     const getThreadTypeInput = () => {
         switch(selected) { 
             case 'post':
@@ -43,7 +51,9 @@ export default function CreateThread () {
                 return (
                     <div className="create-thread-type-inputs">
                         <input className="thread-type-title" type="text" placeholder="Title" onChange={e => updateThread('title', e.target.value)} />
-                        <input type="file" onChange={e => updateThread('content', e.target.files[0])} />
+                        <input type="file" onChange={e => setAttachedImg(e.target.files[0])} />
+                        {attachedImg && <img src={attachedImg.name} alt="Attached" />}
+                        {attachedImg && <button onClick={() => setAttachedImg(null)}>Remove</button>}
                     </div>
                 )
             case 'url':
@@ -57,18 +67,21 @@ export default function CreateThread () {
     }
 
     const postThread = async () => {
-        if(!thread.title) return toast.error('Title is a required field.');
-        if(!thread.content) return toast.error('Content is a required field.');
+        if (!thread.title) return toast.error('Title is a required field.');
+        if (!thread.content) return toast.error('Content is a required field.');
         if (thread.title.length < 16) return toast.error('Title must be at least 16 characters long.');
         if (thread.title.length > 64) return toast.error('Title must be at most 64 characters long.');
-        if (typeof thread.content === 'string' && thread.content.length < 32) return toast.error('Content must be at least 32 characters long.');
-        if (typeof thread.content === 'string' && thread.content.length > 8192) return toast.error('Content must be at most 8192 characters long.');
+        if (!attachedImg && thread.content.length < 32) return toast.error('Content must be at least 32 characters long.');
+        if (!attachedImg && thread.content.length > 8192) return toast.error('Content must be at most 8192 characters long.');
         try {
-            await addThread(thread.title, thread.content, userData.handle);
+            const res = await addThread(thread.title, thread.content, userData.handle);
+            attachedImg && await uploadThreadImage(attachedImg, res);
             toast.success("Thread created successfully!");
             navigate('/threads/newest');
         } catch (e) {
             console.log(e.message);
+        } finally {
+            setAttachedImg(null);
         }
     }
 
