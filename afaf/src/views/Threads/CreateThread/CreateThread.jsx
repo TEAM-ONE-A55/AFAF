@@ -66,7 +66,7 @@ export default function CreateThread () {
         try {
             await addThread(thread.title, thread.content, userData.handle);
             toast.success("Thread created successfully!");
-            navigate('/');
+            navigate('/threads/newest');
         } catch (e) {
             console.log(e.message);
         }

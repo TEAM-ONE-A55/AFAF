@@ -5,8 +5,9 @@ import { AppContext } from "../../../context/AppContext";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./SimpleThread.css";
 import Avatar from "../../../components/Avatar/Avatar";
-import { getUserByHandle } from "../../../services/users.service";
-import { deleteTopic } from "../../../services/threads.service";
+import {
+  getUserByHandle,
+} from "../../../services/users.service";
 
 export default function SimpleThread({ topic, topicLike, topicDislike }) {
   const { user, userData } = useContext(AppContext);
@@ -32,10 +33,6 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
       });
     });
   }, [topic.author, author]);
-
-  const deleteThread = async (author) => {
-    await deleteTopic(author);
-  };
 
   return (
     <>
@@ -99,13 +96,6 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
             <p>{topic.commentedBy.length} comment</p>
           ) : (
             <p>{topic.commentedBy.length} comments</p>
-          )}
-
-          {(userData?.handle === author.username ||
-            userData?.role === "admin") && (
-            <Button onClick={() => deleteThread(author.username)}>
-              Delete
-            </Button>
           )}
         </div>
       )}

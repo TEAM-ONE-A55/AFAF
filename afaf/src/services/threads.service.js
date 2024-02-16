@@ -11,10 +11,10 @@ import {
 import { db } from "../config/firebase-config";
 
 const fromTopicsDocument = (snapshot) => {
-  const tweetsDocument = snapshot.val();
+  const topicDocument = snapshot.val();
 
-  return Object.keys(tweetsDocument).map((key) => {
-    const topic = tweetsDocument[key];
+  return Object.keys(topicDocument).map((key) => {
+    const topic = topicDocument[key];
 
     return {
       ...topic,
@@ -33,10 +33,11 @@ export const addThread = async (title, content, author) => {
     commentedBy: {},
     likedBy: {},
   });
+  console.log(topic.key)
 
   const topicId = topic.key;
 
-  const userRef = ref(db, `users/${author}/createdTopics`);
+  const userRef = ref(db, `users/${author}/createdTopics/${topicId}`);
   await push(userRef, topicId);
 
   return topicId;

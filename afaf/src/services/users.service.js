@@ -58,3 +58,7 @@ export const getAllUsers = async () => {
 export const deleteUser = async (handle) => {
   return remove(ref(db, `users/${handle}`))
 }
+
+export const deleteUserTopic = async (handle, value) => {
+  return remove(ref(db, `users/${handle}/createdTopics/${value}`))
+}
