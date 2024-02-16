@@ -4,6 +4,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { AppContext } from "../../../context/AppContext";
 import { addThread } from "../../../services/threads.service";
 import { uploadThreadImage } from "../../../services/storage.service";
+import { MIN_CONTENT_LENGTH, MAX_CONTENT_LENGTH, MIN_TITLE_LENGTH, MAX_TITLE_LENGTH } from "../../../constants/constants";
 import Avatar from "../../../components/Avatar/Avatar";
 import toast from "react-hot-toast";
 import { v4 } from "uuid";
@@ -23,7 +24,8 @@ export default function CreateThread() {
   });
 
   const [attachedImg, setAttachedImg] = useState(null);
-  const [imgUpload, setImgUpload] = useState("");
+  
+  const [imageUrl, setImageUrl] = useState("");
 
   const updateThread = (key, value) => {
     setThread({
@@ -43,7 +45,7 @@ export default function CreateThread() {
   useEffect(() => {
     if (attachedImg) {
         uploadThreadImage(attachedImg, thread.uuid)
-            .then((url) => setImgUpload(url))
+            .then((url) => setImageUrl(url))
             .then(() => toast.success("Image uploaded successfully!"))
             .catch((e) => toast(e.message));
     }
@@ -79,7 +81,7 @@ export default function CreateThread() {
               type="file"
               onChange={(e) => setAttachedImg(e.target.files[0])}
             />
-            {attachedImg && <img src={imgUpload} alt="Attached" />}
+            {attachedImg && <img src={imageUrl} alt="Attached" />}
             {attachedImg && (
               <button onClick={() => setAttachedImg(null)}>Remove</button>
             )}
@@ -106,31 +108,32 @@ export default function CreateThread() {
   };
 
   const postThread = async () => {
+
     if (!thread.title) 
         return toast.error("Title is a required field.");
     if (!attachedImg && !thread.content) 
         return toast.error('Content is a required field.');
-    if (thread.title.length < MIN_Thread_Title_Length)
+    if (thread.title.length < MIN_TITLE_LENGTH)
       return toast.error("Title must be at least 16 characters long.");
-    if (thread.title.length > MAX_Thread_Title_Length)
+    if (thread.title.length > MAX_TITLE_LENGTH)
       return toast.error("Title must be at most 64 characters long.");
-    if (!attachedImg && thread.content.length < MIN_Thread_Content_Length)
+    if (!attachedImg && thread.content.length < MIN_CONTENT_LENGTH)
       return toast.error("Content must be at least 32 characters long.");
-    if (!attachedImg && thread.content.length > MAX_Thread_Content_Length)
+    if (!attachedImg && thread.content.length > MAX_CONTENT_LENGTH)
       return toast.error("Content must be at most 8192 characters long.");
+
     try {
       await addThread(
         thread.title,
         thread.content,
         userData.handle,
-        imgUpload,
+        imageUrl,
         thread.uuid
       );
-
       toast.success("Thread created successfully!");
       navigate("/threads/newest");
     } catch (e) {
-      console.log(e.message);
+      toast.error("Could not create thread.");
     } finally {
       setAttachedImg(null);
     }

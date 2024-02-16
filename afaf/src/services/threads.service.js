@@ -35,7 +35,6 @@ export const addThread = async (title, content, author, url, uuid) => {
     commentedBy: {},
     likedBy: {},
   });
-  console.log(topic.key)
 
   const topicId = topic.key;
 
