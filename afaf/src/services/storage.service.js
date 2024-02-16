@@ -24,8 +24,18 @@ export const deleteAvatar = (handle, key) => {
     });
 };
 
-export const uploadThreadImage = async (image, key) => {
-  const imageRef = ref(storage, `thread-images/${key}/${image.name + v4()}`);
+export const uploadThreadImage = async (image, uuid) => {
+  const imageRef = ref(storage, `thread-images/${uuid}/${image.name}`);
   await uploadBytes(imageRef, image);
   return getDownloadURL(imageRef);
 }
+
+// Unimplemented, but would be used to delete thread images
+// export const deleteThreadImage = (uuid) => {
+//   const lastFolderRef = ref(storage, `thread-images/${uuid}`);
+//   listAll(lastFolderRef)
+//     .then((res) => deleteObject(res.items[0]))
+//     .catch((error) => {
+//       console.log(error.message);
+//     });
+// };

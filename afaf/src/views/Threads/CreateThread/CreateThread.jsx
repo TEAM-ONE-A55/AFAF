@@ -1,11 +1,12 @@
 import "./CreateThread.css";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { AppContext } from "../../../context/AppContext";
 import { addThread } from "../../../services/threads.service";
 import { uploadThreadImage } from "../../../services/storage.service";
 import Avatar from "../../../components/Avatar/Avatar";
 import toast from "react-hot-toast";
+import { v4 } from "uuid";
 
 export default function CreateThread() {
   const { user, userData } = useContext(AppContext);
@@ -17,16 +18,11 @@ export default function CreateThread() {
   const [thread, setThread] = useState({
     content: "",
     title: "",
+    uuid: v4()
   });
 
   const [attachedImg, setAttachedImg] = useState(null);
   const [imgUpload, setImgUpload] = useState("");
-
-  useEffect(() => {
-    updateThread(userData.handle, "image", imgUpload);
-}, [imgUpload, userData.handle]);
-
-  }, [imgUpload])
 
   const updateThread = (key, value) => {
     setThread({
@@ -43,7 +39,15 @@ export default function CreateThread() {
     });
   };
 
-  // console.log(attachedImg);
+  useEffect(() => {
+    if (attachedImg) {
+        uploadThreadImage(attachedImg, thread.uuid)
+            .then((url) => setImgUpload(url))
+            .then(() => toast.success("Image uploaded successfully!"))
+            .catch((e) => toast(e.message));
+    }
+  }, [attachedImg, thread.uuid]);
+
   const getThreadTypeInput = () => {
     switch (selected) {
       case "post":
@@ -101,8 +105,10 @@ export default function CreateThread() {
   };
 
   const postThread = async () => {
-    if (!thread.title) return toast.error("Title is a required field.");
-    // if (!thread.content) return toast.error('Content is a required field.');
+    if (!thread.title) 
+        return toast.error("Title is a required field.");
+    if (!attachedImg && !thread.content) 
+        return toast.error('Content is a required field.');
     if (thread.title.length < 16)
       return toast.error("Title must be at least 16 characters long.");
     if (thread.title.length > 64)
@@ -112,16 +118,13 @@ export default function CreateThread() {
     if (!attachedImg && thread.content.length > 8192)
       return toast.error("Content must be at most 8192 characters long.");
     try {
-      const res = await addThread(
+      await addThread(
         thread.title,
         thread.content,
-        userData.handle
+        userData.handle,
+        imgUpload,
+        thread.uuid
       );
-      if (attachedImg) {
-        const url = await uploadThreadImage(attachedImg, res);
-        console.log(url);
-        setImgUpload(url);
-      }
 
       toast.success("Thread created successfully!");
     //   navigate("/threads/newest");

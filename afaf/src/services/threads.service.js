@@ -24,11 +24,13 @@ const fromTopicsDocument = (snapshot) => {
 };
 
 // Create new topic
-export const addThread = async (title, content, author) => {
+export const addThread = async (title, content, author, url, uuid) => {
   const topic = push(ref(db, "topics"), {
     content,
     title,
     author,
+    url,
+    uuid,
     createdOn: Date.now(),
     commentedBy: {},
     likedBy: {},

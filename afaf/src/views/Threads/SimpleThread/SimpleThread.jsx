@@ -68,7 +68,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
           </span>
           <hr />
           <h3>{topic.title}</h3>
-          <p>{topic.content}</p>
+          {topic.content ? (<p>{topic.content}</p>) : (<img src={topic.url} alt="topic" />)}
           <p>
             {" "}
             <b>Created on: </b>
