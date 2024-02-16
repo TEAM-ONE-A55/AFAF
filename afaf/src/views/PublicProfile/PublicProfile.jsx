@@ -1,16 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import {
-  deleteUser,
-  getUserByHandle,
-  updateUserData,
-} from "../../services/users.service";
+import { deleteUser, getUserByHandle } from "../../services/users.service";
 import Avatar from "../../components/Avatar/Avatar";
 import "./PublicProfile.css";
 import { AppContext } from "../../context/AppContext";
 import Button from "../../components/Button/Button";
 import toast from "react-hot-toast";
 import { deleteTopic } from "../../services/threads.service";
+import { blockUser, changeRole } from "../../functions/admin-functions";
 
 export default function PublicProfile() {
   const { userData } = useContext(AppContext);
@@ -45,32 +42,8 @@ export default function PublicProfile() {
     });
   }, [handle]);
 
-  const blockUser = async () => {
-    if (user.blocked === false) {
-      await updateUserData(user.handle, "blocked", true);
-      setUser({ ...user, blocked: true });
-      toast.success(`User has been successfully blocked.`);
-    } else {
-      await updateUserData(user.handle, "blocked", false);
-      setUser({ ...user, blocked: false });
-      toast.success(`User has been successfully unblocked.`);
-    }
-  };
-
-  const changeRole = async () => {
-    if (user.role === "user") {
-      await updateUserData(user.handle, "role", "admin");
-      setUser({ ...user, role: "admin" });
-      toast.success(`User role has been changed to an Admin`);
-    } else {
-      await updateUserData(user.handle, "role", "user");
-      setUser({ ...user, role: "user" });
-      toast.success(`User role has been changed to a user`);
-    }
-  };
-
   const removeUser = async (handle) => {
-    await deleteTopic(handle)
+    await deleteTopic(handle);
     await deleteUser(handle);
     toast.success(`User ${handle} has been successfully deleted`);
     navigate(-1);
@@ -93,7 +66,7 @@ export default function PublicProfile() {
           user.role
         )}{" "}
         <span>
-          <Link onClick={changeRole}>
+          <Link onClick={() => changeRole(user, setUser)}>
             {user.role === "admin" ? "Downgrade to User" : "Upgrade to Admin"}
           </Link>
         </span>
@@ -114,7 +87,7 @@ export default function PublicProfile() {
       <p>See all threads: TODO</p>
       {userData && userData.role === "admin" && (
         <>
-          <Button onClick={blockUser}>
+          <Button onClick={() => blockUser(user, setUser)}>
             {" "}
             {!user.blocked ? "Ban user" : "Unblock user"}
           </Button>

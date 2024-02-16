@@ -171,7 +171,7 @@ export const deleteTopic = async (handle, id) => {
 };
 
 
-export const updateUserData = async (handle, key, value) => {
-  const path = `users/${handle}/${key}`;
+export const updateTopic = async (id, key, value) => {
+  const path = `topics/${id}/${key}`;
   return update(ref(db), { [path]: value });
 };

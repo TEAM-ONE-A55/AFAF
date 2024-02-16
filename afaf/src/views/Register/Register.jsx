@@ -8,6 +8,7 @@ import { registerUser } from "../../services/auth.service";
 import Button from "../../components/Button/Button";
 import "./Register.css";
 import toast from "react-hot-toast";
+import { MAX_Name_Length, MIN_Name_Length } from "../../constants/constants";
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -23,54 +24,60 @@ export default function Register() {
   };
 
   const register = async () => {
-    if (form.name.length < 4 || form.name.length > 32) {
+    if (
+      form.name.length < MIN_Name_Length ||
+      form.name.length > MAX_Name_Length
+    ) {
       return toast.error(
         "Please enter a full name that is between 4 and 32 characters long."
       );
     }
-    if(!form.username) return  toast.error("Uh oh! Don't forget your username!")
+    if (!form.username)
+      return toast.error("Uh oh! Don't forget your username!");
 
-      try {
-        const user = await getUserByHandle(form.username);
-        if (user.exists()) {
-          return toast.error("Oops! This username is already taken!");
-        }
-
-        const credentials = await registerUser(form.email, form.password);
-        await createUserHandle(
-          form.username,
-          credentials.user.uid,
-          form.email,
-          form.name
-        );
-        setTimeout(() => {
-          navigate(-1);
-        }, 2000);
-        return toast.success(
-          "Congratulations! Your account has been successfully created!"
-        );
-      } catch (e) {
-        if (e.message === "Firebase: Error (auth/missing-password).")
-          return toast.error(
-            "Oops! Looks like you forgot to enter a password. Let's add one for security!"
-          );
-        if (e.message === "Firebase: Error (auth/invalid-email).")
-          return toast.error(
-            "It seems the email you entered is invalid. Please double-check and try again."
-          );
-        if (
-          e.message ===
-          "Firebase: Password should be at least 6 characters (auth/weak-password)."
-        )
-          return toast.error(
-            "Oops! Your password should be at least 6 characters long!"
-          );
-
-          if(e.message === 'Firebase: Error (auth/email-already-in-use).') {
-            return toast.error("Oops! Email already in use. Try another or log in.")
-          }
-        console.log(e.message);
+    try {
+      const user = await getUserByHandle(form.username);
+      if (user.exists()) {
+        return toast.error("Oops! This username is already taken!");
       }
+
+      const credentials = await registerUser(form.email, form.password);
+      await createUserHandle(
+        form.username,
+        credentials.user.uid,
+        form.email,
+        form.name
+      );
+      setTimeout(() => {
+        navigate(-1);
+      }, 2000);
+      return toast.success(
+        "Congratulations! Your account has been successfully created!"
+      );
+    } catch (e) {
+      if (e.message === "Firebase: Error (auth/missing-password).")
+        return toast.error(
+          "Oops! Looks like you forgot to enter a password. Let's add one for security!"
+        );
+      if (e.message === "Firebase: Error (auth/invalid-email).")
+        return toast.error(
+          "It seems the email you entered is invalid. Please double-check and try again."
+        );
+      if (
+        e.message ===
+        "Firebase: Password should be at least 6 characters (auth/weak-password)."
+      )
+        return toast.error(
+          "Oops! Your password should be at least 6 characters long!"
+        );
+
+      if (e.message === "Firebase: Error (auth/email-already-in-use).") {
+        return toast.error(
+          "Oops! Email already in use. Try another or log in."
+        );
+      }
+      console.log(e.message);
+    }
   };
   return (
     <div className="registration">

@@ -7,6 +7,7 @@ import { uploadThreadImage } from "../../../services/storage.service";
 import Avatar from "../../../components/Avatar/Avatar";
 import toast from "react-hot-toast";
 import { v4 } from "uuid";
+import { MAX_Thread_Content_Length, MAX_Thread_Title_Length, MIN_Thread_Content_Length, MIN_Thread_Title_Length } from "../../../constants/constants";
 
 export default function CreateThread() {
   const { user, userData } = useContext(AppContext);
@@ -109,13 +110,13 @@ export default function CreateThread() {
         return toast.error("Title is a required field.");
     if (!attachedImg && !thread.content) 
         return toast.error('Content is a required field.');
-    if (thread.title.length < 16)
+    if (thread.title.length < MIN_Thread_Title_Length)
       return toast.error("Title must be at least 16 characters long.");
-    if (thread.title.length > 64)
+    if (thread.title.length > MAX_Thread_Title_Length)
       return toast.error("Title must be at most 64 characters long.");
-    if (!attachedImg && thread.content.length < 32)
+    if (!attachedImg && thread.content.length < MIN_Thread_Content_Length)
       return toast.error("Content must be at least 32 characters long.");
-    if (!attachedImg && thread.content.length > 8192)
+    if (!attachedImg && thread.content.length > MAX_Thread_Content_Length)
       return toast.error("Content must be at most 8192 characters long.");
     try {
       await addThread(
