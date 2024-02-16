@@ -14,6 +14,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
     username: "",
     createdOn: "",
     threads: [],
+    role: ''
   });
 
   const navigate = useNavigate()
@@ -25,6 +26,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
         username: snapshot.val().handle,
         createdOn: new Date(snapshot.val().createdOn).toLocaleDateString(),
         threads: Object.keys(snapshot.val().createdTopics).length,
+        role: snapshot.val().role
       });
     });
   }, [author, topic.author]);
@@ -41,6 +43,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
         <p>
           <b>Author: </b><Link to={`/profile/${author.username}`}>@{author.username}</Link>
         </p>
+        <p><b>Role: </b>{author.role === 'admin' ? <span style={{color: "pink"}}>{author.role}</span> : author.role }</p>
         <p><b>Member since: </b>{author.createdOn}</p>
         <p>
           <b>Total threads: </b>{author.threads}
