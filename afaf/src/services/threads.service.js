@@ -159,12 +159,14 @@ export const dislikeTopic = (handle, topicId) => {
   return update(ref(db), updateLikes);
 };
 
-export const deleteTopic = async (handle) => {
-  // await getAllTopics('author')
+export const deleteTopic = async (handle, id) => {
+
   const topicsToRemove = await getTopicsByAuthor(handle);
-  topicsToRemove.filter(topic => remove(ref(db, `topics/${topic.id}`)))
-  // remove(ref(db))
-  console.log(topicsToRemove)
+  topicsToRemove.filter(topic => {
+    if (topic.id === id) {
+      remove(ref(db, `topics/${topic.id}`))
+    }
+  })
 
 };
 

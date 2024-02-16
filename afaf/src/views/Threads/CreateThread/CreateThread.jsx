@@ -127,7 +127,7 @@ export default function CreateThread() {
       );
 
       toast.success("Thread created successfully!");
-    //   navigate("/threads/newest");
+      navigate("/threads/newest");
     } catch (e) {
       console.log(e.message);
     } finally {

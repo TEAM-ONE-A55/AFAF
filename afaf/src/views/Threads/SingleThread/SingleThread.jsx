@@ -36,7 +36,7 @@ export default function SingleThread() {
   const deleteThread = async (author, topic) => {
     try {
       await deleteUserTopic(author, topic);
-      await deleteTopic(author);
+      await deleteTopic(author, topic);
       return toast.success("Your thread has been successfully deleted");
     } catch (e) {
       return toast.error("Something went wrong. Please try again later.");
@@ -50,9 +50,13 @@ export default function SingleThread() {
   return (
     <div className="single-thread-container">
       <h1>{thread?.title}</h1>
-      {(userData?.handle === thread?.author || userData?.role === "admin") && (
-        <Button onClick={() => deleteThread(thread.author, id)}>Delete</Button>
+      {thread && 
+      (userData?.handle === thread?.author || userData?.role === "admin") && (
+        <Button onClick={() => deleteThread(thread.author, thread.id)}>
+          Delete
+        </Button>
       )}
+      
       {thread && (
         <SimpleThread
           topic={thread}
