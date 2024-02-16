@@ -10,6 +10,7 @@ import { deleteTopic } from "../../../services/threads.service";
 
 export default function SimpleThread({ topic, topicLike, topicDislike }) {
   const { user, userData } = useContext(AppContext);
+
   const [author, setAuthor] = useState({
     username: "",
     avatar: "",
@@ -32,9 +33,9 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
     });
   }, [topic.author, author]);
 
-  const test = async (author) => {
-    console.log(await deleteTopic(author))
-  }
+  const deleteThread = async (author) => {
+    await deleteTopic(author);
+  };
 
   return (
     <>
@@ -99,7 +100,13 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
           ) : (
             <p>{topic.commentedBy.length} comments</p>
           )}
-          <button onClick={() => test(author.username)}>Click</button>
+
+          {(userData?.handle === author.username ||
+            userData?.role === "admin") && (
+            <Button onClick={() => deleteThread(author.username)}>
+              Delete
+            </Button>
+          )}
         </div>
       )}
     </>
