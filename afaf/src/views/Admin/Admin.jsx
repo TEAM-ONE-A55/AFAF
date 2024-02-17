@@ -1,13 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import { getAllUsers, getUserByHandle } from "../../services/users.service";
 import { Link, useNavigate } from "react-router-dom";
-import "./Admin.css";
 import { getAllTopics, getTopicById } from "../../services/threads.service";
 import { blockUser, changeRole } from "../../functions/admin-functions";
 import { deleteUser } from "../../services/users.service";
-import toast from "react-hot-toast";
 import { AppContext } from "../../context/AppContext";
 import { deleteThread } from "../../functions/threads-functions";
+import { sortThreads, sortUsers } from "../../functions/sorting-functions";
+import "./Admin.css";
+import toast from "react-hot-toast";
+import SortingDropdown from "../../components/SortingDropdown/SortingDropdown";
 
 export function Admin() {
   const { userData } = useContext(AppContext);
@@ -15,8 +17,49 @@ export function Admin() {
   const [topics, setTopics] = useState([]);
   const [user, setUser] = useState({});
   const [topic, setTopic] = useState({});
+  const [data, setData] = useState(false);
+  const [usersSortBy, setUsersSortBy] = useState("dateDescending");
+  const [threadSortBy, setThreadSortBy] = useState("dateDescending")
+
+  const usersSortingOptions = [
+    { label: "Sort by Date (descending)", value: "dateDescending" },
+    { label: "Sort by Date (ascending)", value: "dateAscending" },
+    { label: "Sort by Username (ascending)", value: "usernameAscending" },
+    { label: "Sort by Username (descending)", value: "usernameDescending" },
+    {
+      label: "Sort by Most active users (descending)",
+      value: "userActivityDescending",
+    },
+    {
+      label: "Sort by Most active users (ascending)",
+      value: "userActivityAscending",
+    },
+  ];
+
+  const threadsSortingOptions = [
+    { label: "Sort by Date (descending)", value: "dateDescending" },
+    { label: "Sort by Date (ascending)", value: "dateAscending" },
+    { label: "Sort by Author (ascending)", value: "authorAscending" },
+    { label: "Sort by Author (descending)", value: "authorDescending" },
+    {
+      label: "Sort by Most Liked (descending)",
+      value: "mostLikedDescending",
+    },
+    {
+      label: "Sort by Most Liked users (ascending)",
+      value: "mostLikedAscending",
+    },
+    {
+      label: "Sort by Most Commented (descending)",
+      value: "mostCommentedDescending",
+    },
+    {
+      label: "Sort by Most Liked users (ascending)",
+      value: "mostCommentedAscending",
+    },
+  ];
+
   const navigate = useNavigate();
-  const [data, setData] = useState(false)
 
   useEffect(() => {
     getAllUsers()
@@ -51,6 +94,14 @@ export function Admin() {
     });
   };
 
+  const handleUsersSortChange = (sortBy) => {
+    setUsersSortBy(sortBy);
+  };
+
+  const handleThreadsSortChange = (sortBy) => {
+    setThreadSortBy(sortBy)
+  }
+
   const handleDeleteThread = (topic) => {
     getTopic(topic.id);
     deleteThread(topic.author, topic.id, topic.uuid, topic.url);
@@ -71,89 +122,107 @@ export function Admin() {
           <h3>Total users: {users.length}</h3>
           <h3>Total threads: {topics.length}</h3>
           <br />
-          <h3 className="admin-data" onClick={() => setData(!data)}>{!data ? "See all users" : "See all threads"}</h3>
-          <hr/>
+          <h3 className="admin-data" onClick={() => setData(!data)}>
+            {!data ? "See all users" : "See all threads"}
+          </h3>
+          <hr />
           {data ? (
             <>
-            <h3>All users: </h3>
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>User</th>
-                  <th>Name</th>
-                  <th>Role</th>
-                  <th>Date of registration</th>
-                  <th>Total threads</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.map((user) => {
-                  return (
-                    <tr key={user.handle}>
-                      <td>{user.handle}</td>
-                      <td>{user.name}</td>
-                      <td>
-                        {user.role === "admin" ? (
-                          <span style={{ color: "pink" }}>{user.role}</span>
-                        ) : (
-                          user.role
-                        )}
-                      </td>
-                      <td>{new Date(user.createdOn).toLocaleDateString()}</td>
-                      <td>
-                        {(user.createdTopics &&
-                          Object.keys(user.createdTopics).length) ||
-                          0}
-                      </td>
-                      <td>
-                        {user.blocked === true ? (
-                          <span style={{ color: "red" }}>Blocked</span>
-                        ) : (
-                          "Active"
-                        )}
-                      </td>
-                      <td>
-                        <button
-                          onClick={() => navigate(`/profile/${user.handle}`)}
-                        >
-                          See Profile
-                        </button>
-                        <button
-                          onClick={() => {
-                            getUser(user.handle);
-                            user.handle && removeUser(user.handle);
-                          }}
-                        >
-                          Delete
-                        </button>
-                        <button
-                          onClick={() => {
-                            getUser(user.handle);
-                            blockUser(user, setUser);
-                          }}
-                        >
-                          Ban
-                        </button>
-                        <button
-                          onClick={() => {
-                            getUser(user.handle);
-                            changeRole(user, setUser);
-                          }}
-                        >
-                          Change Role
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+              <h3>
+                All users: {"  "}
+                {
+                  <SortingDropdown
+                    options={usersSortingOptions}
+                    defaultOption={usersSortBy}
+                    onChange={handleUsersSortChange}
+                  />
+                }
+              </h3>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Date of registration</th>
+                    <th>Total threads</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {sortUsers(users, usersSortBy).map((user) => {
+                    return (
+                      <tr key={user.handle}>
+                        <td>{user.handle}</td>
+                        <td>{user.name}</td>
+                        <td>
+                          {user.role === "admin" ? (
+                            <span style={{ color: "pink" }}>{user.role}</span>
+                          ) : (
+                            user.role
+                          )}
+                        </td>
+                        <td>{new Date(user.createdOn).toLocaleDateString()}</td>
+                        <td>
+                          {(user.createdTopics &&
+                            Object.keys(user.createdTopics).length) ||
+                            0}
+                        </td>
+                        <td>
+                          {user.blocked === true ? (
+                            <span style={{ color: "red" }}>Blocked</span>
+                          ) : (
+                            "Active"
+                          )}
+                        </td>
+                        <td>
+                          <button
+                            onClick={() => navigate(`/profile/${user.handle}`)}
+                          >
+                            See Profile
+                          </button>
+                          <button
+                            onClick={() => {
+                              getUser(user.handle);
+                              user.handle && removeUser(user.handle);
+                            }}
+                          >
+                            Delete
+                          </button>
+                          <button
+                            onClick={() => {
+                              getUser(user.handle);
+                              blockUser(user, setUser);
+                            }}
+                          >
+                            Ban
+                          </button>
+                          <button
+                            onClick={() => {
+                              getUser(user.handle);
+                              changeRole(user, setUser);
+                            }}
+                          >
+                            Change Role
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
             </>
           ) : (
             <>
-            <h3>All threads: </h3>
+              <h3>All threads: {"  "}
+                {
+                  <SortingDropdown
+                    options={threadsSortingOptions}
+                    defaultOption={threadSortBy}
+                    onChange={handleThreadsSortChange}
+                  />
+                }</h3>
               <table className="table">
                 <thead>
                   <tr>
@@ -166,8 +235,7 @@ export function Admin() {
                   </tr>
                 </thead>
                 <tbody>
-                  {topics
-                    .sort((a, b) => new Date(b.createdOn) - new Date(a.createdOn))
+                  {sortThreads(topics, threadSortBy)
                     .map((topic) => (
                       <tr key={topic.id}>
                         <td
@@ -186,7 +254,9 @@ export function Admin() {
                         <td>{Object.keys(topic.commentedBy).length}</td>
                         <td>
                           <button
-                            onClick={() => navigate(`/single-thread/${topic.id}`)}
+                            onClick={() =>
+                              navigate(`/single-thread/${topic.id}`)
+                            }
                           >
                             See Thread
                           </button>
@@ -203,11 +273,8 @@ export function Admin() {
                 </tbody>
               </table>
             </>
-          )
-          }
-
+          )}
         </>
-
       ) : (
         navigate("*")
       )}
