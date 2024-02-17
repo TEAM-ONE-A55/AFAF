@@ -5,9 +5,7 @@ import { AppContext } from "../../../context/AppContext";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./SimpleThread.css";
 import Avatar from "../../../components/Avatar/Avatar";
-import {
-  getUserByHandle,
-} from "../../../services/users.service";
+import { getUserByHandle } from "../../../services/users.service";
 
 export default function SimpleThread({ topic, topicLike, topicDislike }) {
   const { user, userData } = useContext(AppContext);
@@ -30,6 +28,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
         createdOn: new Date(snapshot.val().createdOn).toLocaleDateString(),
         threads: Object.keys(snapshot.val().createdTopics).length,
         role: snapshot.val().role,
+        uid: snapshot.val().uid,
       });
     });
   }, [topic.author, author]);
@@ -68,17 +67,22 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
           </span>
           <hr />
           <h3>{topic.title}</h3>
-          {topic.content ? (<p>{topic.content}</p>) : (<img src={topic.url} alt="topic" />)}
+          {topic.content ? (
+            <p>{topic.content}</p>
+          ) : (
+            <img src={topic.url} alt="topic" />
+          )}
           <p>
             {" "}
             <b>Created on: </b>
-            {new Date(topic.createdOn).toLocaleString()}
+            {new Date (topic.createdOn).toLocaleString()}
           </p>
-          {topic.likedBy.length === 1 ? (
-            <p>{topic.likedBy.length} like</p>
-          ) : (
-            <p>{topic.likedBy.length} likes</p>
-          )}
+          {topic.likedBy &&
+            (topic.likedBy.length === 1 ? (
+              <p>{topic.likedBy.length} like</p>
+            ) : (
+              <p>{topic.likedBy.length} likes</p>
+            ))}
           <p>
             {user && (
               <>
@@ -92,11 +96,12 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
               </>
             )}
           </p>
-          {topic.commentedBy.length === 1 ? (
-            <p>{topic.commentedBy.length} comment</p>
-          ) : (
-            <p>{topic.commentedBy.length} comments</p>
-          )}
+          {topic.commentedBy &&
+            (topic.commentedBy.length === 1 ? (
+              <p>{topic.commentedBy.length} comment</p>
+            ) : (
+              <p>{topic.commentedBy.length} comments</p>
+            ))}
         </div>
       )}
     </>
@@ -105,6 +110,6 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
 
 SimpleThread.propTypes = {
   topic: PropTypes.object.isRequired,
-  topicLike: PropTypes.func.isRequired,
-  topicDislike: PropTypes.func.isRequired,
+  topicLike: PropTypes.func,
+  topicDislike: PropTypes.func,
 };

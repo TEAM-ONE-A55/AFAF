@@ -6,8 +6,14 @@ import "./PublicProfile.css";
 import { AppContext } from "../../context/AppContext";
 import Button from "../../components/Button/Button";
 import toast from "react-hot-toast";
-import { deleteTopic } from "../../services/threads.service";
+import {
+  deleteTopic,
+  dislikeTopic,
+  getTopicsByAuthor,
+  likeTopic,
+} from "../../services/threads.service";
 import { blockUser, changeRole } from "../../functions/admin-functions";
+import SimpleThread from "../Threads/SimpleThread/SimpleThread";
 
 export default function PublicProfile() {
   const { userData } = useContext(AppContext);
@@ -21,6 +27,9 @@ export default function PublicProfile() {
     blocked: "",
     role: "",
   });
+
+  const [topics, setTopics] = useState([]);
+  const [hasTopics, setHasTopics] = useState(false);
 
   const location = useLocation();
   const handle = location.pathname.split("/")[2];
@@ -42,11 +51,29 @@ export default function PublicProfile() {
     });
   }, [handle]);
 
+  useEffect(() => {
+
+  }, [topics])
+
+  useEffect(() => {
+    getTopicsByAuthor(user.handle).then(setTopics);
+  }, [hasTopics, user.handle]);
+
   const removeUser = async (handle) => {
     await deleteTopic(handle);
     await deleteUser(handle);
     toast.success(`User ${handle} has been successfully deleted`);
     navigate(-1);
+  };
+
+  const topicLike = async (handle, id) => {
+    await likeTopic(handle, id);
+    getTopicsByAuthor(user.handle).then(setTopics);
+  };
+
+  const topicDislike = async (handle, id) => {
+    await dislikeTopic(handle, id);
+    getTopicsByAuthor(user.handle).then(setTopics);
   };
 
   return (
@@ -84,7 +111,20 @@ export default function PublicProfile() {
         <b>Total threads: </b>
         {user.threads || "Nothing shared"}
       </p>
-      <p>See all threads: TODO</p>
+      <Link onClick={() => setHasTopics(!hasTopics)}>
+        {" "}
+        {hasTopics ? "Hide all threads:" : "Show all threads: "}
+      </Link>
+      {hasTopics &&
+        topics.map((topic) => (
+          <SimpleThread
+            key={topic.id}
+            topic={topic}
+            topicDislike={topicDislike}
+            topicLike={topicLike}
+          />
+        ))}
+
       {userData && userData.role === "admin" && (
         <>
           <Button onClick={() => blockUser(user, setUser)}>

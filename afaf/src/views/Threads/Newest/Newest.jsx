@@ -22,7 +22,7 @@ export default function Newest() {
     await dislikeTopic(handle, id);
     getAllTopics().then(setTopics);
   };
-
+  console.log(topics);
   return (
     <div>
       {topics

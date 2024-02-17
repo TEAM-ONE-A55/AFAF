@@ -19,7 +19,12 @@ const fromTopicsDocument = (snapshot) => {
     return {
       ...topic,
       id: key,
+      // createdOn: new Date(snapshot.val()[key].createdOn).toLocaleString(),
+      createdOn: new Date(topic.createdOn),
+      likedBy: topic.likedBy ? Object.keys(topic.likedBy) : [],
+      commentedBy: topic.commentedBy ? Object.keys(topic.commentedBy) : [],
     };
+    
   });
 };
 
@@ -54,6 +59,7 @@ export const getAllTopics = async (key = "createdOn") => {
   const topics = Object.keys(snapshot.val()).map((key) => ({
     id: key,
     ...snapshot.val()[key],
+    // createdOn: new Date(snapshot.val()[key].createdOn).toLocaleString(),
     likedBy: snapshot.val()[key].likedBy
       ? Object.keys(snapshot.val()[key].likedBy)
       : [],
@@ -73,7 +79,8 @@ export const getAllTopicsBySearch = async (search, key = "createdOn") => {
     .map((key) => ({
       id: key,
       ...snapshot.val()[key],
-      createdOn: new Date(snapshot.val()[key].createdOn).toLocaleString(),
+      // createdOn: new Date(snapshot.val()[key].createdOn).toLocaleString(),
+      createdOn: new Date(snapshot.val()[key].createdOn),
       likedBy: snapshot.val()[key].likedBy
         ? Object.keys(snapshot.val()[key].likedBy)
         : [],
@@ -96,7 +103,8 @@ export const getTopicById = async (id) => {
   const topic = {
     id,
     ...snapshot.val(),
-    createdOn: new Date(snapshot.val().createdOn).toLocaleString(),
+    // createdOn: new Date(snapshot.val().createdOn).toLocaleString(),
+    createdOn: new Date(snapshot.val().createdOn),
     likedBy: snapshot.val().likedBy ? Object.keys(snapshot.val().likedBy) : [],
     commentedBy: snapshot.val().commentedBy
       ? Object.keys(snapshot.val().commentedBy)
