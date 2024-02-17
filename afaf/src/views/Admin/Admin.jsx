@@ -65,15 +65,17 @@ export function Admin() {
     <div className="admin-container">
       {userData && userData.role === "admin" ? (
         <>
-          <h3>Dashboard</h3>
+          <h2>Dashboard</h2>
           <hr />
           <br />
-          <h3>Total threads: {topics.length}</h3>
           <h3>Total users: {users.length}</h3>
+          <h3>Total threads: {topics.length}</h3>
           <br />
-
-          <h3 className="admin-data" onClick={() => setData(!data)}>{data ? "See all users" : "See all threads"}</h3>
+          <h3 className="admin-data" onClick={() => setData(!data)}>{!data ? "See all users" : "See all threads"}</h3>
+          <hr/>
           {data ? (
+            <>
+            <h3>All users: </h3>
             <table className="table">
               <thead>
                 <tr>
@@ -148,8 +150,10 @@ export function Admin() {
                 })}
               </tbody>
             </table>
+            </>
           ) : (
             <>
+            <h3>All threads: </h3>
               <table className="table">
                 <thead>
                   <tr>
