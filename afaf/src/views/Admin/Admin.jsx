@@ -46,7 +46,7 @@ export function Admin() {
       value: "mostLikedDescending",
     },
     {
-      label: "Sort by Most Liked users (ascending)",
+      label: "Sort by Most Liked (ascending)",
       value: "mostLikedAscending",
     },
     {
@@ -54,7 +54,7 @@ export function Admin() {
       value: "mostCommentedDescending",
     },
     {
-      label: "Sort by Most Liked users (ascending)",
+      label: "Sort by Most Commented (ascending)",
       value: "mostCommentedAscending",
     },
   ];
