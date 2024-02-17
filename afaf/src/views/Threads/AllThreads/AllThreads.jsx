@@ -5,6 +5,7 @@ import {
   likeTopic,
 } from "../../../services/threads.service";
 import SimpleThread from "../SimpleThread/SimpleThread";
+import { allThreads } from "../../../functions/filter-functions";
 
 export default function AllThreads() {
   const [topics, setTopics] = useState([]);
@@ -25,8 +26,7 @@ export default function AllThreads() {
 
   return (
     <div>
-      {topics
-        .sort((a, b) => new Date(a.createdOn) - new Date(b.createdOn))
+      {allThreads(topics)
         .map((topic) => (
           <SimpleThread
             key={topic.id}

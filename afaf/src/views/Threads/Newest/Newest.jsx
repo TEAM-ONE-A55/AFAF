@@ -5,6 +5,7 @@ import {
   likeTopic,
 } from "../../../services/threads.service";
 import SimpleThread from "../SimpleThread/SimpleThread";
+import { newest } from "../../../functions/filter-functions";
 
 export default function Newest() {
   const [topics, setTopics] = useState([]);
@@ -25,8 +26,7 @@ export default function Newest() {
 
   return (
     <div>
-      {topics
-        .sort((a, b) => new Date(b.createdOn) - new Date(a.createdOn))
+      {newest(topics)
         .map((topic) => (
           <SimpleThread
             key={topic.id}

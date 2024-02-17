@@ -5,6 +5,7 @@ import {
   likeTopic,
 } from "../../../services/threads.service";
 import SimpleThread from "../SimpleThread/SimpleThread";
+import { popularByLikes } from "../../../functions/filter-functions";
 
 export default function MostLiked() {
   const [topics, setTopics] = useState([]);
@@ -25,8 +26,7 @@ export default function MostLiked() {
 
   return (
     <div>
-      {topics
-        .sort((a, b) => new Date(b.likedBy.length) - new Date(a.likedBy.length))
+      {popularByLikes(topics)
         .map((topic) => (
           <SimpleThread
             key={topic.id}

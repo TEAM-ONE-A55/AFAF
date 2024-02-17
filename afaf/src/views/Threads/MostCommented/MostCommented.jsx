@@ -5,6 +5,7 @@ import {
   likeTopic,
 } from "../../../services/threads.service";
 import SimpleThread from "../SimpleThread/SimpleThread";
+import { popularByComments } from "../../../functions/filter-functions";
 
 export default function MostCommented() {
   const [topics, setTopics] = useState([]);
@@ -25,8 +26,7 @@ export default function MostCommented() {
 
   return (
     <div>
-      {topics
-        .sort((a, b) => new Date(b.commentedBy.length) - new Date(a.commentedBy.length))
+      {popularByComments(topics)
         .map((topic) => (
           <SimpleThread
             key={topic.id}
