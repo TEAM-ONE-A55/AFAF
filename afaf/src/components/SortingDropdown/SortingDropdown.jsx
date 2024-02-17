@@ -1,5 +1,6 @@
 import { useState } from "react";
 import PropTypes from 'prop-types'
+import "./SortingDropdown.css"
 
 export default function SortingDropdown({ options, defaultOption, onChange }) {
     const [selectedOption, setSelectedOption] = useState(defaultOption)
@@ -10,6 +11,7 @@ export default function SortingDropdown({ options, defaultOption, onChange }) {
     };
 
     return (
+        <div className="select-container">
         <select value={selectedOption} onChange={handleOptionChange}>
             {options.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -17,6 +19,7 @@ export default function SortingDropdown({ options, defaultOption, onChange }) {
                 </option>
             ))}
         </select>
+        </div>
     );
 }
 
