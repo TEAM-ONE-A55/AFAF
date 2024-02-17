@@ -18,6 +18,7 @@ export default function Header() {
         <>
           <NavLink to="/create-thread">New Thread</NavLink>
           <NavLink to="/profile">Profile</NavLink>
+          {userData.role === "admin" && <NavLink to="/admin">Admin</NavLink>}
           <span>
             <Avatar
               Width="40px"

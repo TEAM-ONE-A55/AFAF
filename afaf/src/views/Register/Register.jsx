@@ -78,6 +78,8 @@ export default function Register() {
         );
       }
       console.log(e.message);
+    } finally {
+      navigate(-1)
     }
   };
   return (

@@ -26,7 +26,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
         avatar: snapshot.val().avatar,
         username: snapshot.val().handle,
         createdOn: new Date(snapshot.val().createdOn).toLocaleDateString(),
-        threads: Object.keys(snapshot.val().createdTopics).length,
+        threads: snapshot.val().createdTopics && Object.keys(snapshot.val().createdTopics).length,
         role: snapshot.val().role,
         uid: snapshot.val().uid,
       });
