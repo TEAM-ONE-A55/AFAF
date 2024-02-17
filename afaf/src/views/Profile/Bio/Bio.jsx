@@ -37,18 +37,18 @@ export default function Bio() {
 
   const updateButtonText = (inputText) => {
     return <Button
-    onClick={() => {
-      updateBio(bio);
-      setOnChange(false);
-    }}
-  >
-    {inputText}
-  </Button>
+      onClick={() => {
+        updateBio(bio);
+        setOnChange(false);
+      }}
+    >
+      {inputText}
+    </Button>
   }
 
   const hasBio = (
     <>
-      <p>Update bio:</p>
+      <p><b>Update bio:</b></p>
       {formBio}
       <br />
       <Button onClick={() => setOnChange(false)}>Back</Button>
@@ -58,29 +58,33 @@ export default function Bio() {
 
   const missingBio = (
     <>
-      <p>Add bio: </p>
+      <p><b>Add bio: </b></p>
       {formBio}
-      <br/>
-     {updateButtonText('Publish')}
-     <br/>
+      <br />
+      {updateButtonText('Publish')}
+      <br />
     </>
   );
 
   return (
     <>
-      {userData.bio 
-      ? (
-        onChange 
-          ? (
-          hasBio
+      {userData.bio
+        ? (
+          onChange
+            ? (
+              hasBio
+            ) : (
+              <>
+                <p >
+                  <b>Bio</b> <Link onClick={handleEditLinkBio}>Edit</Link>
+                </p>
+                <p className="bio-info">{userData.bio}</p>
+                <br />
+              </>
+            )
         ) : (
-          <p>
-            Bio: {userData.bio} <Link onClick={handleEditLinkBio}>Edit</Link>
-          </p>
-        )
-      ) : (
-        missingBio
-      )}
+          missingBio
+        )}
     </>
   );
 }
