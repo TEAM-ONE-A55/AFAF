@@ -10,6 +10,10 @@ import { sortThreads, sortUsers } from "../../functions/sorting-functions";
 import "./Admin.css";
 import toast from "react-hot-toast";
 import SortingDropdown from "../../components/SortingDropdown/SortingDropdown";
+import {
+  threadsSortingOptions,
+  usersSortingOptions,
+} from "../../constants/constants";
 
 export function Admin() {
   const { userData } = useContext(AppContext);
@@ -19,45 +23,7 @@ export function Admin() {
   const [topic, setTopic] = useState({});
   const [data, setData] = useState(false);
   const [usersSortBy, setUsersSortBy] = useState("dateDescending");
-  const [threadSortBy, setThreadSortBy] = useState("dateDescending")
-
-  const usersSortingOptions = [
-    { label: "Sort by Date (descending)", value: "dateDescending" },
-    { label: "Sort by Date (ascending)", value: "dateAscending" },
-    { label: "Sort by Username (ascending)", value: "usernameAscending" },
-    { label: "Sort by Username (descending)", value: "usernameDescending" },
-    {
-      label: "Sort by Most active users (descending)",
-      value: "userActivityDescending",
-    },
-    {
-      label: "Sort by Most active users (ascending)",
-      value: "userActivityAscending",
-    },
-  ];
-
-  const threadsSortingOptions = [
-    { label: "Sort by Date (descending)", value: "dateDescending" },
-    { label: "Sort by Date (ascending)", value: "dateAscending" },
-    { label: "Sort by Author (ascending)", value: "authorAscending" },
-    { label: "Sort by Author (descending)", value: "authorDescending" },
-    {
-      label: "Sort by Most Liked (descending)",
-      value: "mostLikedDescending",
-    },
-    {
-      label: "Sort by Most Liked (ascending)",
-      value: "mostLikedAscending",
-    },
-    {
-      label: "Sort by Most Commented (descending)",
-      value: "mostCommentedDescending",
-    },
-    {
-      label: "Sort by Most Commented (ascending)",
-      value: "mostCommentedAscending",
-    },
-  ];
+  const [threadSortBy, setThreadSortBy] = useState("dateDescending");
 
   const navigate = useNavigate();
 
@@ -71,9 +37,9 @@ export function Admin() {
     getAllTopics().then((topicData) => setTopics(topicData));
   }, []);
 
-  useEffect(() => { }, [user]);
+  useEffect(() => {}, [user]);
 
-  useEffect(() => { }, [topic]);
+  useEffect(() => {}, [topic]);
 
   const getUser = async (handle) => {
     const user = await getUserByHandle(handle);
@@ -99,8 +65,8 @@ export function Admin() {
   };
 
   const handleThreadsSortChange = (sortBy) => {
-    setThreadSortBy(sortBy)
-  }
+    setThreadSortBy(sortBy);
+  };
 
   const handleDeleteThread = (topic) => {
     getTopic(topic.id);
@@ -215,14 +181,16 @@ export function Admin() {
             </>
           ) : (
             <>
-              <h3>All threads: {"  "}
+              <h3>
+                All threads: {"  "}
                 {
                   <SortingDropdown
                     options={threadsSortingOptions}
                     defaultOption={threadSortBy}
                     onChange={handleThreadsSortChange}
                   />
-                }</h3>
+                }
+              </h3>
               <table className="table">
                 <thead>
                   <tr>
@@ -235,41 +203,38 @@ export function Admin() {
                   </tr>
                 </thead>
                 <tbody>
-                  {sortThreads(topics, threadSortBy)
-                    .map((topic) => (
-                      <tr key={topic.id}>
-                        <td
-                          id="table-thread-title"
+                  {sortThreads(topics, threadSortBy).map((topic) => (
+                    <tr key={topic.id}>
+                      <td
+                        id="table-thread-title"
+                        onClick={() => navigate(`/single-thread/${topic.id}`)}
+                      >
+                        {topic.title}
+                      </td>
+                      <td>
+                        <Link to={`/profile/${topic.author}`}>
+                          {topic.author}
+                        </Link>
+                      </td>
+                      <td>{new Date(topic.createdOn).toLocaleString()}</td>
+                      <td>{Object.keys(topic.likedBy).length}</td>
+                      <td>{Object.keys(topic.commentedBy).length}</td>
+                      <td>
+                        <button
                           onClick={() => navigate(`/single-thread/${topic.id}`)}
                         >
-                          {topic.title}
-                        </td>
-                        <td>
-                          <Link to={`/profile/${topic.author}`}>
-                            {topic.author}
-                          </Link>
-                        </td>
-                        <td>{new Date(topic.createdOn).toLocaleString()}</td>
-                        <td>{Object.keys(topic.likedBy).length}</td>
-                        <td>{Object.keys(topic.commentedBy).length}</td>
-                        <td>
-                          <button
-                            onClick={() =>
-                              navigate(`/single-thread/${topic.id}`)
-                            }
-                          >
-                            See Thread
-                          </button>
-                          <button
-                            onClick={() => {
-                              handleDeleteThread(topic);
-                            }}
-                          >
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
+                          See Thread
+                        </button>
+                        <button
+                          onClick={() => {
+                            handleDeleteThread(topic);
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </>

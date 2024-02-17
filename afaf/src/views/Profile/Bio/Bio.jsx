@@ -3,6 +3,7 @@ import Button from "../../../components/Button/Button";
 import { updateUserData } from "../../../services/users.service";
 import { useContext, useState } from "react";
 import { AppContext } from "../../../context/AppContext";
+import "./Bio.css"
 
 export default function Bio() {
   const { userData } = useContext(AppContext);

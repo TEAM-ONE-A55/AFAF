@@ -11,3 +11,62 @@ export const MAX_CONTENT_LENGTH = 8192;
 export const MIN_NAME_LENGTH = 4;
 
 export const MAX_NAME_LENGTH = 32;
+
+export const threadsSortingOptions = [
+  { label: "Sort by Date (descending)", value: "dateDescending" },
+  { label: "Sort by Date (ascending)", value: "dateAscending" },
+  { label: "Sort by Author (ascending)", value: "authorAscending" },
+  { label: "Sort by Author (descending)", value: "authorDescending" },
+  {
+    label: "Sort by Most Liked (descending)",
+    value: "mostLikedDescending",
+  },
+  {
+    label: "Sort by Most Liked (ascending)",
+    value: "mostLikedAscending",
+  },
+  {
+    label: "Sort by Most Commented (descending)",
+    value: "mostCommentedDescending",
+  },
+  {
+    label: "Sort by Most Commented (ascending)",
+    value: "mostCommentedAscending",
+  },
+];
+
+export const userThreadsSortingOptions = [
+  { label: "Sort by Date (descending)", value: "dateDescending" },
+  { label: "Sort by Date (ascending)", value: "dateAscending" },
+  {
+    label: "Sort by Most Liked (descending)",
+    value: "mostLikedDescending",
+  },
+  {
+    label: "Sort by Most Liked (ascending)",
+    value: "mostLikedAscending",
+  },
+  {
+    label: "Sort by Most Commented (descending)",
+    value: "mostCommentedDescending",
+  },
+  {
+    label: "Sort by Most Commented (ascending)",
+    value: "mostCommentedAscending",
+  },
+];
+
+export const usersSortingOptions = [
+  { label: "Sort by Date (descending)", value: "dateDescending" },
+  { label: "Sort by Date (ascending)", value: "dateAscending" },
+  { label: "Sort by Username (ascending)", value: "usernameAscending" },
+  { label: "Sort by Username (descending)", value: "usernameDescending" },
+  {
+    label: "Sort by Most active users (descending)",
+    value: "userActivityDescending",
+  },
+  {
+    label: "Sort by Most active users (ascending)",
+    value: "userActivityAscending",
+  },
+];
