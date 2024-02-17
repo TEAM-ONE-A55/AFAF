@@ -10,6 +10,7 @@ import {
 } from "firebase/database";
 import { db } from "../config/firebase-config";
 import { defaultAvatar } from "../constants/constants";
+import { getTopicsByAuthor } from "./threads.service";
 
 export const getUserByHandle = (handle) => {
   return get(ref(db, `users/${handle}`));
@@ -56,6 +57,10 @@ export const getAllUsers = async () => {
 
 
 export const deleteUser = async (handle) => {
+  const topics = await getTopicsByAuthor(handle)
+  topics.map(async topic => {
+    await remove(ref(db, `topics/${topic.id}`))
+  })
   return remove(ref(db, `users/${handle}`))
 }
 

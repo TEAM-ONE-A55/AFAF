@@ -7,7 +7,6 @@ import { AppContext } from "../../context/AppContext";
 import Button from "../../components/Button/Button";
 import toast from "react-hot-toast";
 import {
-  deleteTopic,
   dislikeTopic,
   getTopicsByAuthor,
   likeTopic,
@@ -60,7 +59,6 @@ export default function PublicProfile() {
   }, [hasTopics, user.handle]);
 
   const removeUser = async (handle) => {
-    await deleteTopic(handle);
     await deleteUser(handle);
     toast.success(`User ${handle} has been successfully deleted`);
     navigate(-1);
@@ -75,6 +73,10 @@ export default function PublicProfile() {
     await dislikeTopic(handle, id);
     getTopicsByAuthor(user.handle).then(setTopics);
   };
+
+  const test = async (handle) => {
+    deleteUser(handle)
+  }
 
   return (
     <div className="public-profile-container">
@@ -124,6 +126,7 @@ export default function PublicProfile() {
             topicLike={topicLike}
           />
         ))}
+        <Button onClick={()=> test(user.handle)}>Click</Button>
 
       {userData && userData.role === "admin" && (
         <>
