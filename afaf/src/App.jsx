@@ -49,74 +49,18 @@ function App() {
         <Toaster position="bottom-right" reverseOrder={true} />
         <Header />
         <Routes>
-          <Route
-            path="/"
-            element={
-              <Home>
-                {" "}
-                <MostCommented />{" "}
-              </Home>
-            }
-          />
-          <Route
-            path="/threads/all"
-            element={
-              <Home>
-                <AllThreads />
-              </Home>
-            }
-          />
-          <Route
-            path="/threads/newest"
-            element={
-              <Home>
-                {" "}
-                <Newest />{" "}
-              </Home>
-            }
-          />
-          <Route
-            path="/threads/popular/likes"
-            element={
-              <Home>
-                {" "}
-                <MostLiked />{" "}
-              </Home>
-            }
-          />
-          <Route
-            path="/threads/popular/comments"
-            element={
-              <Home>
-                {" "}
-                <MostCommented />{" "}
-              </Home>
-            }
-          />
-          <Route path="/create-thread" element={<CreateThread />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/profile/:handle" element={<PublicProfile />} />
-          <Route
-            path="/profile/"
-            element={
-              <Authenticated>
-                {" "}
-                <Profile />{" "}
-              </Authenticated>
-            }
-          />
-          <Route path="/single-thread/:id" element={<SingleThread />} />
-          <Route
-            path="/create-thread"
-            element={
-              <Authenticated>
-                {" "}
-                <CreateThread />{" "}
-              </Authenticated>
-            }
-          />
+          <Route path="/" element={<Home><MostCommented /></Home>}/>
+          <Route path="/threads/all" element={<Home><AllThreads /></Home>}/>
+          <Route path="/threads/newest" element={<Home><Newest /></Home>}/>
+          <Route path="/threads/popular/likes" element={<Home><MostLiked /></Home>}/>
+          <Route path="/threads/popular/comments" element={<Home><MostCommented /></Home>}/>
+          <Route path="/login" element={<Login />}/>
+          <Route path="/admin" element={<Authenticated><Admin /></Authenticated>}/>
+          <Route path="/register" element={<Register />}/>
+          <Route path="/profile/:handle" element={<Authenticated><PublicProfile /></Authenticated>}/>
+          <Route path="/profile/" element={<Authenticated><Profile /></Authenticated>}/>
+          <Route path="/single-thread/:id" element={<Authenticated><SingleThread /></Authenticated>}/>
+          <Route path="/create-thread" element={ <Authenticated><CreateThread /></Authenticated>}/>
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

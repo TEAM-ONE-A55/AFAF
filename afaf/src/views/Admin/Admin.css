@@ -1,3 +1,30 @@
 .admin-container {
-    margin-top: 3em;
+  margin-top: 3em;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Style for table header */
+.table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+/* Style for table data cells */
+.table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.admin-container button {
+  width: 95px;
+  font-size: 0.7em;
+}
+
+#table-thread-title {
+    text-align: left;
 }

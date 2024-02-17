@@ -25,6 +25,7 @@ export default function PublicProfile() {
     threads: null,
     blocked: "",
     role: "",
+    name: ""
   });
 
   const [topics, setTopics] = useState([]);
@@ -46,13 +47,12 @@ export default function PublicProfile() {
           Object.keys(snapshot.val().createdTopics).length,
         blocked: snapshot.val().blocked,
         role: snapshot.val().role,
+        name: snapshot.val().name
       });
     });
   }, [handle]);
 
-  useEffect(() => {
-
-  }, [topics])
+  useEffect(() => {}, [topics]);
 
   useEffect(() => {
     getTopicsByAuthor(user.handle).then(setTopics);
@@ -74,12 +74,19 @@ export default function PublicProfile() {
     getTopicsByAuthor(user.handle).then(setTopics);
   };
 
-  const test = async (handle) => {
-    deleteUser(handle)
-  }
-
   return (
     <div className="public-profile-container">
+      {userData && userData.role === "admin" && (
+        <>
+          <Button onClick={() => blockUser(user, setUser)}>
+            {" "}
+            {!user.blocked ? "Ban user" : "Unblock user"}
+          </Button>
+          <Button onClick={() => removeUser(user.handle)}>Delete user</Button>
+        </>
+      )}
+           <br/>
+           <hr/>
       <Avatar
         Width="150px"
         Height="150px"
@@ -100,15 +107,14 @@ export default function PublicProfile() {
           </Link>
         </span>
       </p>
+      <p><b>Full name: </b>{user.name}</p>
 
       <p>
         <b>Member since: </b>
         {user.createdOn}
       </p>
-      <p>
-        <b>Bio: </b>
-        {user.bio || "Nothing shared"}
-      </p>
+      <p><b>Bio: </b></p>
+        <p className="bio-info">{user.bio || "Nothing shared"}</p>
       <p>
         <b>Total threads: </b>
         {user.threads || "Nothing shared"}
@@ -126,17 +132,6 @@ export default function PublicProfile() {
             topicLike={topicLike}
           />
         ))}
-        <Button onClick={()=> test(user.handle)}>Click</Button>
-
-      {userData && userData.role === "admin" && (
-        <>
-          <Button onClick={() => blockUser(user, setUser)}>
-            {" "}
-            {!user.blocked ? "Ban user" : "Unblock user"}
-          </Button>
-          <Button onClick={() => removeUser(user.handle)}>Delete user</Button>
-        </>
-      )}
     </div>
   );
 }

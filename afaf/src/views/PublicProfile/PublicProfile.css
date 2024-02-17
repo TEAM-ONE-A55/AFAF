@@ -1,3 +1,10 @@
 .public-profile-container {
-    margin-top: 3em;
+  margin-top: 3em;
+}
+
+.bio-info {
+  border: 0.5px dashed;
+  padding: 15px;
+  max-width: 500px;
+  border-radius: 14px;
 }
