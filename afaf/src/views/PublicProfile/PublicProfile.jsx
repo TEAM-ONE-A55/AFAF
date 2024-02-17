@@ -13,6 +13,9 @@ import {
 } from "../../services/threads.service";
 import { blockUser, changeRole } from "../../functions/admin-functions";
 import SimpleThread from "../Threads/SimpleThread/SimpleThread";
+import SortingDropdown from "../../components/SortingDropdown/SortingDropdown";
+import { userThreadsSortingOptions } from "../../constants/constants";
+import { sortThreads } from "../../functions/sorting-functions";
 
 export default function PublicProfile() {
   const { userData } = useContext(AppContext);
@@ -25,11 +28,12 @@ export default function PublicProfile() {
     threads: null,
     blocked: "",
     role: "",
-    name: ""
+    name: "",
   });
 
   const [topics, setTopics] = useState([]);
   const [hasTopics, setHasTopics] = useState(false);
+  const [threadSortBy, setThreadSortBy] = useState("dateDescending");
 
   const location = useLocation();
   const handle = location.pathname.split("/")[2];
@@ -47,7 +51,7 @@ export default function PublicProfile() {
           Object.keys(snapshot.val().createdTopics).length,
         blocked: snapshot.val().blocked,
         role: snapshot.val().role,
-        name: snapshot.val().name
+        name: snapshot.val().name,
       });
     });
   }, [handle]);
@@ -74,6 +78,10 @@ export default function PublicProfile() {
     getTopicsByAuthor(user.handle).then(setTopics);
   };
 
+  const handleThreadsSortChange = (sortBy) => {
+    setThreadSortBy(sortBy);
+  };
+
   return (
     <div className="public-profile-container">
       {userData && userData.role === "admin" && (
@@ -85,8 +93,8 @@ export default function PublicProfile() {
           <Button onClick={() => removeUser(user.handle)}>Delete user</Button>
         </>
       )}
-           <br/>
-           <hr/>
+      <br />
+      <hr />
       <Avatar
         Width="150px"
         Height="150px"
@@ -107,31 +115,44 @@ export default function PublicProfile() {
           </Link>
         </span>
       </p>
-      <p><b>Full name: </b>{user.name}</p>
+      <p>
+        <b>Full name: </b>
+        {user.name}
+      </p>
 
       <p>
         <b>Member since: </b>
         {user.createdOn}
       </p>
-      <p><b>Bio: </b></p>
-        <p className="bio-info">{user.bio || "Nothing shared"}</p>
+      <p>
+        <b>Bio: </b>
+      </p>
+      <p className="bio-info">{user.bio || "Nothing shared"}</p>
       <p>
         <b>Total threads: </b>
         {user.threads || "Nothing shared"}
       </p>
       <Link onClick={() => setHasTopics(!hasTopics)}>
         {" "}
-        {hasTopics ? "Hide all threads:" : "Show all threads: "}
+        {hasTopics ? "Hide all threads" : "Show all threads "}
       </Link>
-      {hasTopics &&
-        topics.map((topic) => (
-          <SimpleThread
-            key={topic.id}
-            topic={topic}
-            topicDislike={topicDislike}
-            topicLike={topicLike}
+      {hasTopics && (
+        <>
+          <SortingDropdown
+            options={userThreadsSortingOptions}
+            defaultOption={threadSortBy}
+            onChange={handleThreadsSortChange}
           />
-        ))}
+          {sortThreads(topics, threadSortBy).map((topic) => (
+            <SimpleThread
+              key={topic.id}
+              topic={topic}
+              topicDislike={topicDislike}
+              topicLike={topicLike}
+            />
+          ))}
+        </>
+      )}
     </div>
   );
 }
