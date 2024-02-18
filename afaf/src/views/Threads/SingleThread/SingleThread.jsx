@@ -62,7 +62,7 @@ export default function SingleThread() {
             topicDislike={topicDislike}
             topicLike={topicLike}
           />
-          <Comment/>
+          <Comment thread={thread}/>
         </>
       )}
     </div>

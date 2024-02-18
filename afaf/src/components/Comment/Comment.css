@@ -28,6 +28,9 @@
   font-size: 300;
 }
 
+.comment-btn:hover {
+    cursor: pointer;
+}
 
 .material-symbols-outlined {
   font-variation-settings:
