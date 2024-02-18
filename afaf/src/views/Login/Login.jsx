@@ -53,6 +53,10 @@ export default function Login() {
     }
   };
 
+  const handleOnKeyDown = (event) => {
+    if (event.key === "Enter") return login();
+  };
+
   return (
     <div className="login-container">
       <h1>Login</h1>
@@ -64,6 +68,7 @@ export default function Login() {
         placeholder="Enter your email"
         onChange={(e) => setEmail(e.target.value)}
         value={email}
+        onKeyDown={handleOnKeyDown}
       />
       <br />
       <label htmlFor="login-password">Password: </label>
@@ -74,6 +79,7 @@ export default function Login() {
         placeholder="Enter your password"
         onChange={(e) => setPassword(e.target.value)}
         value={password}
+        onKeyDown={handleOnKeyDown}
       />
       <br />
       <Button onClick={login}>Login</Button>
