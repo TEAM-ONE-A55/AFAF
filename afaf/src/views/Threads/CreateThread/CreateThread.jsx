@@ -46,17 +46,15 @@ export default function CreateThread() {
   };
 
   const handleThreadTypeNav = async (type) => {
-    setSelected(async (prev) => {
-      if (prev === type) return prev;
-      if (imageUrl) {
-        try {
-          await removeAttachedImg();
-        } catch (e) {
-          console.log(e.message);
-        }
+    if (selected === type) return;
+    if (imageUrl) {
+      try {
+        await removeAttachedImg();
+      } catch (e) {
+        console.log(e.message);
       }
-      return type;
-    });
+    }
+    setSelected(type);
   };
 
   useEffect(() => {

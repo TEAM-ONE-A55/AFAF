@@ -45,9 +45,15 @@ export default function EditThread() {
     }
   };
 
-  const handleThreadTypeNav = (type) => {
-    if (selected === type) return;
-    if (imageUrl) removeAttachedImg();
+  const handleThreadTypeNav = async (type) => {
+    if(selected === type) return;
+    if (imageUrl) {
+      try {
+        await removeAttachedImg();
+      } catch (e) {
+        console.log(e.message);
+      }
+    }
     setSelected(type);
   };
 
