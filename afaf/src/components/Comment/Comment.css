@@ -1,0 +1,38 @@
+.textarea-comment {
+  border: 1px solid;
+  border-radius: 30px;
+  padding: 20px;
+  width: 96.7%;
+  font-size: 14pt;
+  height: 20px;
+}
+
+.textarea-comment-onAction {
+  border: 1px solid;
+  border-radius: 15px;
+  padding: 20px;
+  width: 96.7%;
+  font-size: 14pt;
+  height: 100px;
+}
+
+.textarea-container {
+  position: relative;
+  width: 100%;
+}
+
+.comment-btn {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  font-size: 300;
+}
+
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 300,
+  'GRAD' 0,
+  'opsz' 48
+}

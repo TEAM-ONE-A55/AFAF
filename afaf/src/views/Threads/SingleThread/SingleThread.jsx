@@ -10,6 +10,7 @@ import { AppContext } from "../../../context/AppContext";
 import Button from "../../../components/Button/Button";
 import "./SingleThread.css";
 import { deleteThread } from "../../../functions/threads-functions";
+import Comment from "../../../components/Comment/Comment";
 
 export default function SingleThread() {
   const { userData } = useContext(AppContext);
@@ -32,7 +33,7 @@ export default function SingleThread() {
       if (result) {
         setThread(result);
       } else {
-        navigate('*')
+        navigate("*");
       }
     });
   }, [id, navigate]);
@@ -55,11 +56,14 @@ export default function SingleThread() {
         )}
 
       {thread && (
-        <SimpleThread
-          topic={thread}
-          topicDislike={topicDislike}
-          topicLike={topicLike}
-        />
+        <>
+          <SimpleThread
+            topic={thread}
+            topicDislike={topicDislike}
+            topicLike={topicLike}
+          />
+          <Comment/>
+        </>
       )}
     </div>
   );
