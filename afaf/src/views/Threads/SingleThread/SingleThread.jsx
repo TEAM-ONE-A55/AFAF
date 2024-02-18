@@ -32,6 +32,7 @@ export default function SingleThread() {
     getTopicById(id).then((result) => {
       if (result) {
         setThread(result);
+        console.log(result)
       } else {
         navigate("*");
       }
@@ -45,13 +46,13 @@ export default function SingleThread() {
         (userData?.handle === thread?.author || userData?.role === "admin") && (
           <Button
             onClick={() => {
-              deleteThread(thread.author, thread.id, thread.uuid, thread.url);
+              deleteThread(thread.author, thread.id, thread.uuid, thread.url, "Thread has been successfully deleted");
               setTimeout(() => {
                 navigate(-1);
               }, 1000);
             }}
           >
-            Delete
+            Delete thread
           </Button>
         )}
 
