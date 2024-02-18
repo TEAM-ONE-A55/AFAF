@@ -134,7 +134,7 @@ export default function PublicProfile() {
       </p>
       <Link onClick={() => setHasTopics(!hasTopics)}>
         {" "}
-        {hasTopics ? "Hide all threads" : "Show all threads "}
+        {hasTopics ? <h3>Hide all threads</h3> : <h3>Show all threads</h3>}
       </Link>
       {hasTopics && (
         <>
