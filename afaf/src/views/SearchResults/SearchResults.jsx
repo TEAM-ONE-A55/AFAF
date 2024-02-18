@@ -21,7 +21,7 @@ export default function SearchResults() {
   const { query } = useParams();
 
   useEffect(() => {
-    getAllTopicsBySearch(query, filterBy).then(setTopics);
+    if (query) getAllTopicsBySearch(query, filterBy).then(setTopics);
   }, [query, filterBy]);
 
   const topicLike = async (handle, id) => {
@@ -46,34 +46,47 @@ export default function SearchResults() {
 
   return (
     <div className="search-results-container">
-      <h3>Search results for {query}</h3>
-      <SortingDropdown
-        options={threadsFilterOptions}
-        defaultOption={filterBy}
-        onChange={handleFilterBy}
-      />
-
-      {topics.length !== 0 ? (
+      {query ? (
         <>
+          <h3>Search results for {query}</h3>
           <SortingDropdown
-            options={threadsSortingOptions}
-            defaultOption={sortBy}
-            onChange={handleSortBy}
+            options={threadsFilterOptions}
+            defaultOption={filterBy}
+            onChange={handleFilterBy}
           />
-          {sortThreads(topics, sortBy).map((topic) => (
-            <SimpleThread
-              key={topic.id}
-              topic={topic}
-              topicLike={topicLike}
-              topicDislike={topicDislike}
-            />
-          ))}
+
+          {topics.length !== 0 ? (
+            <>
+              <SortingDropdown
+                options={threadsSortingOptions}
+                defaultOption={sortBy}
+                onChange={handleSortBy}
+              />
+              {sortThreads(topics, sortBy).map((topic) => (
+                <SimpleThread
+                  key={topic.id}
+                  topic={topic}
+                  topicLike={topicLike}
+                  topicDislike={topicDislike}
+                />
+              ))}
+            </>
+          ) : (
+            <p>
+              The specified {query} was not found. Try refining your search
+              terms or adjusting the filters for better results.
+            </p>
+          )}
         </>
       ) : (
-        <p>
-          The specified {query} was not found. Try refining your search terms or
-          adjusting the filters for better results.
-        </p>
+        <>
+          <h3>Ready to search? What can I help you find?{query}</h3>
+          <SortingDropdown
+            options={threadsFilterOptions}
+            defaultOption={filterBy}
+            onChange={handleFilterBy}
+          />
+        </>
       )}
     </div>
   );

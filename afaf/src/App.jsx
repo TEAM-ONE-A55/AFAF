@@ -59,6 +59,7 @@ function App() {
           <Route path="/admin" element={<Authenticated><Admin /></Authenticated>}/>
           <Route path="/register" element={<Register />}/>
           <Route path="/search/:query" element={<SearchResults/>}/>
+          <Route path="/search/" element={<SearchResults/>}/>
           <Route path="/profile/:handle" element={<Authenticated><PublicProfile /></Authenticated>}/>
           <Route path="/profile/" element={<Authenticated><Profile /></Authenticated>}/>
           <Route path="/single-thread/:id" element={<Authenticated><SingleThread /></Authenticated>}/>

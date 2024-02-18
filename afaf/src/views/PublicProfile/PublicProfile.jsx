@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { deleteUser, getUserByHandle } from "../../services/users.service";
 import Avatar from "../../components/Avatar/Avatar";
 import "./PublicProfile.css";
@@ -35,26 +35,29 @@ export default function PublicProfile() {
   const [hasTopics, setHasTopics] = useState(false);
   const [threadSortBy, setThreadSortBy] = useState("dateDescending");
 
-  const location = useLocation();
-  const handle = location.pathname.split("/")[2];
+  const { handle } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     getUserByHandle(handle).then((snapshot) => {
-      setUser({
-        avatar: snapshot.val().avatar,
-        handle: snapshot.val().handle,
-        bio: snapshot.val().bio,
-        createdOn: new Date(snapshot.val().createdOn).toLocaleDateString(),
-        threads:
-          snapshot.val().createdTopics &&
-          Object.keys(snapshot.val().createdTopics).length,
-        blocked: snapshot.val().blocked,
-        role: snapshot.val().role,
-        name: snapshot.val().name,
-      });
+      if (snapshot.exists()) {
+        setUser({
+          avatar: snapshot.val().avatar,
+          handle: snapshot.val().handle,
+          bio: snapshot.val().bio,
+          createdOn: new Date(snapshot.val().createdOn).toLocaleDateString(),
+          threads:
+            snapshot.val().createdTopics &&
+            Object.keys(snapshot.val().createdTopics).length,
+          blocked: snapshot.val().blocked,
+          role: snapshot.val().role,
+          name: snapshot.val().name,
+        });
+      } else {
+        navigate("*");
+      }
     });
-  }, [handle]);
+  }, [handle, navigate]);
 
   useEffect(() => {}, [topics]);
 

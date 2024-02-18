@@ -28,8 +28,14 @@ export default function SingleThread() {
   };
 
   useEffect(() => {
-    getTopicById(id).then(setThread);
-  }, [id]);
+    getTopicById(id).then((result) => {
+      if (result) {
+        setThread(result);
+      } else {
+        navigate('*')
+      }
+    });
+  }, [id, navigate]);
 
   return (
     <div className="single-thread-container">
@@ -38,12 +44,7 @@ export default function SingleThread() {
         (userData?.handle === thread?.author || userData?.role === "admin") && (
           <Button
             onClick={() => {
-              deleteThread(
-                thread.author,
-                thread.id,
-                thread.uuid,
-                thread.url,
-              );
+              deleteThread(thread.author, thread.id, thread.uuid, thread.url);
               setTimeout(() => {
                 navigate(-1);
               }, 1000);
