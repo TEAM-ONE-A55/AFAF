@@ -35,26 +35,16 @@ export default function CreateThread() {
     });
   };
 
-  const removeAttachedImg = async () => {
-    try {
-      await deleteThreadImage(thread.uuid);
-      setImageUrl("");
-      setAttachedImg(null);
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
+  const removeAttachedImg = () => {
+    deleteThreadImage(thread.uuid);
+    setImageUrl("");
+    setAttachedImg(null);
+  }
 
-  const handleThreadTypeNav = async (type) => {
-    setSelected(async (prev) => {
+  const handleThreadTypeNav = (type) => {
+    setSelected((prev) => {
       if (prev === type) return prev;
-      if (imageUrl) {
-        try {
-          await removeAttachedImg();
-        } catch (e) {
-          console.log(e.message);
-        }
-      }
+      if (imageUrl) removeAttachedImg();
       return type;
     });
   };
@@ -126,6 +116,8 @@ export default function CreateThread() {
         );
     }
   };
+
+
 
   const postThread = async () => {
 

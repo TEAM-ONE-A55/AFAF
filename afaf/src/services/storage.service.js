@@ -1,45 +1,41 @@
-import { ref, uploadBytes, getDownloadURL, deleteObject, listAll } from "firebase/storage";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+  listAll,
+} from "firebase/storage";
 import { storage } from "../config/firebase-config";
 import { v4 } from "uuid";
 
 export const uploadAvatar = async (image, handle, key) => {
-  try {
-    const imageRef = ref(storage, `images/${handle}/${key}/${image.name + v4()}`);
-    await uploadBytes(imageRef, image);
-    const url = await getDownloadURL(imageRef);
-    return url;
-  } catch (e) {
-    console.log(e.message);
-  }
+  const imageRef = ref(storage, `images/${handle}/${key}/${image.name + v4()}`);
+  await uploadBytes(imageRef, image);
+  // console.log(getDownloadURL)
+  return getDownloadURL(imageRef);
 };
 
-export const deleteAvatar = async (handle, key) => {
-  try {
-    const lastFolderRef = ref(storage, `images/${handle}/${key}`);
-    const res = await listAll(lastFolderRef);
-    await deleteObject(res.items[0]);
-  } catch (e) {
-    console.log(e.message);
-  }
+export const deleteAvatar = (handle, key) => {
+  const lastFolderRef = ref(storage, `images/${handle}/${key}`);
+  listAll(lastFolderRef)
+    .then((res) => deleteObject(res.items[0]))
+    .catch((error) => {
+      console.log(error.message);
+    });
 };
 
 export const uploadThreadImage = async (image, uuid) => {
-  try {
-    const imageRef = ref(storage, `thread-images/${uuid}/${image.name}`);
-    await uploadBytes(imageRef, image);
-    const url = await getDownloadURL(imageRef);
-    return url;
-  } catch (e) {
-    console.log(e.message);
-  }
-};
+  const imageRef = ref(storage, `thread-images/${uuid}/${image.name}`);
+  await uploadBytes(imageRef, image);
+  return getDownloadURL(imageRef);
+}
 
-export const deleteThreadImage = async (uuid) => {
-  try {
-    const lastFolderRef = ref(storage, `thread-images/${uuid}`);
-    const res = await listAll(lastFolderRef);
-    await deleteObject(res.items[0]);
-  } catch (e) {
-    console.log(e.message);
-  }
+// Unimplemented, but would be used to delete thread images
+export const deleteThreadImage = (uuid) => {
+  const lastFolderRef = ref(storage, `thread-images/${uuid}`);
+  listAll(lastFolderRef)
+    .then((res) => deleteObject(res.items[0]))
+    .catch((error) => {
+      console.log(error.message);
+    });
 };
