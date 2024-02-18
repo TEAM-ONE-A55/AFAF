@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import "./SearchResults.css";
-import SortingDropdown from "../../components/SortingDropdown/SortingDropdown";
-import { threadsSortingOptions } from "../../constants/constants";
+import SortingDropdown from "../../components/Dropdown/Dropdown";
+import {
+  threadsFilterOptions,
+  threadsSortingOptions,
+} from "../../constants/constants";
 import { useParams } from "react-router-dom";
 import {
   dislikeTopic,
@@ -13,12 +16,13 @@ import { sortThreads } from "../../functions/sorting-functions";
 
 export default function SearchResults() {
   const [topics, setTopics] = useState([]);
-  const [sortBy, setUsersSortBy] = useState("dateDescending");
+  const [sortBy, setSortBy] = useState("dateDescending");
+  const [filterBy, setFilterBy] = useState("title");
   const { query } = useParams();
 
   useEffect(() => {
-    getAllTopicsBySearch(query).then(setTopics);
-  }, [query]);
+    getAllTopicsBySearch(query, filterBy).then(setTopics);
+  }, [query, filterBy]);
 
   const topicLike = async (handle, id) => {
     await likeTopic(handle, id);
@@ -31,7 +35,11 @@ export default function SearchResults() {
   };
 
   const handleSortBy = (sortBy) => {
-    setUsersSortBy(sortBy);
+    setSortBy(sortBy);
+  };
+
+  const handleFilterBy = (filterBy) => {
+    setFilterBy(filterBy);
   };
 
   console.log(topics);
@@ -39,6 +47,12 @@ export default function SearchResults() {
   return (
     <div className="search-results-container">
       <h3>Search results for {query}</h3>
+      <SortingDropdown
+        options={threadsFilterOptions}
+        defaultOption={filterBy}
+        onChange={handleFilterBy}
+      />
+
       {topics.length !== 0 ? (
         <>
           <SortingDropdown
@@ -56,7 +70,10 @@ export default function SearchResults() {
           ))}
         </>
       ) : (
-        <p>Not found</p>
+        <p>
+          The specified {query} was not found. Try refining your search terms or
+          adjusting the filters for better results.
+        </p>
       )}
     </div>
   );

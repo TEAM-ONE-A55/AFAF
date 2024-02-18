@@ -1,6 +1,6 @@
 import { useState } from "react";
 import PropTypes from 'prop-types'
-import "./SortingDropdown.css"
+import "./Dropdown.css"
 
 export default function SortingDropdown({ options, defaultOption, onChange }) {
     const [selectedOption, setSelectedOption] = useState(defaultOption)

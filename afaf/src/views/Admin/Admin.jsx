@@ -9,7 +9,7 @@ import { deleteThread } from "../../functions/threads-functions";
 import { sortThreads, sortUsers } from "../../functions/sorting-functions";
 import "./Admin.css";
 import toast from "react-hot-toast";
-import SortingDropdown from "../../components/SortingDropdown/SortingDropdown";
+import SortingDropdown from "../../components/Dropdown/Dropdown";
 import {
   threadsSortingOptions,
   usersSortingOptions,

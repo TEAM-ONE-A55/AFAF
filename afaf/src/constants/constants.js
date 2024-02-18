@@ -70,3 +70,15 @@ export const usersSortingOptions = [
     value: "userActivityAscending",
   },
 ];
+
+export const threadsFilterOptions = [
+  {label: "Filter by title", value: "title"},
+  {label: "Filter by author", value: "author"},
+  {label: "Filter by content", value: "content"}
+]
+
+export const usersThreadOptions = [
+  {label: "Filter by email", value: "email"},
+  {label: "Filter by username", value: "handle"},
+  {label: "Filter by name", value: "name"}
+]

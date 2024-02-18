@@ -13,7 +13,7 @@ import {
 } from "../../services/threads.service";
 import { blockUser, changeRole } from "../../functions/admin-functions";
 import SimpleThread from "../Threads/SimpleThread/SimpleThread";
-import SortingDropdown from "../../components/SortingDropdown/SortingDropdown";
+import SortingDropdown from "../../components/Dropdown/Dropdown";
 import { userThreadsSortingOptions } from "../../constants/constants";
 import { sortThreads } from "../../functions/sorting-functions";
 
