@@ -3,7 +3,7 @@ import { useState, useContext, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { AppContext } from "../../../context/AppContext";
 import { addThread } from "../../../services/threads.service";
-import { uploadThreadImage } from "../../../services/storage.service";
+import { uploadThreadImage, deleteThreadImage } from "../../../services/storage.service";
 import { MIN_CONTENT_LENGTH, MAX_CONTENT_LENGTH, MIN_TITLE_LENGTH, MAX_TITLE_LENGTH } from "../../../constants/constants";
 import Avatar from "../../../components/Avatar/Avatar";
 import toast from "react-hot-toast";
@@ -26,6 +26,8 @@ export default function CreateThread() {
   
   const [imageUrl, setImageUrl] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   const updateThread = (key, value) => {
     setThread({
       ...thread,
@@ -33,20 +35,28 @@ export default function CreateThread() {
     });
   };
 
+  const removeAttachedImg = () => {
+    deleteThreadImage(thread.uuid);
+    setImageUrl("");
+    setAttachedImg(null);
+  }
+
   const handleThreadTypeNav = (type) => {
     setSelected((prev) => {
       if (prev === type) return prev;
-      setAttachedImg(null);
+      if (imageUrl) removeAttachedImg();
       return type;
     });
   };
 
   useEffect(() => {
     if (attachedImg) {
+      setLoading(true);
         uploadThreadImage(attachedImg, thread.uuid)
             .then((url) => setImageUrl(url))
             .then(() => toast.success("Image uploaded successfully!"))
-            .catch((e) => toast(e.message));
+            .catch((e) => toast(e.message))
+            .finally(() => setLoading(false));
     }
   }, [attachedImg, thread.uuid]);
 
@@ -80,9 +90,10 @@ export default function CreateThread() {
               type="file"
               onChange={(e) => setAttachedImg(e.target.files[0])}
             />
-            {attachedImg && <img src={imageUrl} alt="Attached" />}
-            {attachedImg && (
-              <button onClick={() => setAttachedImg(null)}>Remove</button>
+            {loading && <p>Uploading...</p>}
+            {imageUrl && <img src={imageUrl} alt="Attached" />}
+            {imageUrl && (
+              <button onClick={removeAttachedImg}>Remove</button>
             )}
           </div>
         );
@@ -105,6 +116,8 @@ export default function CreateThread() {
         );
     }
   };
+
+
 
   const postThread = async () => {
 

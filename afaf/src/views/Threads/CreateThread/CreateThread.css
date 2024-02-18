@@ -73,8 +73,8 @@
 
 .create-thread-type textarea {
     font-size: 1.2rem;
-    min-height: 150px;
-}
+    min-height: 250px;
+} 
 
 .create-thread-type-inputs {
     margin-top: 2em;
