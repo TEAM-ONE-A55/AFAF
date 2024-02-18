@@ -71,11 +71,9 @@ export function Admin() {
   const handleDeleteThread = (topic) => {
     getTopic(topic.id);
     deleteThread(topic.author, topic.id, topic.uuid, topic.url);
-    toast.promise(window.location.reload(), {
-      loading: "Saving...",
-      success: <b>{`Topic ${topic.title} has been successfully deleted`}</b>,
-      error: <b>Could not delete this user.</b>,
-    });
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   };
 
   return (
