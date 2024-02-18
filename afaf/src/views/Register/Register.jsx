@@ -10,7 +10,6 @@ import "./Register.css";
 import toast from "react-hot-toast";
 import { MAX_NAME_LENGTH, MIN_NAME_LENGTH } from "../../constants/constants";
 
-
 export default function Register() {
   const [form, setForm] = useState({
     username: "",
@@ -79,9 +78,14 @@ export default function Register() {
       }
       console.log(e.message);
     } finally {
-      navigate(-1)
+      navigate(-1);
     }
   };
+
+  const handleOnKeyDown = (event) => {
+    if (event.key === "Enter") return register();
+  };
+
   return (
     <div className="registration">
       <div className="registration-form">
@@ -93,6 +97,7 @@ export default function Register() {
           value={form.name}
           onChange={updateForm("name")}
           placeholder="Enter your full name"
+          onKeyDown={handleOnKeyDown}
         />
         <br />
         <br />
@@ -104,6 +109,7 @@ export default function Register() {
           value={form.username}
           onChange={updateForm("username")}
           placeholder="Enter username"
+          onKeyDown={handleOnKeyDown}
         />
         <br />
         <br />
@@ -115,6 +121,7 @@ export default function Register() {
           value={form.email}
           onChange={updateForm("email")}
           placeholder="Enter your email"
+          onKeyDown={handleOnKeyDown}
         />
         <br />
         <br />
@@ -126,6 +133,7 @@ export default function Register() {
           value={form.password}
           onChange={updateForm("password")}
           placeholder="Create a strong password"
+          onKeyDown={handleOnKeyDown}
         />
         <br />
         <br />
