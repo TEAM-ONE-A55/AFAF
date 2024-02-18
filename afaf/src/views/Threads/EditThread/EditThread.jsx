@@ -217,7 +217,3 @@ export default function EditThread() {
     );
   } else return <Navigate replace to="/login" />;
 }
-
-EditThread.propTypes = {
-  thread: PropTypes.object.isRequired,
-};
