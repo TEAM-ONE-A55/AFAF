@@ -23,6 +23,7 @@ import { Toaster } from "react-hot-toast";
 import { Admin } from "./views/Admin/Admin";
 import PublicProfile from "./views/PublicProfile/PublicProfile";
 import SearchResults from "./views/SearchResults/SearchResults";
+import EditThread from "./views/Threads/EditThread/EditThread";
 
 function App() {
   const [context, setContext] = useState({
@@ -50,20 +51,21 @@ function App() {
         <Toaster position="bottom-right" reverseOrder={true} />
         <Header />
         <Routes>
-          <Route path="/" element={<Home><MostCommented /></Home>}/>
-          <Route path="/threads/all" element={<Home><AllThreads /></Home>}/>
-          <Route path="/threads/newest" element={<Home><Newest /></Home>}/>
-          <Route path="/threads/popular/likes" element={<Home><MostLiked /></Home>}/>
-          <Route path="/threads/popular/comments" element={<Home><MostCommented /></Home>}/>
-          <Route path="/login" element={<Login />}/>
-          <Route path="/admin" element={<Authenticated><Admin /></Authenticated>}/>
-          <Route path="/register" element={<Register />}/>
-          <Route path="/search/:query" element={<SearchResults/>}/>
-          <Route path="/search/" element={<SearchResults/>}/>
-          <Route path="/profile/:handle" element={<Authenticated><PublicProfile /></Authenticated>}/>
-          <Route path="/profile/" element={<Authenticated><Profile /></Authenticated>}/>
-          <Route path="/single-thread/:id" element={<Authenticated><SingleThread /></Authenticated>}/>
-          <Route path="/create-thread" element={ <Authenticated><CreateThread /></Authenticated>}/>
+          <Route path="/" element={ <Home><MostCommented /></Home>} />
+          <Route path="/threads/all" element={ <Home><AllThreads /></Home>} />
+          <Route path="/threads/newest" element={ <Home><Newest /></Home>} />
+          <Route path="/threads/popular/likes" element={ <Home><MostLiked /></Home>} />
+          <Route path="/threads/popular/comments" element={ <Home><MostCommented /></Home>} />
+          <Route path="/login" element={ <Login /> }/>
+          <Route path="/admin" element={ <Authenticated><Admin /></Authenticated>} />
+          <Route path="/register" element={ <Register />} />
+          <Route path="/search/:query" element={ <SearchResults/>} />
+          <Route path="/search/" element={ <SearchResults />}/>
+          <Route path="/profile/:handle" element={ <Authenticated><PublicProfile /></Authenticated>} />
+          <Route path="/profile/" element={ <Authenticated><Profile /></Authenticated>} />
+          <Route path="/single-thread/:id" element={ <Authenticated><SingleThread /></Authenticated>} />
+          <Route path="/create-thread" element={ <Authenticated><CreateThread /></Authenticated>} />
+          <Route path="/edit-thread/:id" element={ <Authenticated><EditThread /></Authenticated>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

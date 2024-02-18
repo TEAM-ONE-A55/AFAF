@@ -93,6 +93,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
                   Dislike
                 </Button>
                 <NavLink to={`/single-thread/${topic.id}`}>View</NavLink>
+                {userData.handle === topic.author && <NavLink to={`/edit-thread/${topic.id}`}>Edit</NavLink>}
               </>
             )}
           </p>

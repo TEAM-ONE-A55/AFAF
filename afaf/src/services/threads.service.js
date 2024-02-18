@@ -29,24 +29,28 @@ const fromTopicsDocument = (snapshot) => {
 };
 
 // Create new topic
-export const addThread = async (title, content, author, url, uuid) => {
-  const topic = push(ref(db, "topics"), {
-    content,
-    title,
-    author,
-    url,
-    uuid,
-    createdOn: Date.now(),
-    commentedBy: {},
-    likedBy: {},
-  });
+export const addThread = async (title, content, author, url, uuid, type) => {
+  try {
+    const thread = push(ref(db, "topics"), {
+      content,
+      title,
+      author,
+      url,
+      uuid,
+      type,
+      createdOn: Date.now(),
+      commentedBy: {},
+      likedBy: {},
+    });
 
-  const topicId = topic.key;
+    const threadId = thread.key;
+    const userRef = ref(db, `users/${author}/createdTopics/${threadId}`);
+    await push(userRef, threadId);
+    return threadId;
 
-  const userRef = ref(db, `users/${author}/createdTopics/${topicId}`);
-  await push(userRef, topicId);
-
-  return topicId;
+  } catch (e) {
+    console.log(e.message);
+  }
 };
 
 // key could be title, author, etc... and it would replace 'title' => equalTo(search, key)

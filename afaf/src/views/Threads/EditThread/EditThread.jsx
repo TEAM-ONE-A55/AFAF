@@ -1,4 +1,4 @@
-import "./CreateThread.css";
+import "./EditThread.css";
 import { useState, useContext, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { AppContext } from "../../../context/AppContext";
@@ -9,7 +9,7 @@ import Avatar from "../../../components/Avatar/Avatar";
 import toast from "react-hot-toast";
 import { v4 } from "uuid";
 
-export default function CreateThread() {
+export default function EditThread() {
   const { user, userData } = useContext(AppContext);
 
   const navigate = useNavigate();
@@ -45,18 +45,10 @@ export default function CreateThread() {
     }
   };
 
-  const handleThreadTypeNav = async (type) => {
-    setSelected(async (prev) => {
-      if (prev === type) return prev;
-      if (imageUrl) {
-        try {
-          await removeAttachedImg();
-        } catch (e) {
-          console.log(e.message);
-        }
-      }
-      return type;
-    });
+  const handleThreadTypeNav = (type) => {
+    if (selected === type) return;
+    if (imageUrl) removeAttachedImg();
+    setSelected(type);
   };
 
   useEffect(() => {
@@ -148,13 +140,11 @@ export default function CreateThread() {
         thread.content,
         userData.handle,
         imageUrl,
-        thread.uuid,
-        selected
+        thread.uuid
       );
       toast.success("Thread created successfully!");
       navigate("/threads/newest");
     } catch (e) {
-      console.log(e.message);
       toast.error("Could not create thread.");
     } finally {
       setAttachedImg(null);
@@ -164,7 +154,7 @@ export default function CreateThread() {
   if (user) {
     return (
       <div className="create-thread-container">
-        <h2>Create Thread</h2>
+        <h2>Edit Thread</h2>
         <hr />
         <div className="create-thread-container-content">
           <div className="create-thread-left-side">
