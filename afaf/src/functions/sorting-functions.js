@@ -7,9 +7,9 @@ export const sortUsers = (users, sortBy) => {
     case "usernameDescending":
       return users.slice().sort((a, b) => b.handle.localeCompare(a.handle));
     case "userActivityAscending":
-       return users.slice().sort((a, b) =>Object.keys(a.createdTopics).length - Object.keys(b.createdTopics).length);
+       return users.slice().sort((a, b) =>(a.createdTopics ? Object.keys(a.createdTopics).length : 0 ) - (b.createdTopics ? Object.keys(b.createdTopics).length : 0));
     case "userActivityDescending":
-       return users.slice().sort((a, b) =>Object.keys(b.createdTopics).length - Object.keys(a.createdTopics).length);
+       return users.slice().sort((a, b) =>(b.createdTopics ? Object.keys(b.createdTopics).length : 0) - (a.createdTopics ? Object.keys(a.createdTopics).length : 0));
     default:
       return users.slice().sort((a, b) => new Date(b.createdOn) - new Date(a.createdOn));
   }
@@ -24,13 +24,13 @@ export const sortThreads = (threads, sortBy) => {
     case "authorDescending":
       return threads.slice().sort((a, b) => b.author.localeCompare(a.author));
     case "mostLikedAscending":
-      return threads.slice().sort((a, b) =>Object.keys(a.likedBy).length - Object.keys(b.likedBy).length);
+      return threads.slice().sort((a, b) =>(a.likedBy ? Object.keys(a.likedBy).length : 0) - (b.likedBy ? Object.keys(b.likedBy).length : 0));
     case "mostLikedDescending":
-      return threads.slice().sort((a, b) =>Object.keys(b.likedBy).length - Object.keys(a.likedBy).length);
+      return threads.slice().sort((a, b) =>(b.likedBy ? Object.keys(b.likedBy).length : 0) - (a.likedBy ? Object.keys(a.likedBy).length : 0));
     case "mostCommentedAscending":
-      return threads.slice().sort((a, b) =>Object.keys(a.commentedBy).length - Object.keys(b.commentedBy).length);
+      return threads.slice().sort((a, b) =>(a.commentedBy ? Object.keys(a.commentedBy).length : 0) - (b.commentedBy ? Object.keys(b.commentedBy).length : 0));
     case "mostCommentedDescending":
-      return threads.slice().sort((a, b) =>Object.keys(b.commentedBy).length - Object.keys(a.commentedBy).length);
+      return threads.slice().sort((a, b) =>(b.commentedBy ? Object.keys(b.commentedBy).length : 0) - (a.commentedBy ? Object.keys(a.commentedBy).length : 0));
     
     default:
       return threads.slice().sort((a, b) => new Date(b.createdOn) - new Date(a.createdOn)); // Default to date descending
