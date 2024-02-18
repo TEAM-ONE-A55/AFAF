@@ -5,3 +5,7 @@
     padding: 30px;
     margin: 20px
 }
+
+.simple-thread-container img {
+    max-width: 100%;
+}

@@ -204,7 +204,7 @@ export default function CreateThread() {
               </nav>
               {getThreadTypeInput()}
               <button className="post-button" onClick={postThread}>
-                Post
+                Create Thread
               </button>
             </div>
           </div>
