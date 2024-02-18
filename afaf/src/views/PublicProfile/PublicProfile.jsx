@@ -113,9 +113,9 @@ export default function PublicProfile() {
           user.role
         )}{" "}
         <span>
-          <Link onClick={() => changeRole(user, setUser)}>
+          {userData.role === 'admin' && <Link onClick={() => changeRole(user, setUser)}>
             {user.role === "admin" ? "Downgrade to User" : "Upgrade to Admin"}
-          </Link>
+          </Link>}
         </span>
       </p>
       <p>
