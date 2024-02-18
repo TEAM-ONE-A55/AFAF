@@ -70,7 +70,7 @@ export const getAllTopics = async (key = "createdOn") => {
   return topics;
 };
 
-export const getAllTopicsBySearch = async (search, key = "createdOn") => {
+export const getAllTopicsBySearch = async (search, searchByKey = 'title', key = "createdOn") => {
   const snapshot = await get(query(ref(db, "topics"), orderByChild(key)));
   if (!snapshot.exists()) {
     return [];
@@ -79,7 +79,6 @@ export const getAllTopicsBySearch = async (search, key = "createdOn") => {
     .map((key) => ({
       id: key,
       ...snapshot.val()[key],
-      // createdOn: new Date(snapshot.val()[key].createdOn).toLocaleString(),
       createdOn: new Date(snapshot.val()[key].createdOn),
       likedBy: snapshot.val()[key].likedBy
         ? Object.keys(snapshot.val()[key].likedBy)
@@ -89,21 +88,19 @@ export const getAllTopicsBySearch = async (search, key = "createdOn") => {
         : [],
     }))
     .filter((topic) =>
-      topic.title.toLowerCase().includes(search.toLowerCase())
+      topic[searchByKey].toLowerCase().includes(search.toLowerCase())
     );
-  console.log(topics);
+
   return topics;
 };
 
 export const getTopicById = async (id) => {
-  // const snapshot = await get(query(ref(db, "topics"), equalTo(id, "id")));
   const snapshot = await get(ref(db, `topics/${id}`));
   if (!snapshot.exists()) return null;
 
   const topic = {
     id,
     ...snapshot.val(),
-    // createdOn: new Date(snapshot.val().createdOn).toLocaleString(),
     createdOn: new Date(snapshot.val().createdOn),
     likedBy: snapshot.val().likedBy ? Object.keys(snapshot.val().likedBy) : [],
     commentedBy: snapshot.val().commentedBy
@@ -111,7 +108,6 @@ export const getTopicById = async (id) => {
       : [],
   };
 
-  // console.log(topic);
   return topic;
 };
 

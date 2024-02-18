@@ -22,6 +22,7 @@ import MostLiked from "./views/Threads/MostLiked/MostLiked";
 import { Toaster } from "react-hot-toast";
 import { Admin } from "./views/Admin/Admin";
 import PublicProfile from "./views/PublicProfile/PublicProfile";
+import SearchResults from "./views/SearchResults/SearchResults";
 
 function App() {
   const [context, setContext] = useState({
@@ -57,6 +58,7 @@ function App() {
           <Route path="/login" element={<Login />}/>
           <Route path="/admin" element={<Authenticated><Admin /></Authenticated>}/>
           <Route path="/register" element={<Register />}/>
+          <Route path="/search/:query" element={<SearchResults/>}/>
           <Route path="/profile/:handle" element={<Authenticated><PublicProfile /></Authenticated>}/>
           <Route path="/profile/" element={<Authenticated><Profile /></Authenticated>}/>
           <Route path="/single-thread/:id" element={<Authenticated><SingleThread /></Authenticated>}/>
