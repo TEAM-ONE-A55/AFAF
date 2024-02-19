@@ -1,5 +1,39 @@
-#root {
-  margin: 0 auto;
-  padding: 2em;
-  /* text-align: center; */
+button {
+  font-family: "Lexend", sans-serif;
+  padding: 0.6em 1.2em;
+  font-size: 1rem;
+  background-color: #ffffff;
+  color: black;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: rgb(230, 230, 230);
+  transition: 50ms;
+}
+
+.navlink {
+  font-weight: 500;
+  color: rgb(255, 255, 255);
+  text-decoration: inherit;
+  margin: 0 20px;
+  user-select: none;
+  transition: 50ms;
+  font-size: 1rem;
+}
+
+.navlink:hover {
+  color: rgb(224, 224, 224);
+  transition: 50ms;
+}
+
+.navlink.active {
+  color: rgb(157, 72, 255);
+}
+
+a {
+  text-decoration: none;
 }
