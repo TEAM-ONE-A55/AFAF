@@ -23,6 +23,7 @@ export default function Comment({ thread, setThread }) {
     setComment("");
     setTextArea(false);
     
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [commentsData, thread.id]);
 
   const addComment = () => {

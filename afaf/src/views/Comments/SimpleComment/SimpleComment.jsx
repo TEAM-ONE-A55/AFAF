@@ -6,12 +6,14 @@ import { AppContext } from "../../../context/AppContext";
 import Avatar from "../../../components/Avatar/Avatar";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../../../components/Button/Button";
+import OnEditComment from "../OnEditComment/OnEditComment";
 
 export default function SimpleComment({ comment }) {
   const { userData } = useContext(AppContext);
   const [author, setAuthor] = useState({
     avatar: "",
   });
+  const [editing, setEditing] = useState(false);
 
   const navigate = useNavigate();
 
@@ -24,7 +26,7 @@ export default function SimpleComment({ comment }) {
   }, [comment.author, author]);
 
   const handleEdit = () => {
-    console.log('edit');
+    setEditing(true)
   };
 
   const handleDelete = () => {
@@ -46,7 +48,13 @@ export default function SimpleComment({ comment }) {
       </span>
       <span>{new Date(comment.createdOn).toLocaleString()}</span>
       <hr />
-      <p>{comment.comment}</p>
+      {editing ? (
+        <OnEditComment
+          comment={comment}
+        />
+      ) : (
+        <p>{comment.comment}</p>
+      )}
       {userData.handle === comment.author && (
         <Button onClick={handleEdit}>Edit</Button>
       )}

@@ -182,3 +182,9 @@ export const updateTopic = async (id, key, value) => {
   const path = `topics/${id}/${key}`;
   return update(ref(db), { [path]: value });
 };
+
+
+export const updateComment = async(id, key, value) => {
+  const path = `topics/${id}/comments/${key}/comment/`
+  return update(ref(db), {[path]: value})
+}
