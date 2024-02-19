@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import Avatar from "../../../components/Avatar/Avatar";
-import Button from "../../../components/Button/Button";
 import { AppContext } from "../../../context/AppContext";
 import toast from "react-hot-toast";
 import { updateUserData } from "../../../services/users.service";
@@ -8,32 +7,49 @@ import { deleteAvatar, uploadAvatar } from "../../../services/storage.service";
 import { defaultAvatar } from "../../../constants/constants";
 
 export default function SetAvatar() {
-  const { userData } = useContext(AppContext);
-  const [imgUpload, setImgUpload] = useState(userData.avatar);
+  const { userData, setContext } = useContext(AppContext);
   const [attachImg, setAttachImg] = useState(null);
 
+  useEffect(() => {
+    updateUserData(userData.handle, "avatar", userData.avatar);
+  }, [userData]);
+
   const uploadImg = async () => {
-    const url = await uploadAvatar(attachImg, userData.handle, "avatar");
-    setImgUpload(url);
-    toast.promise(window.location.reload(), {
-      loading: "Saving...",
-      success: <b>Settings saved!</b>,
-      error: <b>Could not save.</b>,
-    });
+    try {
+      const url = await uploadAvatar(attachImg, userData.handle, "avatar");
+      
+      setContext(prevState => ({
+        ...prevState,
+        userData: {
+          ...prevState.userData,
+          avatar: url
+        }
+      }));
+      toast.success("Avatar uploaded successfully.");
+
+    } catch (error) {
+      console.log(error.message);
+      toast.error("Could not upload avatar.");
+    }
   };
 
-  useEffect(() => {
-    updateUserData(userData.handle, "avatar", imgUpload);
-  }, [imgUpload, userData.handle]);
-
   const deleteImg = () => {
-    deleteAvatar(userData.handle, "avatar");
-    setImgUpload(defaultAvatar);
-    toast.promise(window.location.reload(), {
-      loading: "Saving...",
-      success: <b>Settings saved!</b>,
-      error: <b>Could not save.</b>,
-    });
+    try {
+      deleteAvatar(userData.handle, "avatar");
+
+      setContext(prevState => ({
+        ...prevState,
+        userData: {
+          ...prevState.userData,
+          avatar: defaultAvatar
+        }
+      }));
+      toast.success("Avatar deleted successfully.");
+      
+    } catch (error) {
+      console.log(error.message);
+      toast.error("Could not delete avatar.");
+    }
   };
 
   return (
@@ -46,19 +62,19 @@ export default function SetAvatar() {
       />
       <input type="file" onChange={(e) => setAttachImg(e.target.files[0])} />
       {attachImg ? (
-        <Button onClick={uploadImg}>Upload</Button>
+        <button onClick={uploadImg}>Upload</button>
       ) : (
-        <Button
+        <button
           onClick={() =>
             toast.error("Please select a file to upload before proceeding.")
           }
         >
           Upload
-        </Button>
+        </button>
       )}
 
       {userData.avatar !== defaultAvatar && (
-        <Button onClick={deleteImg}>Delete</Button>
+        <button onClick={deleteImg}>Delete</button>
       )}
     </div>
   );
