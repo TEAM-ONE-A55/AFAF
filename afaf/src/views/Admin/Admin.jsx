@@ -34,6 +34,15 @@ export function Admin() {
   }, [user]);
 
   useEffect(() => {
+    if (data) {
+      getAllUsers()
+        .then((users) => users.map((user) => user.val()))
+        .then((userData) => setUsers(userData))
+        .catch((error) => console.log(error));
+    }
+  }, [data]);
+
+  useEffect(() => {
     getAllTopics().then((topicData) => setTopics(topicData));
   }, []);
 
@@ -51,13 +60,15 @@ export function Admin() {
     getTopicById(id).then(setTopic);
   };
 
-  const removeUser = async (user) => {
-    await deleteUser(user);
-    toast.promise(window.location.reload(), {
-      loading: "Saving...",
-      success: <b>{`User ${user} has been successfully deleted`}</b>,
-      error: <b>Could not delete this user.</b>,
-    });
+  const removeUser = async (userHandle) => {
+    try {
+      await deleteUser(userHandle);
+      setUsers(users.filter((user) => user.handle !== userHandle));
+      toast.success(`User ${userHandle} has been successfully deleted`);
+    } catch (error) {
+      console.log(error.message);
+      toast.error(`Could not delete user ${userHandle}`);
+    }
   };
 
   const handleUsersSortChange = (sortBy) => {
@@ -69,11 +80,14 @@ export function Admin() {
   };
 
   const handleDeleteThread = (topic) => {
-    getTopic(topic.id);
-    deleteThread(topic.author, topic.id, topic.uuid, topic.url);
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
+    try {
+      getTopic(topic.id);
+      deleteThread(topic.author, topic.id, topic.uuid, topic.url);
+      setTopics(topics.filter(t => t.id !== topic.id))
+    } catch (error) {
+      console.log(error.message);
+      toast.error(`Could not delete the thread`);
+    }
   };
 
   return (
@@ -216,7 +230,11 @@ export function Admin() {
                       </td>
                       <td>{new Date(topic.createdOn).toLocaleString()}</td>
                       <td>{Object.keys(topic.likedBy).length}</td>
-                      <td>{topic.comments ? Object.keys(topic.comments).length : 0}</td>
+                      <td>
+                        {topic.comments
+                          ? Object.keys(topic.comments).length
+                          : 0}
+                      </td>
                       <td>
                         <button
                           onClick={() => navigate(`/single-thread/${topic.id}`)}

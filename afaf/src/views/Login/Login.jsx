@@ -29,7 +29,7 @@ export default function Login() {
       toast.success(
         "Welcome back! You've successfully logged in. Enjoy your experience!"
       );
-      window.location.reload();
+
     } catch (e) {
       if (e.message === "Firebase: Error (auth/invalid-email).") {
         return toast.error(
