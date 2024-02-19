@@ -7,6 +7,7 @@ import {
   update,
   equalTo,
   remove,
+  set,
 } from "firebase/database";
 import { db } from "../config/firebase-config";
 
@@ -177,8 +178,13 @@ export const deleteTopic = async (handle, id) => {
 
 };
 
-
 export const updateTopic = async (id, key, value) => {
   const path = `topics/${id}/${key}`;
   return update(ref(db), { [path]: value });
+};
+
+export const updateThreadDB = async (id, thread) => {
+    const path = `topics/${id}`;
+    await update(ref(db), { [path]: {...thread}} );
+    return id;
 };

@@ -2,7 +2,7 @@ import "./EditThread.css";
 import { useState, useContext, useEffect } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../../../context/AppContext";
-import { addThread } from "../../../services/threads.service";
+import { addThread, updateThreadDB } from "../../../services/threads.service";
 import { uploadThreadImage, deleteThreadImage } from "../../../services/storage.service";
 import { MIN_CONTENT_LENGTH, MAX_CONTENT_LENGTH, MIN_TITLE_LENGTH, MAX_TITLE_LENGTH } from "../../../constants/constants";
 import { getTopicById } from "../../../services/threads.service";
@@ -18,12 +18,12 @@ export default function EditThread() {
   const navigate = useNavigate();
   
   const [thread, setThread] = useState(null);
-  const [attachedImg, setAttachedImg] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [oldImageUrl, setOldImageUrl] = useState("");
-  const [newImageUrl, setNewImageUrl] = useState("");
-  const [threadTitle, setThreadTitle] = useState("");
-  const [threadContent, setThreadContent] = useState("");
+  const [attachedImg, setAttachedImg] = useState(null);
+  const [oldImageUrl, setOldImageUrl] = useState(null);
+  const [newImageUrl, setNewImageUrl] = useState(null);
+  const [threadTitle, setThreadTitle] = useState(null);
+  const [threadContent, setThreadContent] = useState(null);
 
   useEffect(() => {
     getTopicById(id).then(res => {
@@ -37,7 +37,7 @@ export default function EditThread() {
         navigate("*");
     }
     });
-  }, [id, navigate]);
+  }, []);
 
   useEffect(() => {
     if (attachedImg && thread) {
@@ -48,7 +48,7 @@ export default function EditThread() {
             .catch((e) => toast(e.message))
             .finally(() => setLoading(false));
     }
-  }, [attachedImg, thread]);
+  }, [attachedImg]);
 
   const updateThread = (key, value) => {
     setThread({
@@ -57,14 +57,13 @@ export default function EditThread() {
     });
     if (key === "title") setThreadTitle(value);
     if (key === "content") setThreadContent(value);
-    console.log(thread[key]);
+    // console.log(thread[key]);
   };
 
   const removeAttachedImg = async () => {
     if (oldImageUrl) {
         try {
             await deleteThreadImage(thread.uuid);
-            setThread({...thread, uuid: v4(), url: ""});
             setOldImageUrl(null);
         } catch (e) {
             console.log(e.message);
@@ -72,7 +71,7 @@ export default function EditThread() {
     } else {
         try {
           await deleteThreadImage(thread.uuid);
-          setNewImageUrl("");
+          setNewImageUrl(null);
           setAttachedImg(null);
         } catch (e) {
           console.log(e.message);
@@ -156,21 +155,30 @@ export default function EditThread() {
       return toast.error("Content must be at least 32 characters long.");
     if (thread.type !== 'image' && thread.content.length > MAX_CONTENT_LENGTH)
       return toast.error("Content must be at most 8192 characters long.");
-      if (thread.type === 'image' && !oldImageUrl && !newImageUrl)
+    if (thread.type === 'image' && !oldImageUrl && !newImageUrl)
       return toast.error("Please upload an image!");
 
     try {
-      await deleteThread(thread.author, thread.id, thread.uuid, oldImageUrl || newImageUrl, "Changes submitted successfully!");
-      await addThread(
-        thread.title,
-        thread.content,
-        userData.handle,
-        newImageUrl || oldImageUrl,
-        thread.uuid,
-        thread.type
-      );
+      updateThreadDB(thread.id, {
+        ...thread,
+        url: newImageUrl || oldImageUrl,
+        title: threadTitle,
+        content: threadContent
+      });
+      console.log('submitted')
       navigate("/threads/newest");
-    } catch (e) {
+      }
+      // await deleteThread(thread.author, thread.id, thread.uuid, oldImageUrl || newImageUrl, "Changes submitted successfully!");
+      // await addThread(
+      //   thread.title,
+      //   thread.content,
+      //   userData.handle,
+      //   newImageUrl || oldImageUrl,
+      //   thread.uuid,
+      //   thread.type
+      // );
+
+     catch (e) {
       toast.error("Could not update thread.");
     } finally {
       setAttachedImg(null);
