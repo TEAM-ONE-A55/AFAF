@@ -7,16 +7,16 @@ export default function OnEditComment({ comment, onUpdate }) {
   const [editedComment, setEditedComment] = useState(comment.comment);
 
   const { id } = useParams();
-  const [post, setPost] = useState(false);
+  const [onPublish, setOnPublish] = useState(false);
 
   useEffect(() => {
-    if (post) {
+    if (onPublish) {
       updateComment(id, comment.id, editedComment).then(() => {
         onUpdate(editedComment);
-        setPost(false);
+        setOnPublish(false);
       });
     }
-  }, [comment.id, editedComment, id, onUpdate, post]);
+  }, [comment.id, editedComment, id, onUpdate, onPublish]);
 
   const onUpdateComment = (e) => {
     setEditedComment(e.target.value);
@@ -24,12 +24,12 @@ export default function OnEditComment({ comment, onUpdate }) {
   const handleOnKeyDown = (e) => {
     if (e.key === "Enter") {
       onUpdateComment(e);
-      setPost(true)
+      setOnPublish(true)
     }
   };
   return (
     <div>
-      {!post && (
+      {!onPublish && (
         <div className="textarea-container">
           <textarea
             className="textarea-comment-onAction"
@@ -38,7 +38,7 @@ export default function OnEditComment({ comment, onUpdate }) {
             onKeyDown={handleOnKeyDown}
           />
           <span
-            onClick={() => setPost(true)}
+            onClick={() => setOnPublish(true)}
             className="material-symbols-outlined comment-btn"
           >
             send

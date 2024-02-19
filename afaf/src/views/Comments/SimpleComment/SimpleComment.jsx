@@ -13,7 +13,7 @@ export default function SimpleComment({ comment }) {
   const [author, setAuthor] = useState({
     avatar: "",
   });
-  const [editing, setEditing] = useState(false);
+  const [onEditing, setOnEditing] = useState(false);
   const [editedComment, setEditedComment] = useState(comment.comment)
 
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ export default function SimpleComment({ comment }) {
 
   const handleEditing = (updatedComment) => {
     setEditedComment(updatedComment);
-    setEditing(false)
+    setOnEditing(false)
   };
 
   const handleDelete = () => {
@@ -50,7 +50,7 @@ export default function SimpleComment({ comment }) {
       </span>
       <span>{new Date(comment.createdOn).toLocaleString()}</span>
       <hr />
-      {editing ? (
+      {onEditing ? (
         <>
           <OnEditComment comment={comment} onUpdate={handleEditing} />
         </>
@@ -59,8 +59,8 @@ export default function SimpleComment({ comment }) {
       )}
 
       {userData.handle === comment.author && (
-        <Button onClick={() => setEditing(!editing)}>
-          {editing ? "Back" : "Edit"}
+        <Button onClick={() => setOnEditing(!onEditing)}>
+          {onEditing ? "Back" : "Edit"}
         </Button>
       )}
       {(userData.handle === comment.author || userData.role === "admin") && (
