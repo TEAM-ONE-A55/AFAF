@@ -2,13 +2,12 @@ import "./EditThread.css";
 import { useState, useContext, useEffect } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../../../context/AppContext";
-import { addThread, updateThreadDB } from "../../../services/threads.service";
+import { updateThreadDB } from "../../../services/threads.service";
 import { uploadThreadImage, deleteThreadImage } from "../../../services/storage.service";
 import { MIN_CONTENT_LENGTH, MAX_CONTENT_LENGTH, MIN_TITLE_LENGTH, MAX_TITLE_LENGTH } from "../../../constants/constants";
 import { getTopicById } from "../../../services/threads.service";
 import Avatar from "../../../components/Avatar/Avatar";
 import toast from "react-hot-toast";
-import { v4 } from "uuid";
 import { deleteThread } from "../../../functions/threads-functions";
 
 export default function EditThread() {
