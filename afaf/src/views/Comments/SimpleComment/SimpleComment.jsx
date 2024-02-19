@@ -27,6 +27,7 @@ export default function SimpleComment({ comment }) {
   }, [comment.author, author]);
 
   const handleEditing = (updatedComment) => {
+    comment.comment = updatedComment
     setEditedComment(updatedComment);
     setOnEditing(false)
   };
