@@ -6,10 +6,10 @@ export default function Home({ children }) {
   return (
     <div className="home-container">
       <nav>
-        <NavLink to="/threads/all">All Threads</NavLink>
-        <NavLink to="/threads/popular/likes">Most Liked</NavLink>
-        <NavLink to="/threads/popular/comments">Most commented</NavLink>
-        <NavLink to="/threads/newest">Newest</NavLink>
+        <NavLink to="/threads/all" className="navlink">All Threads</NavLink>
+        <NavLink to="/threads/popular/likes" className="navlink">Most Liked</NavLink>
+        <NavLink to="/threads/popular/comments" className="navlink">Most commented</NavLink>
+        <NavLink to="/threads/newest" className="navlink">Newest</NavLink>
       </nav>
       {children}
     </div>

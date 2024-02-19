@@ -1,7 +1,31 @@
-.search-input {
-    height: 30px;
-    min-width: 300px;
+.search-container {
+    height: 40px;
+    min-width: 400px;
     outline: none;
     border: none;
-    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: rgb(81, 255, 197) 1px solid; */
+}
+
+.search-container > input {
+    height: 37px;
+    outline: none;
+    border: none;
+    flex: 1;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    font-size: 1rem;
+    font-weight: 500;
+    padding-left: .7em;
+}
+
+.search-container > button {
+    border-radius: 0px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    max-height: 40px;
+    border-left: 1px solid rgb(245, 245, 245);
+    font-size: 1rem;
 }
