@@ -11,6 +11,7 @@ import Button from "../../../components/Button/Button";
 import "./SingleThread.css";
 import { deleteThread } from "../../../functions/threads-functions";
 import Comment from "../../../components/Comment/Comment";
+import Comments from "../../Comments/RenderComments/RenderComments";
 
 export default function SingleThread() {
   const { userData } = useContext(AppContext);
@@ -32,7 +33,6 @@ export default function SingleThread() {
     getTopicById(id).then((result) => {
       if (result) {
         setThread(result);
-        console.log(result)
       } else {
         navigate("*");
       }
@@ -46,7 +46,13 @@ export default function SingleThread() {
         (userData?.handle === thread?.author || userData?.role === "admin") && (
           <Button
             onClick={() => {
-              deleteThread(thread.author, thread.id, thread.uuid, thread.url, "Thread has been successfully deleted");
+              deleteThread(
+                thread.author,
+                thread.id,
+                thread.uuid,
+                thread.url,
+                "Thread has been successfully deleted"
+              );
               setTimeout(() => {
                 navigate(-1);
               }, 1000);
@@ -63,7 +69,8 @@ export default function SingleThread() {
             topicDislike={topicDislike}
             topicLike={topicLike}
           />
-          <Comment thread={thread}/>
+          <Comment thread={thread} setThread={setThread} />
+          {thread.comments && <Comments thread={thread} />}
         </>
       )}
     </div>

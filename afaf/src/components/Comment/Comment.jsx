@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { updateTopic } from "../../services/threads.service";
 import { v4 } from "uuid";
 
-export default function Comment({ thread }) {
+export default function Comment({ thread, setThread }) {
   const { userData } = useContext(AppContext);
   const [textArea, setTextArea] = useState(false);
   const [comment, setComment] = useState("");
@@ -18,9 +18,12 @@ export default function Comment({ thread }) {
 
   useEffect(() => {
     updateTopic(thread.id, "comments", commentsData);
+    thread.comments = commentsData
+    setThread({...thread})
     setComment("");
     setTextArea(false);
-  }, [commentsData]);
+    
+  }, [commentsData, thread.id]);
 
   const addComment = () => {
     setCommentsData({
@@ -29,10 +32,15 @@ export default function Comment({ thread }) {
         author: userData.handle,
         comment: comment,
         createdOn: Date.now(),
+        id: id
       },
     });
     setId(v4());
   };
+
+  const handleOnKeyDown = (e) => {
+    if (e.key === "Enter") addComment()
+  }
   return !textArea ? (
     <div className="textarea-container">
       <textarea
@@ -50,6 +58,7 @@ export default function Comment({ thread }) {
         placeholder="What's on your mind? Feel free to express yourself..."
         onChange={(e) => setComment(e.target.value)}
         value={comment}
+        onKeyDown={handleOnKeyDown}
       />
       <span
         onClick={addComment}
@@ -63,4 +72,5 @@ export default function Comment({ thread }) {
 
 Comment.propTypes = {
   thread: PropTypes.object.isRequired,
+  setThread: PropTypes.func
 };
