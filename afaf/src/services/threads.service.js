@@ -187,6 +187,10 @@ export const updateComment = async (id, key, value) => {
   return update(ref(db), { [path]: value });
 };
 
+export const updateComment = async(id, key, value) => {
+  const path = `topics/${id}/comments/${key}/comment/`
+  return update(ref(db), {[path]: value})
+}
 export const updateThreadDB = async (id, thread) => {
   const path = `topics/${id}`;
   await update(ref(db), { [path]: { ...thread } });

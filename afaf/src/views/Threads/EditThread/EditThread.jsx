@@ -165,19 +165,8 @@ export default function EditThread() {
         title: threadTitle,
         content: threadContent
       });
-      console.log('submitted')
       navigate("/threads/newest");
-      }
-      // await deleteThread(thread.author, thread.id, thread.uuid, oldImageUrl || newImageUrl, "Changes submitted successfully!");
-      // await addThread(
-      //   thread.title,
-      //   thread.content,
-      //   userData.handle,
-      //   newImageUrl || oldImageUrl,
-      //   thread.uuid,
-      //   thread.type
-      // );
-
+    }
      catch (e) {
       toast.error("Could not update thread.");
     } finally {
