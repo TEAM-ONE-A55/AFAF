@@ -22,16 +22,20 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
 
   useEffect(() => {
     getUserByHandle(topic.author).then((snapshot) => {
-      setAuthor({
-        avatar: snapshot.val().avatar,
-        username: snapshot.val().handle,
-        createdOn: new Date(snapshot.val().createdOn).toLocaleDateString(),
-        threads: snapshot.val().createdTopics && Object.keys(snapshot.val().createdTopics).length,
-        role: snapshot.val().role,
-        uid: snapshot.val().uid,
-      });
+      const getUserData = snapshot.val();
+      if (getUserData)
+        setAuthor({
+          avatar: snapshot.val().avatar,
+          username: snapshot.val().handle,
+          createdOn: new Date(snapshot.val().createdOn).toLocaleDateString(),
+          threads:
+            snapshot.val().createdTopics &&
+            Object.keys(snapshot.val().createdTopics).length,
+          role: snapshot.val().role,
+          uid: snapshot.val().uid,
+        });
     });
-  }, [topic.author, author]);
+  }, [topic.author, author, userData]);
 
   return (
     <>
@@ -66,20 +70,27 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
             </p>
           </span>
           <hr />
-          <h3 style={{ cursor: "pointer" }} onClick={() => navigate(`/single-thread/${topic.id}`)} >{topic.title}</h3>
-          {topic.content ? 
-          (topic.type === 'post' ? <p>{topic.content}</p> : 
-          <a href={topic.content} target="_blank" rel="noreferrer">{topic.content}</a>) : 
-          <img src={topic.url} alt="Topic image is missing :(" />} 
-          {/* {topic.content ? (
-            <p>{topic.content}</p>
+          <h3
+            style={{ cursor: "pointer" }}
+            onClick={() => navigate(`/single-thread/${topic.id}`)}
+          >
+            {topic.title}
+          </h3>
+          {topic.content ? (
+            topic.type === "post" ? (
+              <p>{topic.content}</p>
+            ) : (
+              <a href={topic.content} target="_blank" rel="noreferrer">
+                {topic.content}
+              </a>
+            )
           ) : (
             <img src={topic.url} alt="Topic image is missing :(" />
-          )} */}
+          )}
           <p>
             {" "}
             <b>Created on: </b>
-            {new Date (topic.createdOn).toLocaleString()}
+            {new Date(topic.createdOn).toLocaleString()}
           </p>
           {topic.likedBy &&
             (topic.likedBy.length === 1 ? (
@@ -96,19 +107,24 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
                 <button onClick={() => topicDislike(userData.handle, topic.id)}>
                   Dislike
                 </button>
-                <button onClick={() => navigate(`/single-thread/${topic.id}`)}>View</button>
-                {userData.handle === topic.author && <NavLink to={`/edit-thread/${topic.id}`}>Edit</NavLink>}
+                <button onClick={() => navigate(`/single-thread/${topic.id}`)}>
+                  View
+                </button>
+                {userData.handle === topic.author && (
+                  <NavLink to={`/edit-thread/${topic.id}`}>Edit</NavLink>
+                )}
               </>
             )}
           </p>
-          {topic.comments ?
-            (Object.keys(topic.comments).length === 1 ? (
+          {topic.comments ? (
+            Object.keys(topic.comments).length === 1 ? (
               <p>{Object.keys(topic.comments).length} comment</p>
             ) : (
               <p>{Object.keys(topic.comments).length} comments</p>
-            ))
-            : <p>0 comments</p>
-          }
+            )
+          ) : (
+            <p>0 comments</p>
+          )}
         </div>
       )}
     </>
