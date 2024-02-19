@@ -66,7 +66,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
             </p>
           </span>
           <hr />
-          <h3>{topic.title}</h3>
+          <h3 style={{ cursor: "pointer" }} onClick={() => navigate(`/single-thread/${topic.id}`)} >{topic.title}</h3>
           {topic.content ? 
           (topic.type === 'post' ? <p>{topic.content}</p> : 
           <a href={topic.content} target="_blank" rel="noreferrer">{topic.content}</a>) : 
@@ -90,13 +90,13 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
           <p>
             {user && (
               <>
-                <Button onClick={() => topicLike(userData.handle, topic.id)}>
+                <button onClick={() => topicLike(userData.handle, topic.id)}>
                   Like
-                </Button>
-                <Button onClick={() => topicDislike(userData.handle, topic.id)}>
+                </button>
+                <button onClick={() => topicDislike(userData.handle, topic.id)}>
                   Dislike
-                </Button>
-                <NavLink to={`/single-thread/${topic.id}`}>View</NavLink>
+                </button>
+                <button onClick={() => navigate(`/single-thread/${topic.id}`)}>View</button>
                 {userData.handle === topic.author && <NavLink to={`/edit-thread/${topic.id}`}>Edit</NavLink>}
               </>
             )}

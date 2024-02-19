@@ -1,5 +1,4 @@
 import "./EditThread.css";
-import PropTypes from "prop-types";
 import { useState, useContext, useEffect } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../../../context/AppContext";
@@ -217,7 +216,3 @@ export default function EditThread() {
     );
   } else return <Navigate replace to="/login" />;
 }
-
-EditThread.propTypes = {
-  thread: PropTypes.object
-};

@@ -15,18 +15,14 @@ export default function CreateThread() {
   const navigate = useNavigate();
 
   const [selected, setSelected] = useState("post");
-
+  const [attachedImg, setAttachedImg] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
+  const [loading, setLoading] = useState(false);
   const [thread, setThread] = useState({
     content: "",
     title: "",
     uuid: v4()
   });
-
-  const [attachedImg, setAttachedImg] = useState(null);
-  
-  const [imageUrl, setImageUrl] = useState("");
-
-  const [loading, setLoading] = useState(false);
 
   const updateThread = (key, value) => {
     setThread({

@@ -18,13 +18,13 @@ export default function Header() {
       <Search/>
       {user ? (
         <>
-          <NavLink to="/create-thread">New Thread</NavLink>
-          <NavLink to="/profile">Profile</NavLink>
-          {userData.role === "admin" && <NavLink to="/admin">Admin</NavLink>}
-          <span>
+          <NavLink to="/create-thread" className="navlink">New Thread</NavLink>
+          {userData.role === "admin" && <NavLink to="/admin" className="navlink admin-navlink m-subtr-left">Admin</NavLink>}
+          <NavLink to="/profile" className="navlink m-subtr-left">Profile</NavLink>
+          <span className="header-avatar">
             <Avatar
-              Width="40px"
-              Height="40px"
+              Width="38px"
+              Height="38px"
               url={userData.avatar}
               onClick={() => {
                 navigate("/profile");
