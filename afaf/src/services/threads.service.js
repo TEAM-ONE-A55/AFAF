@@ -7,7 +7,6 @@ import {
   update,
   equalTo,
   remove,
-  set,
 } from "firebase/database";
 import { db } from "../config/firebase-config";
 
@@ -25,7 +24,6 @@ const fromTopicsDocument = (snapshot) => {
       likedBy: topic.likedBy ? Object.keys(topic.likedBy) : [],
       commentedBy: topic.commentedBy ? Object.keys(topic.commentedBy) : [],
     };
-    
   });
 };
 
@@ -48,7 +46,6 @@ export const addThread = async (title, content, author, url, uuid, type) => {
     const userRef = ref(db, `users/${author}/createdTopics/${threadId}`);
     await push(userRef, threadId);
     return threadId;
-
   } catch (e) {
     console.log(e.message);
   }
@@ -75,7 +72,11 @@ export const getAllTopics = async (key = "createdOn") => {
   return topics;
 };
 
-export const getAllTopicsBySearch = async (search, searchByKey = 'title', key = "createdOn") => {
+export const getAllTopicsBySearch = async (
+  search,
+  searchByKey = "title",
+  key = "createdOn"
+) => {
   const snapshot = await get(query(ref(db, "topics"), orderByChild(key)));
   if (!snapshot.exists()) {
     return [];
@@ -168,14 +169,12 @@ export const dislikeTopic = (handle, topicId) => {
 };
 
 export const deleteTopic = async (handle, id) => {
-
   const topicsToRemove = await getTopicsByAuthor(handle);
-  topicsToRemove.filter(topic => {
+  topicsToRemove.filter((topic) => {
     if (topic.id === id) {
-      remove(ref(db, `topics/${topic.id}`))
+      remove(ref(db, `topics/${topic.id}`));
     }
-  })
-
+  });
 };
 
 export const updateTopic = async (id, key, value) => {
@@ -183,16 +182,13 @@ export const updateTopic = async (id, key, value) => {
   return update(ref(db), { [path]: value });
 };
 
-<<<<<<< HEAD
-
-export const updateComment = async(id, key, value) => {
-  const path = `topics/${id}/comments/${key}/comment/`
-  return update(ref(db), {[path]: value})
-}
-=======
-export const updateThreadDB = async (id, thread) => {
-    const path = `topics/${id}`;
-    await update(ref(db), { [path]: {...thread}} );
-    return id;
+export const updateComment = async (id, key, value) => {
+  const path = `topics/${id}/comments/${key}/comment/`;
+  return update(ref(db), { [path]: value });
 };
->>>>>>> 467766e8736c6fdb983f651f2dbc380b0cda2f1c
+
+export const updateThreadDB = async (id, thread) => {
+  const path = `topics/${id}`;
+  await update(ref(db), { [path]: { ...thread } });
+  return id;
+};

@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 export default function OnEditComment({ comment }) {
   const [currComment, setCurrComment] = useState(comment.comment);
-  const [newComment, setNewComment] = useState("");
+  // const [newComment, setNewComment] = useState("");
   // const [textArea, setTextArea] = useState(false);
   const { id } = useParams();
   const [post, setPost] = useState(false);
@@ -14,6 +14,7 @@ export default function OnEditComment({ comment }) {
   useEffect(() => {
     updateComment(id, comment.id, currComment);
     comment.comment = currComment;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [post]);
 
   const onUpdateComment = (e) => {
