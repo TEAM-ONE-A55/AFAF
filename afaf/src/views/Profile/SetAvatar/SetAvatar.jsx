@@ -37,10 +37,10 @@ export default function SetAvatar() {
   };
 
   return (
-    <>
+    <div className="profile-avatar-wrapper">
       <Avatar
-        Width="150px"
-        Height="150px"
+        Width="200px"
+        Height="200px"
         url={userData.avatar}
         onClick={() => {}}
       />
@@ -60,6 +60,6 @@ export default function SetAvatar() {
       {userData.avatar !== defaultAvatar && (
         <Button onClick={deleteImg}>Delete</Button>
       )}
-    </>
+    </div>
   );
 }

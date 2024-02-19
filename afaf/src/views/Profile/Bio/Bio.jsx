@@ -68,7 +68,7 @@ export default function Bio() {
   );
 
   return (
-    <>
+    <div className="profile-bio-wrapper">
       {userData.bio
         ? (
           onChange
@@ -86,6 +86,6 @@ export default function Bio() {
         ) : (
           missingBio
         )}
-    </>
+    </div>
   );
 }

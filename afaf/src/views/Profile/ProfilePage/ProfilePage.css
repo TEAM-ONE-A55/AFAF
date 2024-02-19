@@ -1,3 +1,58 @@
 .profile-container {
-    margin-top: 3em;
+    background: rgb(15, 15, 15);
+    max-width: 500px;
+    margin: 0 auto;
+    margin-top: 6em;
+    border-radius: 50px;
+    line-height: 1;
+    padding: 3em 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    filter: drop-shadow(15px 25px 15px #0a0a0a);
+}
+
+.profile-container button {
+    border-radius: 5px;
+}
+
+.profile-container > h3 {
+    max-width: fit-content;
+    margin: 0 auto;
+    margin-bottom: 1.5em;
+}
+
+.profile-info-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.profile-bio-wrapper {
+    max-width: 300px;
+}
+
+.profile-avatar-wrapper {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-avatar-wrapper button {
+    width: 100px;
+    margin: .3em 0;
+    border-radius: 5px;
+}
+
+.logout-button {
+    margin-top: 2em;
+    width: 150px;
+    white-space: nowrap;
+    border-radius: 5px;
+    text-align: center;
 }
