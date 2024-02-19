@@ -35,14 +35,14 @@ export default function SimpleComment({ comment }) {
     <div className="simple-comment-container">
       <span>
         <Avatar
-          onClick={() => navigate(`/profile/${author.username}`)}
+          onClick={() => navigate(`/profile/${comment.author}`)}
           Width={"40px"}
           Height={"40px"}
           url={author.avatar}
         />
       </span>
       <span>
-        <Link>{comment.author}</Link>
+        <Link to={`/profile/${comment.author}`}>{comment.author}</Link>
       </span>
       <span>{new Date(comment.createdOn).toLocaleString()}</span>
       <hr />
