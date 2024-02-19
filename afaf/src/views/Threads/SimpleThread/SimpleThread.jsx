@@ -101,12 +101,14 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
               </>
             )}
           </p>
-          {topic.commentedBy &&
-            (topic.commentedBy.length === 1 ? (
-              <p>{topic.commentedBy.length} comment</p>
+          {topic.comments ?
+            (Object.keys(topic.comments).length === 1 ? (
+              <p>{Object.keys(topic.comments).length} comment</p>
             ) : (
-              <p>{topic.commentedBy.length} comments</p>
-            ))}
+              <p>{Object.keys(topic.comments).length} comments</p>
+            ))
+            : <p>0 comments</p>
+          }
         </div>
       )}
     </>

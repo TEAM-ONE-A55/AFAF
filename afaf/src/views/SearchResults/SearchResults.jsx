@@ -42,8 +42,6 @@ export default function SearchResults() {
     setFilterBy(filterBy);
   };
 
-  console.log(topics);
-
   return (
     <div className="search-results-container">
       {query ? (

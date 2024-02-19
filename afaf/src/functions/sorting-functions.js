@@ -28,9 +28,9 @@ export const sortThreads = (threads, sortBy) => {
     case "mostLikedDescending":
       return threads.slice().sort((a, b) =>(b.likedBy ? Object.keys(b.likedBy).length : 0) - (a.likedBy ? Object.keys(a.likedBy).length : 0));
     case "mostCommentedAscending":
-      return threads.slice().sort((a, b) =>(a.commentedBy ? Object.keys(a.commentedBy).length : 0) - (b.commentedBy ? Object.keys(b.commentedBy).length : 0));
+      return threads.slice().sort((a, b) =>(a.comments ? Object.keys(a.comments).length : 0) - (b.comments ? Object.keys(b.comments).length : 0));
     case "mostCommentedDescending":
-      return threads.slice().sort((a, b) =>(b.commentedBy ? Object.keys(b.commentedBy).length : 0) - (a.commentedBy ? Object.keys(a.commentedBy).length : 0));
+      return threads.slice().sort((a, b) =>(b.comments ? Object.keys(b.comments).length : 0) - (a.comments ? Object.keys(a.comments).length : 0));
     
     default:
       return threads.slice().sort((a, b) => new Date(b.createdOn) - new Date(a.createdOn)); // Default to date descending

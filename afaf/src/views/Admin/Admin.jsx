@@ -216,7 +216,7 @@ export function Admin() {
                       </td>
                       <td>{new Date(topic.createdOn).toLocaleString()}</td>
                       <td>{Object.keys(topic.likedBy).length}</td>
-                      <td>{Object.keys(topic.commentedBy).length}</td>
+                      <td>{topic.comments ? Object.keys(topic.comments).length : 0}</td>
                       <td>
                         <button
                           onClick={() => navigate(`/single-thread/${topic.id}`)}

@@ -24,7 +24,8 @@ export const popularByComments = (topics) => {
     .slice()
     .sort(
       (a, b) =>
-        Object.keys(b.commentedBy).length - Object.keys(a.commentedBy).length
+      (b.comments ?
+        Object.keys(b.comments).length : 0) - (a.comments ? Object.keys(a.comments).length : 0)
     )
     .slice(0, 10);
 };

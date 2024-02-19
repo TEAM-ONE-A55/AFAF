@@ -219,5 +219,5 @@ export default function EditThread() {
 }
 
 EditThread.propTypes = {
-  thread: PropTypes.object.isRequired,
+  thread: PropTypes.object
 };
