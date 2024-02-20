@@ -10,7 +10,7 @@ import OnEditComment from "../OnEditComment/OnEditComment";
 import { deleteComment } from "../../../services/threads.service";
 import toast from "react-hot-toast";
 
-export default function SimpleComment({ comment }) {
+export default function SimpleComment({ comment, setThread, thread }) {
   const { userData } = useContext(AppContext);
   const [author, setAuthor] = useState({
     avatar: "",
@@ -41,6 +41,9 @@ export default function SimpleComment({ comment }) {
       toast.success("Poof! Your comment is gone.");
     } catch (e) {
       console.log(e.message);
+    } finally {
+      delete thread.comments[comment.id]
+      setThread({...thread})
     }
   };
 
@@ -81,4 +84,6 @@ export default function SimpleComment({ comment }) {
 
 SimpleComment.propTypes = {
   comment: PropTypes.object.isRequired,
+  setThread: PropTypes.func,
+  thread: PropTypes.object
 };

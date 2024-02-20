@@ -3,19 +3,8 @@ import { v4 } from "uuid";
 import SimpleComment from "../SimpleComment/SimpleComment";
 import "./RenderComments.css";
 
-export default function Comments({ thread }) {
+export default function Comments({ thread, setThread }) {
 
-  // useEffect(() => {
-  //     getComments(thread.id)
-  //       .then(snapshot => {
-  //         setComments(snapshot);
-  //         SetDeletedComment(null);
-  //       });
-  //     }),[deletedComment, thread.id];
-
-  // const handleDeletedComment = () => {
-  //   console.log("deleted")
-  // }
 
   return (
     <div className="comments-container">
@@ -25,7 +14,7 @@ export default function Comments({ thread }) {
           .map((comment) => {
             return (
               <div className="simple-comment" key={v4()}>
-                <SimpleComment comment={comment}/>
+                <SimpleComment comment={comment} setThread={setThread} thread={thread}/>
               </div>
             );
           })}
@@ -35,4 +24,5 @@ export default function Comments({ thread }) {
 
 Comments.propTypes = {
   thread: PropTypes.object.isRequired,
+  setThread: PropTypes.func
 };

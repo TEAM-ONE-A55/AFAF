@@ -166,7 +166,7 @@ export default function SingleThread() {
           )}
           <div className="single-thread-comment-section">
             <Comment thread={thread} setThread={setThread} />
-            {thread.comments && <Comments thread={thread} />}
+            {thread.comments && <Comments thread={thread} setThread={setThread} />}
           </div>
         </>
       )}
