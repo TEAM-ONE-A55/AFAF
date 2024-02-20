@@ -1,5 +1,61 @@
 .simple-comment-container {
-  border-bottom: 0.5px dashed;
-  padding: 30px;
-  margin: 5px;
+  background-color: rgb(17, 17, 17);
+  margin-bottom: 1em;
+  border-radius: 15px;
+}
+
+.simple-comment-top {
+  background-color:  #181818;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 1em;
+  padding: .2em 1em;
+  gap: 1em;
+}
+
+.simple-comment-top .avatar-img {
+  margin-top: 4px;
+}
+
+.simple-comment-date {
+  font-size: 1rem;
+  color: #5a5a5a;
+  display: inline-block;
+}
+
+.simple-comment-bottom {
+  padding: 1.5em;
+  padding-top: 0;
+}
+
+.simple-comment-container button {
+  font-size: .9rem;
+  max-height: 2em;
+  padding: 0.4em 1.2em;
+}
+
+.delete-comment-button {
+  background-color: rgb(255, 45, 45);
+  color: white;
+}
+
+.delete-comment-button:hover {
+  background-color: rgb(235, 42, 42);
+  transition: 50ms;
+}
+
+.simple-comment-container textarea {
+  margin: 2em 0;
+}
+
+.simple-comment-buttons-wrapper {
+  display: flex;
+  gap: .5em;
+}
+
+.apply-transition-50ms {
+  transition: 50ms;
 }

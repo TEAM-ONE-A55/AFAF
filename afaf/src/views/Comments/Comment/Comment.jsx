@@ -12,8 +12,8 @@ export default function Comment({ thread, setThread }) {
   const [id, setId] = useState(v4());
   const [commentsData, setCommentsData] = useState(thread.comments || {});
 
-  const handleTextAreaOnClick = () => {
-    setTextArea(true);
+  const handleTextAreaToggle = () => {
+    setTextArea(prev => !prev);
   };
 
   useEffect(() => {
@@ -47,7 +47,8 @@ export default function Comment({ thread, setThread }) {
       <textarea
         className="textarea-comment"
         placeholder="Add a comment"
-        onClick={handleTextAreaOnClick}
+        onFocus={() => setTextArea(true)}
+        onBlur={() => setTextArea(false)}
         onChange={() => {}}
         value=""
       />
@@ -56,7 +57,8 @@ export default function Comment({ thread, setThread }) {
     <div className="textarea-container">
       <textarea
         className="textarea-comment-onAction"
-        placeholder="What's on your mind? Feel free to express yourself..."
+        placeholder="Add a comment"
+        onBlur={() => setTextArea(false)}
         onChange={(e) => setComment(e.target.value)}
         value={comment}
         onKeyDown={handleOnKeyDown}

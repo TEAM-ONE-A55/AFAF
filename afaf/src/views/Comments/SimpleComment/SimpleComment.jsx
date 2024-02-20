@@ -4,11 +4,12 @@ import { useContext, useEffect, useState } from "react";
 import { getUserByHandle } from "../../../services/users.service";
 import { AppContext } from "../../../context/AppContext";
 import Avatar from "../../../components/Avatar/Avatar";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Button from "../../../components/Button/Button";
 import OnEditComment from "../OnEditComment/OnEditComment";
 import { deleteComment } from "../../../services/threads.service";
 import toast from "react-hot-toast";
+import { avoidPropagation } from "../../../functions/other-functions";
 
 export default function SimpleComment({ comment, setThread, thread }) {
   const { userData } = useContext(AppContext);
@@ -49,35 +50,39 @@ export default function SimpleComment({ comment, setThread, thread }) {
 
    if(userData) return (
     <div className="simple-comment-container">
-      <span>
-        <Avatar
-          onClick={() => navigate(`/profile/${comment.author}`)}
-          Width={"40px"}
-          Height={"40px"}
-          url={author.avatar}
-        />
-      </span>
-      <span>
-        <Link to={`/profile/${comment.author}`}>{comment.author}</Link>
-      </span>
-      <span>{new Date(comment.createdOn).toLocaleString()}</span>
-      <hr />
-      {onEditing ? (
-        <>
-          <OnEditComment comment={comment} onUpdate={handleEditing} />
-        </>
-      ) : (
-        <p>{editedComment}</p>
-      )}
-
-      {userData.handle === comment.author && (
-        <Button onClick={() => setOnEditing(!onEditing)}>
-          {onEditing ? "Back" : "Edit"}
-        </Button>
-      )}
-      {(userData.handle === comment.author || userData.role === "admin") && (
-        <Button onClick={handleDelete}>Delete</Button>
-      )}
+      <div className="simple-comment-top">
+        <span>
+          <Avatar
+            onClick={() => navigate(`/profile/${comment.author}`)}
+            Width={"40px"}
+            Height={"40px"}
+            url={author.avatar}
+          />
+        </span>
+        <p className="single-thread-left-side-handle">
+          <a onClick={e => avoidPropagation(e, () => {navigate(`/profile/${comment.author}`)})}>@{comment.author}</a>
+        </p>
+        <span className="simple-comment-date">{new Date(comment.createdOn).toLocaleString()}</span>
+      </div>
+      <div className="simple-comment-bottom">
+        {onEditing ? (
+          <>
+            <OnEditComment className="apply-transition-50ms" comment={comment} onUpdate={handleEditing} />
+          </>
+        ) : (
+          <p className="apply-transition-50ms">{editedComment}</p>
+        )}
+        <div className="simple-comment-buttons-wrapper">
+          {userData.handle === comment.author && (
+            <button onClick={() => setOnEditing(!onEditing)}>
+              {onEditing ? "Back" : "Edit"}
+            </button>
+          )}
+          {(userData.handle === comment.author || userData.role === "admin") && (
+            <button className="delete-comment-button" onClick={handleDelete}>Delete</button>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

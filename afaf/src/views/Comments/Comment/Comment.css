@@ -1,19 +1,30 @@
 .textarea-comment {
-  border: 1px solid;
-  border-radius: 30px;
   padding: 20px;
-  width: 96.7%;
   font-size: 14pt;
   height: 20px;
+  overflow: hidden;
+  resize: none;
+  transition: 50ms;
+  border-radius: 50px;
 }
 
 .textarea-comment-onAction {
-  border: 1px solid;
   border-radius: 15px;
   padding: 20px;
-  width: 96.7%;
   font-size: 14pt;
   height: 100px;
+  resize: none;
+  transition: 50ms;
+}
+
+.textarea-comment-onAction, .textarea-comment {
+  font-size: 1rem;
+  width: 96.4%;
+}
+
+.textarea-comment-onAction:focus, .textarea-comment:focus {
+  background-color: rgb(22, 22, 22);
+  transition: 50ms;
 }
 
 .textarea-container {
@@ -23,9 +34,10 @@
 
 .comment-btn {
   position: absolute;
-  right: 20px;
+  right: 15px;
   top: 20px;
-  font-size: 300;
+  font-size: 400;
+  transition: 50ms;
 }
 
 .comment-btn:hover {
