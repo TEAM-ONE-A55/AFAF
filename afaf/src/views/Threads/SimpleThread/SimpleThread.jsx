@@ -1,10 +1,11 @@
+import "./SimpleThread.css";
 import PropTypes from "prop-types";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../../context/AppContext";
 import { useNavigate } from "react-router-dom";
-import "./SimpleThread.css";
-import Avatar from "../../../components/Avatar/Avatar";
 import { getUserByHandle } from "../../../services/users.service";
+import { avoidPropagation } from "../../../functions/other-functions";
+import Avatar from "../../../components/Avatar/Avatar";
 
 export default function SimpleThread({ topic, topicLike, topicDislike }) {
   const { user, userData } = useContext(AppContext);
@@ -20,6 +21,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log('simplethread useeffect 1')
     getUserByHandle(topic.author).then((snapshot) => {
       const getUserData = snapshot.val();
       if (getUserData)
@@ -34,13 +36,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
           uid: snapshot.val().uid,
         });
     });
-  }, [topic.author, author, userData]);
-
-
-  const avoidPropagation = (event, func = () => {}) => {
-    event.stopPropagation();
-    func();
-  }
+  }, [topic]);
 
   return (
     <>
