@@ -27,7 +27,7 @@ export default function SimpleComment({ comment }) {
         avatar: snapshot.val().avatar,
       });
     });
-  }, [comment.author, author]);
+  }, [comment.author]);
 
   const handleEditing = (updatedComment) => {
     comment.comment = updatedComment;

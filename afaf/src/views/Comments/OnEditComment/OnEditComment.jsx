@@ -16,7 +16,7 @@ export default function OnEditComment({ comment, onUpdate }) {
         setOnPublish(false);
       });
     }
-  }, [comment.id, editedComment, id, onUpdate, onPublish]);
+  }, [comment.id, editedComment, id, onPublish]);
 
   const onUpdateComment = (e) => {
     setEditedComment(e.target.value);

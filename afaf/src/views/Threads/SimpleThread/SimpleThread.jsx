@@ -21,7 +21,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('simplethread useeffect 1')
+    // console.log('simplethread useeffect 1')
     getUserByHandle(topic.author).then((snapshot) => {
       const getUserData = snapshot.val();
       if (getUserData)
@@ -36,7 +36,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
           uid: snapshot.val().uid,
         });
     });
-  }, [topic]);
+  }, [topic.author, userData]);
 
   return (
     <>
@@ -108,7 +108,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
                 <b>Created: </b>
                 {new Date (topic.createdOn).toLocaleString()}
               </span>
-              {userData.handle === topic.author && <button className="edit-thread-button" onClick={e => avoidPropagation(e, navigate(`/edit-thread/${topic.id}`))}>Edit</button>}
+              {userData && userData.handle === topic.author && <button className="edit-thread-button" onClick={e => avoidPropagation(e, navigate(`/edit-thread/${topic.id}`))}>Edit</button>}
             </div>
           </div>
         </div>

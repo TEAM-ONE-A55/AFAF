@@ -13,9 +13,9 @@ export default function Comments({ thread }) {
   //       });
   //     }),[deletedComment, thread.id];
 
-      // const handleDeletedComment = () => {
-      //   console.log("deleted")
-      // }
+  // const handleDeletedComment = () => {
+  //   console.log("deleted")
+  // }
 
   return (
     <div className="comments-container">

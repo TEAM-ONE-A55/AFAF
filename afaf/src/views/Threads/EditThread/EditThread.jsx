@@ -31,7 +31,6 @@ export default function EditThread() {
         setOldImageUrl(res.url);
         setThreadTitle(res.title);
         setThreadContent(res.content);
-        console.log(res);
     } else {
         navigate("*");
     }

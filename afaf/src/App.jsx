@@ -26,12 +26,12 @@ import SearchResults from "./views/SearchResults/SearchResults";
 import EditThread from "./views/Threads/EditThread/EditThread";
 
 function App() {
+  const [user] = useAuthState(auth);
   const [context, setContext] = useState({
     user: null,
     userData: null,
   });
 
-  const [user] = useAuthState(auth);
   useEffect(() => {
     if (user) {
       getUserData(user.uid).then((snapshot) => {
