@@ -10,7 +10,7 @@ import { AppContext } from "../../../context/AppContext";
 import Button from "../../../components/Button/Button";
 import "./SingleThread.css";
 import { deleteThread } from "../../../functions/threads-functions";
-import Comment from "../../../components/Comment/Comment";
+import Comment from "../../Comments/Comment/Comment";
 import Comments from "../../Comments/RenderComments/RenderComments";
 
 export default function SingleThread() {

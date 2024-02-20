@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import "./Comment.css";
-import { AppContext } from "../../context/AppContext";
+import { AppContext } from "../../../context/AppContext";
 import PropTypes from "prop-types";
-import { updateTopic } from "../../services/threads.service";
+import { updateTopic } from "../../../services/threads.service";
 import { v4 } from "uuid";
 
 export default function Comment({ thread, setThread }) {
@@ -18,10 +18,10 @@ export default function Comment({ thread, setThread }) {
 
   useEffect(() => {
     updateTopic(thread.id, "comments", commentsData);
-    thread.comments = commentsData
-    setThread({...thread})
-    
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    thread.comments = commentsData;
+    setThread({ ...thread });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [commentsData, thread.id]);
 
   const addComment = () => {
@@ -31,17 +31,17 @@ export default function Comment({ thread, setThread }) {
         author: userData.handle,
         comment: comment,
         createdOn: Date.now(),
-        id: id
+        id: id,
       },
     });
-    setComment("")
+    setComment("");
     setTextArea(false);
     setId(v4());
   };
 
   const handleOnKeyDown = (e) => {
-    if (e.key === "Enter") addComment()
-  }
+    if (e.key === "Enter") addComment();
+  };
   return !textArea ? (
     <div className="textarea-container">
       <textarea
@@ -73,5 +73,5 @@ export default function Comment({ thread, setThread }) {
 
 Comment.propTypes = {
   thread: PropTypes.object.isRequired,
-  setThread: PropTypes.func
+  setThread: PropTypes.func,
 };
