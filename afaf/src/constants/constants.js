@@ -72,13 +72,29 @@ export const usersSortingOptions = [
 ];
 
 export const threadsFilterOptions = [
-  {label: "Filter by title", value: "title"},
-  {label: "Filter by author", value: "author"},
-  {label: "Filter by content", value: "content"}
-]
+  { label: "Filter by title", value: "title" },
+  { label: "Filter by author", value: "author" },
+  { label: "Filter by content", value: "content" },
+];
 
 export const usersThreadOptions = [
-  {label: "Filter by email", value: "email"},
-  {label: "Filter by username", value: "handle"},
-  {label: "Filter by name", value: "name"}
-]
+  { label: "Filter by email", value: "email" },
+  { label: "Filter by username", value: "handle" },
+  { label: "Filter by name", value: "name" },
+];
+
+export const STYLE_VOTES_FILL = {
+  fontVariationSettings: `'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24`,
+  cursor: "default",
+  ":hover": {
+    cursor: "pointer",
+  },
+};
+
+export const STYLE_VOTES_EMPTY = {
+  fontVariationSettings: `'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24`,
+  cursor: "default",
+  ":hover": {
+    cursor: "pointer",
+  },
+};

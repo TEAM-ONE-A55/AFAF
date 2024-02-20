@@ -15,6 +15,10 @@ import Comments from "../../Comments/RenderComments/RenderComments";
 import { getUserByHandle } from "../../../services/users.service";
 import Avatar from "../../../components/Avatar/Avatar";
 import { avoidPropagation } from "../../../functions/other-functions";
+import {
+  STYLE_VOTES_EMPTY,
+  STYLE_VOTES_FILL,
+} from "../../../constants/constants";
 
 export default function SingleThread() {
   const { user, userData } = useContext(AppContext);
@@ -173,7 +177,7 @@ export default function SingleThread() {
                 <div>
                   {user && (
                     <div className="single-thread-like-wrapper">
-                      <button
+                      {/* <button
                         onClick={(e) =>
                           avoidPropagation(e, () =>
                             toggleUpvotes(thread, userData.handle)
@@ -181,9 +185,35 @@ export default function SingleThread() {
                         }
                       >
                         {thread.likedBy.includes(userData.handle)
-                          ? "Undo Upvote"
+                          ? "Undo Upvote" 
                           : "Upvote"}
-                      </button>
+                      </button> */}
+                      {thread.likedBy.includes(userData.handle) ? (
+                        <span
+                          onClick={(e) =>
+                            avoidPropagation(e, () =>
+                              toggleUpvotes(thread, userData.handle)
+                            )
+                          }
+                          className="material-symbols-outlined"
+                          style={STYLE_VOTES_FILL}
+                        >
+                          thumb_up
+                        </span>
+                      ) : (
+                        <span
+                          onClick={(e) =>
+                            avoidPropagation(e, () =>
+                              toggleUpvotes(thread, userData.handle)
+                            )
+                          }
+                          className="material-symbols-outlined"
+                          style={STYLE_VOTES_EMPTY}
+                        >
+                          thumb_up
+                        </span>
+                      )}
+
                       {thread.likedBy && thread.dislikedBy && (
                         <p className="simple-thread-like-count">
                           {renderVotes(
@@ -193,7 +223,33 @@ export default function SingleThread() {
                         </p>
                       )}
 
-                      <button
+                      {thread.dislikedBy.includes(userData.handle) ? (
+                        <span
+                          onClick={(e) =>
+                            avoidPropagation(e, () =>
+                              toggleDownVotes(thread, userData.handle)
+                            )
+                          }
+                          className="material-symbols-outlined"
+                          style={STYLE_VOTES_FILL}
+                        >
+                          thumb_down
+                        </span>
+                      ) : (
+                        <span
+                          onClick={(e) =>
+                            avoidPropagation(e, () =>
+                              toggleDownVotes(thread, userData.handle)
+                            )
+                          }
+                          className="material-symbols-outlined"
+                          style={STYLE_VOTES_EMPTY}
+                        >
+                          thumb_down
+                        </span>
+                      )}
+
+                      {/* <button
                         onClick={(e) =>
                           avoidPropagation(e, () =>
                             toggleDownVotes(thread, userData.handle)
@@ -203,7 +259,7 @@ export default function SingleThread() {
                         {thread.dislikedBy.includes(userData.handle)
                           ? "Undo Downvote"
                           : "Downvote"}
-                      </button>
+                      </button> */}
                     </div>
                   )}
                 </div>
