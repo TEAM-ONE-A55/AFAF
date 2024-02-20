@@ -186,7 +186,6 @@ export const undoDislikeTopic = (handle, topicId) => {
 
 export const deleteTopic = async (handle, id) => {
   const topicsToRemove = await getTopicsByAuthor(handle);
-  console.log(topicsToRemove)
   topicsToRemove.filter((topic) => {
     if (topic.id === id) {
       remove(ref(db, `topics/${topic.id}`));

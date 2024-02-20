@@ -34,7 +34,6 @@ export default function SingleThread() {
   });
 
   useEffect(() => {
-    console.log("singlethread useeffect 1");
     getTopicById(id).then((result) => {
       if (result) {
         setThread(result);
@@ -45,7 +44,6 @@ export default function SingleThread() {
   }, []);
 
   useEffect(() => {
-    console.log("singlethread useeffect 2");
     if (thread) {
       getUserByHandle(thread.author).then((snapshot) => {
         const getUserData = snapshot.val();
@@ -177,17 +175,6 @@ export default function SingleThread() {
                 <div>
                   {user && (
                     <div className="single-thread-like-wrapper">
-                      {/* <button
-                        onClick={(e) =>
-                          avoidPropagation(e, () =>
-                            toggleUpvotes(thread, userData.handle)
-                          )
-                        }
-                      >
-                        {thread.likedBy.includes(userData.handle)
-                          ? "Undo Upvote" 
-                          : "Upvote"}
-                      </button> */}
                       {thread.likedBy.includes(userData.handle) ? (
                         <span
                           onClick={(e) =>
@@ -248,18 +235,6 @@ export default function SingleThread() {
                           thumb_down
                         </span>
                       )}
-
-                      {/* <button
-                        onClick={(e) =>
-                          avoidPropagation(e, () =>
-                            toggleDownVotes(thread, userData.handle)
-                          )
-                        }
-                      >
-                        {thread.dislikedBy.includes(userData.handle)
-                          ? "Undo Downvote"
-                          : "Downvote"}
-                      </button> */}
                     </div>
                   )}
                 </div>
@@ -281,10 +256,9 @@ export default function SingleThread() {
                     <button
                       className="edit-thread-button"
                       onClick={(e) =>
-                        avoidPropagation(
-                          e,
-                          () => {navigate(`/edit-thread/${thread.id}`)}
-                        )
+                        avoidPropagation(e, () => {
+                          navigate(`/edit-thread/${thread.id}`);
+                        })
                       }
                     >
                       Edit
