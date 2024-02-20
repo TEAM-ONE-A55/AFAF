@@ -20,8 +20,6 @@ export default function Comment({ thread, setThread }) {
     updateTopic(thread.id, "comments", commentsData);
     thread.comments = commentsData
     setThread({...thread})
-    setComment("");
-    setTextArea(false);
     
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [commentsData, thread.id]);
@@ -36,6 +34,8 @@ export default function Comment({ thread, setThread }) {
         id: id
       },
     });
+    setComment("")
+    setTextArea(false);
     setId(v4());
   };
 
