@@ -1,9 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  dislikeTopic,
-  getAllTopics,
-  likeTopic,
-} from "../../../services/threads.service";
+import { getAllTopics } from "../../../services/threads.service";
 import SimpleThread from "../SimpleThread/SimpleThread";
 import { popularByComments } from "../../../functions/filter-functions";
 
@@ -14,15 +10,6 @@ export default function MostCommented() {
     getAllTopics().then(setTopics);
   }, []);
 
-  // const topicLike = async (handle, id) => {
-  //   await likeTopic(handle, id);
-  //   getAllTopics().then(setTopics);
-  // };
-
-  // const topicDislike = async (handle, id) => {
-  //   await dislikeTopic(handle, id);
-  //   getAllTopics().then(setTopics);
-  // };
   const topicLike = (handle, id) => {
     setTopics(
       topics.map((topic) => {
@@ -51,15 +38,14 @@ export default function MostCommented() {
 
   return (
     <div>
-      {popularByComments(topics)
-        .map((topic) => (
-          <SimpleThread
-            key={topic.id}
-            topic={topic}
-            topicLike={topicLike}
-            topicDislike={topicDislike}
-          />
-        ))}
+      {popularByComments(topics).map((topic) => (
+        <SimpleThread
+          key={topic.id}
+          topic={topic}
+          topicLike={topicLike}
+          topicDislike={topicDislike}
+        />
+      ))}
     </div>
   );
 }

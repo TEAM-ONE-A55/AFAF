@@ -1,9 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  dislikeTopic,
-  getAllTopics,
-  likeTopic,
-} from "../../../services/threads.service";
+import { getAllTopics } from "../../../services/threads.service";
 import SimpleThread from "../SimpleThread/SimpleThread";
 import { newest } from "../../../functions/filter-functions";
 
@@ -13,16 +9,6 @@ export default function Newest() {
   useEffect(() => {
     getAllTopics().then(setTopics);
   }, []);
-
-  // const topicLike = async (handle, id) => {
-  //   await likeTopic(handle, id);
-  //   getAllTopics().then(setTopics);
-  // };
-
-  // const topicDislike = async (handle, id) => {
-  //   await dislikeTopic(handle, id);
-  //   getAllTopics().then(setTopics);
-  // };
 
   const topicLike = (handle, id) => {
     setTopics(
@@ -52,15 +38,14 @@ export default function Newest() {
 
   return (
     <div>
-      {newest(topics)
-        .map((topic) => (
-          <SimpleThread
-            key={topic.id}
-            topic={topic}
-            topicLike={topicLike}
-            topicDislike={topicDislike}
-          />
-        ))}
+      {newest(topics).map((topic) => (
+        <SimpleThread
+          key={topic.id}
+          topic={topic}
+          topicLike={topicLike}
+          topicDislike={topicDislike}
+        />
+      ))}
     </div>
   );
 }
