@@ -6,7 +6,16 @@ import { useNavigate } from "react-router-dom";
 import { getUserByHandle } from "../../../services/users.service";
 import { avoidPropagation } from "../../../functions/other-functions";
 import Avatar from "../../../components/Avatar/Avatar";
-import { dislikeTopic, likeTopic, undoDislikeTopic, undoLikeTopic } from "../../../services/threads.service";
+import {
+  dislikeTopic,
+  likeTopic,
+  undoDislikeTopic,
+  undoLikeTopic,
+} from "../../../services/threads.service";
+import {
+  STYLE_VOTES_EMPTY,
+  STYLE_VOTES_FILL,
+} from "../../../constants/constants";
 
 export default function SimpleThread({ topic, topicLike, topicDislike }) {
   const { user, userData } = useContext(AppContext);
@@ -22,7 +31,6 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // console.log('simplethread useeffect 1')
     getUserByHandle(topic.author).then((snapshot) => {
       const getUserData = snapshot.val();
       if (getUserData)
@@ -39,14 +47,14 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
     });
   }, [topic.author, userData]);
 
-  const toggleUpvotes = async  () => {
+  const toggleUpvotes = async () => {
     if (topic.likedBy.includes(userData.handle)) {
       await undoLikeTopic(userData.handle, topic.id);
     } else {
       await likeTopic(userData.handle, topic.id);
     }
     topicLike(userData.handle, topic.id);
-  }
+  };
 
   const toggleDownVotes = async () => {
     if (topic.dislikedBy.includes(userData.handle)) {
@@ -55,7 +63,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
       await dislikeTopic(userData.handle, topic.id);
     }
     topicDislike(userData.handle, topic.id);
-  }
+  };
 
   const renderVotes = (likes, dislikes) => {
     if (!likes) likes = 0;
@@ -141,14 +149,23 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
               <div>
                 {user ? (
                   <div className="simple-thread-like-wrapper">
-                    <button
-                      onClick={(e) =>
-                        avoidPropagation(e, toggleUpvotes
-                        )
-                      }
-                    >
-                      {topic.likedBy.includes(userData.handle) ? "Undo Upvote" : "Upvote"}
-                    </button>
+                    {topic.likedBy.includes(userData.handle) ? (
+                      <span
+                        onClick={(e) => avoidPropagation(e, toggleUpvotes)}
+                        className="material-symbols-outlined"
+                        style={STYLE_VOTES_FILL}
+                      >
+                        thumb_up
+                      </span>
+                    ) : (
+                      <span
+                        onClick={(e) => avoidPropagation(e, toggleUpvotes)}
+                        className="material-symbols-outlined"
+                        style={STYLE_VOTES_EMPTY}
+                      >
+                        thumb_up
+                      </span>
+                    )}
                     {topic.likedBy && topic.dislikedBy && (
                       <p className="simple-thread-like-count">
                         {renderVotes(
@@ -158,14 +175,23 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
                       </p>
                     )}
 
-                    <button
-                      onClick={(e) =>
-                        avoidPropagation(e, toggleDownVotes
-                        )
-                      }
-                    >
-                       {topic.dislikedBy.includes(userData.handle) ? "Undo Downvote" : "Downvote"}
-                    </button>
+                    {topic.dislikedBy.includes(userData.handle) ? (
+                      <span
+                        onClick={(e) => avoidPropagation(e, toggleDownVotes)}
+                        className="material-symbols-outlined"
+                        style={STYLE_VOTES_FILL}
+                      >
+                        thumb_down
+                      </span>
+                    ) : (
+                      <span
+                        onClick={(e) => avoidPropagation(e, toggleDownVotes)}
+                        className="material-symbols-outlined"
+                        style={STYLE_VOTES_EMPTY}
+                      >
+                        thumb_down
+                      </span>
+                    )}
                   </div>
                 ) : (
                   topic.likedBy &&
