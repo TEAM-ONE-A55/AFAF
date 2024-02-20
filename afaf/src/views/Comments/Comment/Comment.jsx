@@ -4,6 +4,7 @@ import { AppContext } from "../../../context/AppContext";
 import PropTypes from "prop-types";
 import { updateTopic } from "../../../services/threads.service";
 import { v4 } from "uuid";
+import { avoidPropagation } from "../../../functions/other-functions";
 
 export default function Comment({ thread, setThread }) {
   const { userData } = useContext(AppContext);
@@ -11,10 +12,6 @@ export default function Comment({ thread, setThread }) {
   const [comment, setComment] = useState("");
   const [id, setId] = useState(v4());
   const [commentsData, setCommentsData] = useState(thread.comments || {});
-
-  const handleTextAreaToggle = () => {
-    setTextArea(prev => !prev);
-  };
 
   useEffect(() => {
     updateTopic(thread.id, "comments", commentsData);
@@ -48,7 +45,6 @@ export default function Comment({ thread, setThread }) {
         className="textarea-comment"
         placeholder="Add a comment"
         onFocus={() => setTextArea(true)}
-        onBlur={() => setTextArea(false)}
         onChange={() => {}}
         value=""
       />
@@ -58,13 +54,13 @@ export default function Comment({ thread, setThread }) {
       <textarea
         className="textarea-comment-onAction"
         placeholder="Add a comment"
-        onBlur={() => setTextArea(false)}
+        onBlur={() => setTimeout(() => setTextArea(false), 80) }
         onChange={(e) => setComment(e.target.value)}
         value={comment}
         onKeyDown={handleOnKeyDown}
       />
       <span
-        onClick={addComment}
+        onClick={(e) => avoidPropagation(e, addComment)}
         className="material-symbols-outlined comment-btn"
       >
         send
