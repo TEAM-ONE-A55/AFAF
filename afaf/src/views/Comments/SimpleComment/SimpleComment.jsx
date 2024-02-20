@@ -44,7 +44,7 @@ export default function SimpleComment({ comment }) {
     }
   };
 
-  return (
+   if(userData) return (
     <div className="simple-comment-container">
       <span>
         <Avatar
