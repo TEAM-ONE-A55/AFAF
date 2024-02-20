@@ -38,19 +38,43 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
     });
   }, [topic.author, userData]);
 
+  const renderVotes = (likes, dislikes) => {
+    if (!likes) likes = 0;
+    if (!dislikes) dislikes = 0;
+    return likes - dislikes;
+  };
+
   return (
     <>
       {author.username && (
-        <div className="simple-thread-container" style={{ cursor: "pointer" }} onClick={e => avoidPropagation(e, () => navigate(`/single-thread/${topic.id}`))}>
+        <div
+          className="simple-thread-container"
+          style={{ cursor: "pointer" }}
+          onClick={(e) =>
+            avoidPropagation(e, () => navigate(`/single-thread/${topic.id}`))
+          }
+        >
           <div className="simple-thread-left-side">
             <Avatar
-              onClick={(e) => avoidPropagation(e, () => navigate(`/profile/${author.username}`))}
+              onClick={(e) =>
+                avoidPropagation(e, () =>
+                  navigate(`/profile/${author.username}`)
+                )
+              }
               Width={"100px"}
               Height={"100px"}
               url={author.avatar}
             />
             <p className="simple-thread-left-side-handle">
-              <a onClick={e => avoidPropagation(e, () => navigate(`/profile/${author.username}`))}>@{author.username}</a>
+              <a
+                onClick={(e) =>
+                  avoidPropagation(e, () =>
+                    navigate(`/profile/${author.username}`)
+                  )
+                }
+              >
+                @{author.username}
+              </a>
             </p>
             <p>
               <b>Role: </b>
@@ -72,43 +96,102 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
           <div className="simple-thread-right-side">
             <div className="simple-thread-right-side-top">
               <h3>{topic.title}</h3>
-              {topic.content ? 
-              (topic.type === 'post' ? <p className="simple-thread-content">{topic.content}</p> : 
-              <a className="simple-thread-url" href={topic.content} target="_blank" rel="noreferrer" onClick={e => avoidPropagation(e)}>{topic.content}</a>) : 
-              <img className="simple-thread-image" src={topic.url} alt="Topic image is missing :(" />} 
+              {topic.content ? (
+                topic.type === "post" ? (
+                  <p className="simple-thread-content">{topic.content}</p>
+                ) : (
+                  <a
+                    className="simple-thread-url"
+                    href={topic.content}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={(e) => avoidPropagation(e)}
+                  >
+                    {topic.content}
+                  </a>
+                )
+              ) : (
+                <img
+                  className="simple-thread-image"
+                  src={topic.url}
+                  alt="Topic image is missing :("
+                />
+              )}
             </div>
             <div className="simple-thread-right-side-bottom">
               <div>
-                {user && (
+                {user ? (
                   <div className="simple-thread-like-wrapper">
-                    <button onClick={e => avoidPropagation(e, () => topicLike(userData.handle, topic.id))}>
-                      Like
+                    <button
+                      onClick={(e) =>
+                        avoidPropagation(e, () =>
+                          topicLike(userData.handle, topic.id)
+                        )
+                      }
+                    >
+                      Upvote
                     </button>
-                    {topic.likedBy &&
-                      (topic.likedBy.length === 1 ? (
-                        <p className="simple-thread-like-count">{topic.likedBy.length} like</p>
-                      ) : (
-                        <p className="simple-thread-like-count">{topic.likedBy.length} likes</p>
-                      ))}
-                    <button onClick={e => avoidPropagation(e, () => topicDislike(userData.handle, topic.id))}>
-                      Dislike
+                    {topic.likedBy && topic.dislikedBy && (
+                      <p className="simple-thread-like-count">
+                        {renderVotes(
+                          topic.likedBy.length,
+                          topic.dislikedBy.length
+                        )}
+                      </p>
+                    )}
+
+                    <button
+                      onClick={(e) =>
+                        avoidPropagation(e, () =>
+                          topicDislike(userData.handle, topic.id)
+                        )
+                      }
+                    >
+                      Downvote
                     </button>
                   </div>
+                ) : (
+                  topic.likedBy &&
+                  topic.dislikedBy && (
+                    <p className="simple-thread-like-count">
+                      {renderVotes(
+                        topic.likedBy.length,
+                        topic.dislikedBy.length
+                      ) === 1
+                        ? "1 vote"
+                        : `${renderVotes(
+                            topic.likedBy.length,
+                            topic.dislikedBy.length
+                          )} votes`}
+                    </p>
+                  )
                 )}
               </div>
-              {topic.comments ?
-                (Object.keys(topic.comments).length === 1 ? (
+              {topic.comments ? (
+                Object.keys(topic.comments).length === 1 ? (
                   <p>{Object.keys(topic.comments).length} comment</p>
                 ) : (
                   <p>{Object.keys(topic.comments).length} comments</p>
-                  ))
-                  : <p>0 comments</p>
-                }
+                )
+              ) : (
+                <p>0 comments</p>
+              )}
               <span>
                 <b>Created: </b>
-                {new Date (topic.createdOn).toLocaleString()}
+                {new Date(topic.createdOn).toLocaleString()}
               </span>
-              {userData && userData.handle === topic.author && <button className="edit-thread-button" onClick={e => avoidPropagation(e, () => navigate(`/edit-thread/${topic.id}`))}>Edit</button>}
+              {userData && userData.handle === topic.author && (
+                <button
+                  className="edit-thread-button"
+                  onClick={(e) =>
+                    avoidPropagation(e, () =>
+                      navigate(`/edit-thread/${topic.id}`)
+                    )
+                  }
+                >
+                  Edit
+                </button>
+              )}
             </div>
           </div>
         </div>

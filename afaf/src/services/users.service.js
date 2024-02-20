@@ -24,6 +24,7 @@ export const createUserHandle = (handle, uid, email, name) => {
     name,
     createdOn: new Date().valueOf(),
     likedTopics: {},
+    dislikedTopics: {},
     createdTopic: {},
     postReplies: {},
     avatar: defaultAvatar,

@@ -22,7 +22,8 @@ const fromTopicsDocument = (snapshot) => {
       // createdOn: new Date(snapshot.val()[key].createdOn).toLocaleString(),
       createdOn: new Date(topic.createdOn),
       likedBy: topic.likedBy ? Object.keys(topic.likedBy) : [],
-      commentedBy: topic.commentedBy ? Object.keys(topic.commentedBy) : [],
+      dislikedBy: topic.likedBy ? Object.keys(topic.dislikedBy) : [],
+      // commentedBy: topic.commentedBy ? Object.keys(topic.commentedBy) : [],
     };
   });
 };
@@ -38,8 +39,9 @@ export const addThread = async (title, content, author, url, uuid, type) => {
       uuid,
       type,
       createdOn: Date.now(),
-      commentedBy: {},
+      // commentedBy: {},
       likedBy: {},
+      dislikedBy: {}
     });
 
     const threadId = thread.key;
@@ -65,9 +67,12 @@ export const getAllTopics = async (key = "createdOn") => {
     likedBy: snapshot.val()[key].likedBy
       ? Object.keys(snapshot.val()[key].likedBy)
       : [],
-    commentedBy: snapshot.val()[key].commentedBy
-      ? Object.keys(snapshot.val()[key].commentedBy)
+    dislikedBy: snapshot.val()[key].dislikedBy
+      ? Object.keys(snapshot.val()[key].dislikedBy)
       : [],
+    // commentedBy: snapshot.val()[key].commentedBy
+    //   ? Object.keys(snapshot.val()[key].commentedBy)
+    //   : [],
   }));
   return topics;
 };
@@ -89,9 +94,12 @@ export const getAllTopicsBySearch = async (
       likedBy: snapshot.val()[key].likedBy
         ? Object.keys(snapshot.val()[key].likedBy)
         : [],
-      commentedBy: snapshot.val()[key].commentedBy
-        ? Object.keys(snapshot.val()[key].commentedBy)
+      dislikedBy: snapshot.val()[key].dislikedBy
+        ? Object.keys(snapshot.val()[key].dislikedBy)
         : [],
+      // commentedBy: snapshot.val()[key].commentedBy
+      //   ? Object.keys(snapshot.val()[key].commentedBy)
+      //   : [],
     }))
     .filter((topic) =>
       topic[searchByKey].toLowerCase().includes(search.toLowerCase())
@@ -109,9 +117,12 @@ export const getTopicById = async (id) => {
     ...snapshot.val(),
     createdOn: new Date(snapshot.val().createdOn),
     likedBy: snapshot.val().likedBy ? Object.keys(snapshot.val().likedBy) : [],
-    commentedBy: snapshot.val().commentedBy
-      ? Object.keys(snapshot.val().commentedBy)
+    dislikedBy: snapshot.val().dislikedBy
+      ? Object.keys(snapshot.val().dislikedBy)
       : [],
+    // commentedBy: snapshot.val().commentedBy
+    // ? Object.keys(snapshot.val().commentedBy)
+    // : [],
   };
 
   return topic;
@@ -134,9 +145,10 @@ export const getLikedTopics = async (handle) => {
             createdOn: new Date(topic.createdOn),
             id: key,
             likedBy: topic.likedBy ? Object.keys(topic.likedBy) : [],
-            commentedBy: topic.commentedBy
-              ? Object.keys(topic.commentedBy)
-              : [],
+            dislikedBy: topic.dislikedBy ? Object.keys(topic.dislikedBy) : [],
+            // commentedBy: topic.commentedBy
+            //   ? Object.keys(topic.commentedBy)
+            //   : [],
           };
         });
       })
@@ -156,12 +168,16 @@ export const likeTopic = (handle, topicId) => {
   const updateLikes = {};
   updateLikes[`/topics/${topicId}/likedBy/${handle}`] = true;
   updateLikes[`/users/${handle}/likedTopics/${topicId}`] = true;
+  updateLikes[`/topics/${topicId}/dislikedBy/${handle}`] = null;
+  updateLikes[`/users/${handle}/dislikedTopics/${topicId}`] = null;
 
   return update(ref(db), updateLikes);
 };
 
 export const dislikeTopic = (handle, topicId) => {
   const updateLikes = {};
+  updateLikes[`/topics/${topicId}/dislikedBy/${handle}`] = true;
+  updateLikes[`/users/${handle}/dislikedTopics/${topicId}`] = true;
   updateLikes[`/topics/${topicId}/likedBy/${handle}`] = null;
   updateLikes[`/users/${handle}/likedTopics/${topicId}`] = null;
 
@@ -188,14 +204,13 @@ export const updateThreadDB = async (id, thread) => {
   return id;
 };
 
-
 // Comments service
 
-export const getComments = async(topicId) => {
+export const getComments = async (topicId) => {
   const snapshot = await get(ref(db, `topics/${topicId}/comments`));
   if (!snapshot.exists()) return null;
-  return snapshot.val()
-}
+  return snapshot.val();
+};
 
 export const updateComment = async (id, key, value) => {
   const path = `topics/${id}/comments/${key}/comment/`;
@@ -203,5 +218,5 @@ export const updateComment = async (id, key, value) => {
 };
 
 export const deleteComment = async (topicId, commentId) => {
-  remove(ref(db, `topics/${topicId}/comments/${commentId}`))
-}
+  remove(ref(db, `topics/${topicId}/comments/${commentId}`));
+};
