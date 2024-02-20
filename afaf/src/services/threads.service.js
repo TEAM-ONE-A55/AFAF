@@ -19,11 +19,9 @@ const fromTopicsDocument = (snapshot) => {
     return {
       ...topic,
       id: key,
-      // createdOn: new Date(snapshot.val()[key].createdOn).toLocaleString(),
       createdOn: new Date(topic.createdOn),
       likedBy: topic.likedBy ? Object.keys(topic.likedBy) : [],
-      dislikedBy: topic.likedBy ? Object.keys(topic.dislikedBy) : [],
-      // commentedBy: topic.commentedBy ? Object.keys(topic.commentedBy) : [],
+      dislikedBy: topic.dislikedBy ? Object.keys(topic.dislikedBy) : [],
     };
   });
 };
@@ -39,7 +37,6 @@ export const addThread = async (title, content, author, url, uuid, type) => {
       uuid,
       type,
       createdOn: Date.now(),
-      // commentedBy: {},
       likedBy: {},
       dislikedBy: {}
     });
@@ -63,16 +60,12 @@ export const getAllTopics = async (key = "createdOn") => {
   const topics = Object.keys(snapshot.val()).map((key) => ({
     id: key,
     ...snapshot.val()[key],
-    // createdOn: new Date(snapshot.val()[key].createdOn).toLocaleString(),
     likedBy: snapshot.val()[key].likedBy
       ? Object.keys(snapshot.val()[key].likedBy)
       : [],
     dislikedBy: snapshot.val()[key].dislikedBy
       ? Object.keys(snapshot.val()[key].dislikedBy)
       : [],
-    // commentedBy: snapshot.val()[key].commentedBy
-    //   ? Object.keys(snapshot.val()[key].commentedBy)
-    //   : [],
   }));
   return topics;
 };
@@ -97,9 +90,6 @@ export const getAllTopicsBySearch = async (
       dislikedBy: snapshot.val()[key].dislikedBy
         ? Object.keys(snapshot.val()[key].dislikedBy)
         : [],
-      // commentedBy: snapshot.val()[key].commentedBy
-      //   ? Object.keys(snapshot.val()[key].commentedBy)
-      //   : [],
     }))
     .filter((topic) =>
       topic[searchByKey].toLowerCase().includes(search.toLowerCase())
@@ -120,9 +110,6 @@ export const getTopicById = async (id) => {
     dislikedBy: snapshot.val().dislikedBy
       ? Object.keys(snapshot.val().dislikedBy)
       : [],
-    // commentedBy: snapshot.val().commentedBy
-    // ? Object.keys(snapshot.val().commentedBy)
-    // : [],
   };
 
   return topic;
@@ -146,9 +133,6 @@ export const getLikedTopics = async (handle) => {
             id: key,
             likedBy: topic.likedBy ? Object.keys(topic.likedBy) : [],
             dislikedBy: topic.dislikedBy ? Object.keys(topic.dislikedBy) : [],
-            // commentedBy: topic.commentedBy
-            //   ? Object.keys(topic.commentedBy)
-            //   : [],
           };
         });
       })
@@ -181,11 +165,28 @@ export const dislikeTopic = (handle, topicId) => {
   updateLikes[`/topics/${topicId}/likedBy/${handle}`] = null;
   updateLikes[`/users/${handle}/likedTopics/${topicId}`] = null;
 
-  return update(ref(db), updateLikes);
+  return update(ref(db), updateLikes); 
 };
+
+export const undoLikeTopic = (handle, topicId) => {
+  const updateLikes = {};
+  updateLikes[`/topics/${topicId}/likedBy/${handle}`] = null;
+  updateLikes[`/users/${handle}/likedTopics/${topicId}`] = null;
+
+  return update(ref(db), updateLikes);
+}
+
+export const undoDislikeTopic = (handle, topicId) => {
+  const updateLikes = {};
+  updateLikes[`/topics/${topicId}/dislikedBy/${handle}`] = null;
+  updateLikes[`/users/${handle}/dislikedTopics/${topicId}`] = null;
+
+  return update(ref(db), updateLikes);
+}
 
 export const deleteTopic = async (handle, id) => {
   const topicsToRemove = await getTopicsByAuthor(handle);
+  console.log(topicsToRemove)
   topicsToRemove.filter((topic) => {
     if (topic.id === id) {
       remove(ref(db, `topics/${topic.id}`));
