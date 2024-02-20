@@ -5,7 +5,6 @@ import "./RenderComments.css";
 
 export default function Comments({ thread, setThread }) {
 
-
   return (
     <div className="comments-container">
       {thread.comments &&

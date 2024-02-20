@@ -5,7 +5,6 @@ import { getUserByHandle } from "../../../services/users.service";
 import { AppContext } from "../../../context/AppContext";
 import Avatar from "../../../components/Avatar/Avatar";
 import { useNavigate, useParams } from "react-router-dom";
-import Button from "../../../components/Button/Button";
 import OnEditComment from "../OnEditComment/OnEditComment";
 import { deleteComment } from "../../../services/threads.service";
 import toast from "react-hot-toast";
@@ -43,52 +42,75 @@ export default function SimpleComment({ comment, setThread, thread }) {
     } catch (e) {
       console.log(e.message);
     } finally {
-      delete thread.comments[comment.id]
-      setThread({...thread})
+      delete thread.comments[comment.id];
+      setThread({ ...thread });
     }
   };
 
-   if(userData) return (
-    <div className="simple-comment-container">
-      <div className="simple-comment-top">
-        <span>
-          <Avatar
-            onClick={() => navigate(`/profile/${comment.author}`)}
-            Width={"40px"}
-            Height={"40px"}
-            url={author.avatar}
-          />
-        </span>
-        <p className="single-thread-left-side-handle">
-          <a onClick={e => avoidPropagation(e, () => {navigate(`/profile/${comment.author}`)})}>@{comment.author}</a>
-        </p>
-        <span className="simple-comment-date">{new Date(comment.createdOn).toLocaleString()}</span>
-      </div>
-      <div className="simple-comment-bottom">
-        {onEditing ? (
-          <>
-            <OnEditComment className="apply-transition-50ms" comment={comment} onUpdate={handleEditing} />
-          </>
-        ) : (
-          <p className="apply-transition-50ms">{editedComment}</p>
-        )}
-        <div className="simple-comment-buttons-wrapper">
-          {userData.handle === comment.author && (
-            <button onClick={() => setOnEditing(!onEditing)}>
-              {onEditing ? "Back" : "Edit"}
-            </button>
+  return (
+    userData && (
+      <div className="simple-comment-container">
+        <div className="simple-comment-top">
+          <span>
+            {author.avatar && (
+              <Avatar
+                onClick={() => navigate(`/profile/${comment.author}`)}
+                Width={"40px"}
+                Height={"40px"}
+                url={author.avatar}
+              />
+            )}
+          </span>
+          {author && (
+            <p className="single-thread-left-side-handle">
+              <a
+                onClick={(e) =>
+                  avoidPropagation(e, () => {
+                    navigate(`/profile/${comment.author}`);
+                  })
+                }
+              >
+                @{comment.author}
+              </a>
+            </p>
           )}
-          {(userData.handle === comment.author || userData.role === "admin") && (
-            <button className="delete-comment-button" onClick={handleDelete}>Delete</button>
+          <span className="simple-comment-date">
+            {comment.createdOn && new Date(comment.createdOn).toLocaleString()}
+          </span>
+        </div>
+        <div className="simple-comment-bottom">
+          {onEditing ? (
+            <>
+              <OnEditComment
+                className="apply-transition-50ms"
+                comment={comment}
+                onUpdate={handleEditing}
+              />
+            </>
+          ) : (
+            <p className="apply-transition-50ms">{editedComment}</p>
           )}
+          <div className="simple-comment-buttons-wrapper">
+            {userData.handle === comment.author && (
+              <button onClick={() => setOnEditing(!onEditing)}>
+                {onEditing ? "Back" : "Edit"}
+              </button>
+            )}
+            {(userData.handle === comment.author ||
+              userData.role === "admin") && (
+              <button className="delete-comment-button" onClick={handleDelete}>
+                Delete
+              </button>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    )
   );
 }
 
 SimpleComment.propTypes = {
   comment: PropTypes.object.isRequired,
   setThread: PropTypes.func,
-  thread: PropTypes.object
+  thread: PropTypes.object,
 };
