@@ -41,16 +41,16 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
   return (
     <>
       {author.username && (
-        <div className="simple-thread-container" style={{ cursor: "pointer" }} onClick={e => avoidPropagation(e, navigate(`/single-thread/${topic.id}`))}>
+        <div className="simple-thread-container" style={{ cursor: "pointer" }} onClick={e => avoidPropagation(e, () => navigate(`/single-thread/${topic.id}`))}>
           <div className="simple-thread-left-side">
             <Avatar
-              onClick={e => avoidPropagation(e, navigate(`/profile/${author.username}`))}
+              onClick={(e) => avoidPropagation(e, () => navigate(`/profile/${author.username}`))}
               Width={"100px"}
               Height={"100px"}
               url={author.avatar}
             />
             <p className="simple-thread-left-side-handle">
-              <a onClick={e => avoidPropagation(e, navigate(`/profile/${author.username}`))}>@{author.username}</a>
+              <a onClick={e => avoidPropagation(e, () => navigate(`/profile/${author.username}`))}>@{author.username}</a>
             </p>
             <p>
               <b>Role: </b>
@@ -81,7 +81,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
               <div>
                 {user && (
                   <div className="simple-thread-like-wrapper">
-                    <button onClick={e => avoidPropagation(e, topicLike(userData.handle, topic.id))}>
+                    <button onClick={e => avoidPropagation(e, () => topicLike(userData.handle, topic.id))}>
                       Like
                     </button>
                     {topic.likedBy &&
@@ -90,7 +90,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
                       ) : (
                         <p className="simple-thread-like-count">{topic.likedBy.length} likes</p>
                       ))}
-                    <button onClick={e => avoidPropagation(e, topicDislike(userData.handle, topic.id))}>
+                    <button onClick={e => avoidPropagation(e, () => topicDislike(userData.handle, topic.id))}>
                       Dislike
                     </button>
                   </div>
@@ -108,7 +108,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
                 <b>Created: </b>
                 {new Date (topic.createdOn).toLocaleString()}
               </span>
-              {userData && userData.handle === topic.author && <button className="edit-thread-button" onClick={e => avoidPropagation(e, navigate(`/edit-thread/${topic.id}`))}>Edit</button>}
+              {userData && userData.handle === topic.author && <button className="edit-thread-button" onClick={e => avoidPropagation(e, () => navigate(`/edit-thread/${topic.id}`))}>Edit</button>}
             </div>
           </div>
         </div>

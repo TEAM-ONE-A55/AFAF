@@ -4,7 +4,7 @@ export default function Avatar({ Width, Height, url, onClick }) {
   return (
     <img
       className="avatar-img"
-      onClick={() => onClick()}
+      onClick={(e) => onClick(e)}
       style={{ width: Width, height: Height, cursor: "pointer"}}
       src={url}
       alt="avatar-default"
