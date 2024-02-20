@@ -283,7 +283,7 @@ export default function SingleThread() {
                       onClick={(e) =>
                         avoidPropagation(
                           e,
-                          navigate(`/edit-thread/${thread.id}`)
+                          () => {navigate(`/edit-thread/${thread.id}`)}
                         )
                       }
                     >
