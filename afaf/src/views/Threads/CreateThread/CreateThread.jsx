@@ -158,8 +158,8 @@ export default function CreateThread() {
   if (user) {
     return (
       <div className="create-thread-container">
-        <h2>Create Thread</h2>
         <hr />
+        <h2>Create Thread</h2>
         <div className="create-thread-container-content">
           <div className="create-thread-left-side">
             <div className="create-thread-user">

@@ -69,21 +69,20 @@ export default function SingleThread() {
     getTopicById(id).then(setThread);
   };
 
-
   return (
     <div className="single-thread-component-wrapper">
       {thread && (
         <>
         <div className="single-thread-container">
-          <div className="simple-thread-left-side">
+          <div className="single-thread-left-side">
               <Avatar
-                onClick={e => avoidPropagation(e, navigate(`/profile/${author.username}`))}
+                onClick={e => avoidPropagation(e, () => {navigate(`/profile/${author.username}`)})}
                 Width={"100px"}
                 Height={"100px"}
                 url={author.avatar}
               />
-              <p className="simple-thread-left-side-handle">
-                <a onClick={e => avoidPropagation(e, navigate(`/profile/${author.username}`))}>@{author.username}</a>
+              <p className="single-thread-left-side-handle">
+                <a onClick={e => avoidPropagation(e, () => {navigate(`/profile/${author.username}`)})}>@{author.username}</a>
               </p>
               <p>
                 <b>Role: </b>
@@ -102,26 +101,26 @@ export default function SingleThread() {
                 {author.createdOn}
               </p>
             </div>
-            <div className="simple-thread-right-side">
-              <div className="simple-thread-right-side-top">
+            <div className="single-thread-right-side">
+              <div className="single-thread-right-side-top">
                 <h3>{thread.title}</h3>
                 {thread.content ? 
-                (thread.type === 'post' ? <p className="simple-thread-content">{thread.content}</p> : 
-                <a className="simple-thread-url" href={thread.content} target="_blank" rel="noreferrer" onClick={e => avoidPropagation(e)}>{thread.content}</a>) : 
-                <img className="simple-thread-image" src={thread.url} alt="Topic image is missing :(" />} 
+                (thread.type === 'post' ? <p className="single-thread-content">{thread.content}</p> : 
+                <a className="single-thread-url" href={thread.content} target="_blank" rel="noreferrer" onClick={e => avoidPropagation(e)}>{thread.content}</a>) : 
+                <img className="single-thread-image" src={thread.url} alt="Topic image is missing :(" />} 
               </div>
-              <div className="simple-thread-right-side-bottom">
+              <div className="single-thread-right-side-bottom">
                 <div>
                   {user && (
-                    <div className="simple-thread-like-wrapper">
+                    <div className="single-thread-like-wrapper">
                       <button onClick={e => avoidPropagation(e, topicLike(userData.handle, thread.id))}>
                         Like
                       </button>
                       {thread.likedBy &&
                         (thread.likedBy.length === 1 ? (
-                          <p className="simple-thread-like-count">{thread.likedBy.length} like</p>
+                          <p className="single-thread-like-count">{thread.likedBy.length} like</p>
                         ) : (
-                          <p className="simple-thread-like-count">{thread.likedBy.length} likes</p>
+                          <p className="single-thread-like-count">{thread.likedBy.length} likes</p>
                         ))}
                       <button onClick={e => avoidPropagation(e, topicDislike(userData.handle, thread.id))}>
                         Dislike
@@ -141,29 +140,32 @@ export default function SingleThread() {
                   <b>Created: </b>
                   {new Date (thread.createdOn).toLocaleString()}
                 </span>
-                {userData && userData.handle === thread.author && <button className="edit-thread-button" onClick={e => avoidPropagation(e, navigate(`/edit-thread/${thread.id}`))}>Edit</button>}
+                <div className="delete-edit-wrapper">
+                  {userData && userData.handle === thread.author && <button className="edit-thread-button" onClick={e => avoidPropagation(e, navigate(`/edit-thread/${thread.id}`))}>Edit</button>}
+                  {(userData?.handle === thread?.author || userData?.role === "admin") && (
+                      <button
+                        className="delete-thread-button"
+                        onClick={() => {
+                          deleteThread(
+                            thread.author,
+                            thread.id,
+                            thread.uuid,
+                            thread.url,
+                            "Thread has been successfully deleted"
+                          );
+                          setTimeout(() => {
+                            navigate(-1);
+                          }, 1000);
+                        }}
+                      >
+                        Delete Thread
+                      </button>
+                  )}
+                </div>
               </div>
             </div>
           </div>
 
-          {(userData?.handle === thread?.author || userData?.role === "admin") && (
-              <button
-                onClick={() => {
-                  deleteThread(
-                    thread.author,
-                    thread.id,
-                    thread.uuid,
-                    thread.url,
-                    "Thread has been successfully deleted"
-                  );
-                  setTimeout(() => {
-                    navigate(-1);
-                  }, 1000);
-                }}
-              >
-                Delete thread
-              </button>
-          )}
           <div className="single-thread-comment-section">
             <Comment thread={thread} setThread={setThread} />
             {thread.comments && <Comments thread={thread} setThread={setThread} />}
