@@ -66,8 +66,6 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
   };
 
   const renderVotes = (likes, dislikes) => {
-    if (!likes) likes = 0;
-    if (!dislikes) dislikes = 0;
     return likes - dislikes;
   };
 

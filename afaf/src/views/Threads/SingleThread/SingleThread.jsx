@@ -63,34 +63,60 @@ export default function SingleThread() {
   }, [thread]);
 
   const toggleUpvotes = async (thread, handle) => {
-    if (thread.likedBy.includes(handle)) {
+    let updatedLikedBy = thread.likedBy.slice();
+    let updatedDislikedBy = thread.dislikedBy.slice();
+
+    if (updatedDislikedBy.includes(handle)) {
+      await undoDislikeTopic(handle, thread.id);
+      updatedDislikedBy = updatedDislikedBy.filter((u) => u !== handle);
+    }
+
+    if (updatedLikedBy.includes(handle)) {
       await undoLikeTopic(handle, thread.id);
+      updatedLikedBy = updatedLikedBy.filter((u) => u !== handle);
     } else {
       await likeTopic(handle, thread.id);
+      updatedLikedBy.push(handle);
     }
+
     setThread((prevThread) => {
       if (prevThread.id === thread.id) {
-        thread.likedBy = thread.likedBy.includes(handle)
-          ? thread.likedBy.filter((u) => u !== handle)
-          : [...thread.likedBy, handle];
+        return {
+          ...prevThread,
+          likedBy: updatedLikedBy,
+          dislikedBy: updatedDislikedBy,
+        };
       }
-      return { ...prevThread };
+      return prevThread;
     });
   };
 
   const toggleDownVotes = async (thread, handle) => {
-    if (thread.dislikedBy.includes(handle)) {
+    let updatedLikedBy = thread.likedBy.slice();
+    let updatedDislikedBy = thread.dislikedBy.slice();
+
+    if (updatedLikedBy.includes(handle)) {
+      await undoLikeTopic(handle, thread.id);
+      updatedLikedBy = updatedLikedBy.filter((u) => u !== handle);
+    }
+
+    if (updatedDislikedBy.includes(handle)) {
       await undoDislikeTopic(handle, thread.id);
+      updatedDislikedBy = updatedDislikedBy.filter((u) => u !== handle);
     } else {
       await dislikeTopic(handle, thread.id);
+      updatedDislikedBy.push(handle);
     }
+
     setThread((prevThread) => {
       if (prevThread.id === thread.id) {
-        thread.dislikedBy = thread.dislikedBy.includes(handle)
-          ? thread.dislikedBy.filter((u) => u !== handle)
-          : [...thread.dislikedBy, handle];
+        return {
+          ...prevThread,
+          likedBy: updatedLikedBy,
+          dislikedBy: updatedDislikedBy,
+        };
       }
-      return { ...prevThread };
+      return prevThread;
     });
   };
 
