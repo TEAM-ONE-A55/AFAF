@@ -36,6 +36,7 @@ export default function EditThread() {
         navigate("*");
     }
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -47,6 +48,7 @@ export default function EditThread() {
             .catch((e) => toast(e.message))
             .finally(() => setLoading(false));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [attachedImg]);
 
   const updateThread = (key, value) => {

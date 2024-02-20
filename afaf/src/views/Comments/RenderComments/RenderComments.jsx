@@ -4,6 +4,19 @@ import SimpleComment from "../SimpleComment/SimpleComment";
 import "./RenderComments.css";
 
 export default function Comments({ thread }) {
+
+  // useEffect(() => {
+  //     getComments(thread.id)
+  //       .then(snapshot => {
+  //         setComments(snapshot);
+  //         SetDeletedComment(null);
+  //       });
+  //     }),[deletedComment, thread.id];
+
+      // const handleDeletedComment = () => {
+      //   console.log("deleted")
+      // }
+
   return (
     <div className="comments-container">
       {thread.comments &&
@@ -12,7 +25,7 @@ export default function Comments({ thread }) {
           .map((comment) => {
             return (
               <div className="simple-comment" key={v4()}>
-                <SimpleComment comment={comment} />
+                <SimpleComment comment={comment}/>
               </div>
             );
           })}

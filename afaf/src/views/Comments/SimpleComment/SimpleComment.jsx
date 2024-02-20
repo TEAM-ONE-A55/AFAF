@@ -4,9 +4,11 @@ import { useContext, useEffect, useState } from "react";
 import { getUserByHandle } from "../../../services/users.service";
 import { AppContext } from "../../../context/AppContext";
 import Avatar from "../../../components/Avatar/Avatar";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Button from "../../../components/Button/Button";
 import OnEditComment from "../OnEditComment/OnEditComment";
+import { deleteComment } from "../../../services/threads.service";
+import toast from "react-hot-toast";
 
 export default function SimpleComment({ comment }) {
   const { userData } = useContext(AppContext);
@@ -14,7 +16,8 @@ export default function SimpleComment({ comment }) {
     avatar: "",
   });
   const [onEditing, setOnEditing] = useState(false);
-  const [editedComment, setEditedComment] = useState(comment.comment)
+  const [editedComment, setEditedComment] = useState(comment.comment);
+  const { id } = useParams();
 
   const navigate = useNavigate();
 
@@ -27,13 +30,18 @@ export default function SimpleComment({ comment }) {
   }, [comment.author, author]);
 
   const handleEditing = (updatedComment) => {
-    comment.comment = updatedComment
+    comment.comment = updatedComment;
     setEditedComment(updatedComment);
-    setOnEditing(false)
+    setOnEditing(false);
   };
 
-  const handleDelete = () => {
-    console.log("delete");
+  const handleDelete = async () => {
+    try {
+      await deleteComment(id, comment.id);
+      toast.success("Poof! Your comment is gone.");
+    } catch (e) {
+      console.log(e.message);
+    }
   };
 
   return (
