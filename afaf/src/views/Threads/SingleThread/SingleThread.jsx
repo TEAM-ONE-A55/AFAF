@@ -141,7 +141,7 @@ export default function SingleThread() {
                   <b>Created: </b>
                   {new Date (thread.createdOn).toLocaleString()}
                 </span>
-                {userData.handle === thread.author && <button className="edit-thread-button" onClick={e => avoidPropagation(e, navigate(`/edit-thread/${thread.id}`))}>Edit</button>}
+                {userData && userData.handle === thread.author && <button className="edit-thread-button" onClick={e => avoidPropagation(e, navigate(`/edit-thread/${thread.id}`))}>Edit</button>}
               </div>
             </div>
           </div>
