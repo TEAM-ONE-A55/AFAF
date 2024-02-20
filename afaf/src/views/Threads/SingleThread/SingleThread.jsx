@@ -28,6 +28,7 @@ export default function SingleThread() {
     threads: [],
     role: "",
   });
+  console.log(thread)
 
   useEffect(() => {
     // console.log('singlethread useeffect 1')
@@ -38,7 +39,7 @@ export default function SingleThread() {
         navigate("*");
       }
     });
-  }, [id, navigate]);
+  }, []);
 
   useEffect(() => {
     // console.log('singlethread useeffect 2')
@@ -143,7 +144,7 @@ export default function SingleThread() {
                 <div className="delete-edit-wrapper">
                   {userData && userData.handle === thread.author && <button className="edit-thread-button" onClick={e => avoidPropagation(e, navigate(`/edit-thread/${thread.id}`))}>Edit</button>}
                   {(userData?.handle === thread?.author || userData?.role === "admin") && (
-                      <button
+                      thread && <button
                         className="delete-thread-button"
                         onClick={() => {
                           deleteThread(

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { getUserByHandle } from "../../../services/users.service";
 import { avoidPropagation } from "../../../functions/other-functions";
 import Avatar from "../../../components/Avatar/Avatar";
+import { dislikeTopic, likeTopic, undoDislikeTopic, undoLikeTopic } from "../../../services/threads.service";
 
 export default function SimpleThread({ topic, topicLike, topicDislike }) {
   const { user, userData } = useContext(AppContext);
@@ -37,6 +38,24 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
         });
     });
   }, [topic.author, userData]);
+
+  const toggleUpvotes = async  () => {
+    if (topic.likedBy.includes(userData.handle)) {
+      await undoLikeTopic(userData.handle, topic.id);
+    } else {
+      await likeTopic(userData.handle, topic.id);
+    }
+    topicLike(userData.handle, topic.id);
+  }
+
+  const toggleDownVotes = async () => {
+    if (topic.dislikedBy.includes(userData.handle)) {
+      await undoDislikeTopic(userData.handle, topic.id);
+    } else {
+      await dislikeTopic(userData.handle, topic.id);
+    }
+    topicDislike(userData.handle, topic.id);
+  }
 
   const renderVotes = (likes, dislikes) => {
     if (!likes) likes = 0;
@@ -124,12 +143,11 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
                   <div className="simple-thread-like-wrapper">
                     <button
                       onClick={(e) =>
-                        avoidPropagation(e, () =>
-                          topicLike(userData.handle, topic.id)
+                        avoidPropagation(e, toggleUpvotes
                         )
                       }
                     >
-                      Upvote
+                      {topic.likedBy.includes(userData.handle) ? "Undo Upvote" : "Upvote"}
                     </button>
                     {topic.likedBy && topic.dislikedBy && (
                       <p className="simple-thread-like-count">
@@ -142,12 +160,11 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
 
                     <button
                       onClick={(e) =>
-                        avoidPropagation(e, () =>
-                          topicDislike(userData.handle, topic.id)
+                        avoidPropagation(e, toggleDownVotes
                         )
                       }
                     >
-                      Downvote
+                       {topic.dislikedBy.includes(userData.handle) ? "Undo Downvote" : "Downvote"}
                     </button>
                   </div>
                 ) : (
