@@ -164,8 +164,8 @@ export default function CreateThread() {
           <div className="create-thread-left-side">
             <div className="create-thread-user">
               <Avatar
-                Width="50px"
-                Height="50px"
+                Width="40px"
+                Height="40px"
                 url={userData.avatar}
                 onClick={() => navigate("/profile")}
               />
@@ -205,7 +205,14 @@ export default function CreateThread() {
             </div>
           </div>
           <div className="create-thread-right-side">
-            Community guidelines////
+          <h4>We value your courteus language!</h4>
+            <ol>
+              <li>Conversate thoughtfully and considerately. Neither hatred nor discrimination will be tolerated.</li>
+              <li>Welcome all perspectives - tolerance is key to a thriving community.</li>
+              <li>Respect others&apos; privacy. Threat others the way you&apos;d like to be treated.</li>
+              <li>Avoid indecent language - although we strongly advocate for displaying your good sense of humor, please don&apos;t take it too far.</li>
+              <li>Have fun!</li>
+            </ol>
           </div>
         </div>
       </div>

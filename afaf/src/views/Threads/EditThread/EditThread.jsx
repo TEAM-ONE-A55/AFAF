@@ -207,7 +207,14 @@ export default function EditThread() {
             </div>
           </div>
           <div className="create-thread-right-side">
-            Community guidelines////
+            <h4>We value your courteus language!</h4>
+            <ol>
+              <li>Conversate thoughtfully and considerately. Neither hatred nor discrimination will be tolerated.</li>
+              <li>Welcome all perspectives - tolerance is key to a thriving community.</li>
+              <li>Respect others&apos; privacy. Threat others the way you&apos;d like to be treated.</li>
+              <li>Avoid indecent language - although we strongly advocate for displaying your good sense of humor, please don&apos;t take it too far.</li>
+              <li>Have fun!</li>
+            </ol>
           </div>
         </div>
       </div>

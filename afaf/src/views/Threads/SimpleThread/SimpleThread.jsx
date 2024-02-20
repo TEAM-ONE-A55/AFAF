@@ -1,8 +1,7 @@
-// import Button from "../../../components/Button/Button";
 import PropTypes from "prop-types";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../../context/AppContext";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./SimpleThread.css";
 import Avatar from "../../../components/Avatar/Avatar";
 import { getUserByHandle } from "../../../services/users.service";
@@ -37,94 +36,85 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
     });
   }, [topic.author, author, userData]);
 
+
+  const avoidPropagation = (event, func = () => {}) => {
+    event.stopPropagation();
+    func();
+  }
+
   return (
     <>
       {author.username && (
-        <div className="simple-thread-container">
-          <span className="author-info">
+        <div className="simple-thread-container" style={{ cursor: "pointer" }} onClick={e => avoidPropagation(e, navigate(`/single-thread/${topic.id}`))}>
+          <div className="simple-thread-left-side">
             <Avatar
-              onClick={() => navigate(`/profile/${author.username}`)}
-              Width={"70px"}
-              Height={"70px"}
+              onClick={e => avoidPropagation(e, navigate(`/profile/${author.username}`))}
+              Width={"100px"}
+              Height={"100px"}
               url={author.avatar}
             />
-            <p>
-              <b>Author: </b>
-              <Link to={`/profile/${author.username}`}>@{author.username}</Link>
+            <p className="simple-thread-left-side-handle">
+              <a onClick={e => avoidPropagation(e, navigate(`/profile/${author.username}`))}>@{author.username}</a>
             </p>
             <p>
               <b>Role: </b>
               {author.role === "admin" ? (
-                <span style={{ color: "pink" }}>{author.role}</span>
+                <span style={{ color: "rgb(255, 82, 82)" }}>{author.role}</span>
               ) : (
                 author.role
               )}
             </p>
             <p>
+              <b>Created threads: </b>
+              {author.threads}
+            </p>
+            <p>
               <b>Member since: </b>
               {author.createdOn}
             </p>
-            <p>
-              <b>Total threads: </b>
-              {author.threads}
-            </p>
-          </span>
-          <hr />
-          <h3
-            style={{ cursor: "pointer" }}
-            onClick={() => navigate(`/single-thread/${topic.id}`)}
-          >
-            {topic.title}
-          </h3>
-          {topic.content ? (
-            topic.type === "post" ? (
-              <p>{topic.content}</p>
-            ) : (
-              <a href={topic.content} target="_blank" rel="noreferrer">
-                {topic.content}
-              </a>
-            )
-          ) : (
-            <img src={topic.url} alt="Topic image is missing :(" />
-          )}
-          <p>
-            {" "}
-            <b>Created on: </b>
-            {new Date(topic.createdOn).toLocaleString()}
-          </p>
-          {topic.likedBy &&
-            (topic.likedBy.length === 1 ? (
-              <p>{topic.likedBy.length} like</p>
-            ) : (
-              <p>{topic.likedBy.length} likes</p>
-            ))}
-          <p>
-            {user && (
-              <>
-                <button onClick={() => topicLike(userData.handle, topic.id)}>
-                  Like
-                </button>
-                <button onClick={() => topicDislike(userData.handle, topic.id)}>
-                  Dislike
-                </button>
-                <button onClick={() => navigate(`/single-thread/${topic.id}`)}>
-                  View
-                </button>
-                {userData.handle === topic.author && (
-                  <NavLink to={`/edit-thread/${topic.id}`}>Edit</NavLink>
+          </div>
+          <div className="simple-thread-right-side">
+            <div className="simple-thread-right-side-top">
+              <h3>{topic.title}</h3>
+              {topic.content ? 
+              (topic.type === 'post' ? <p className="simple-thread-content">{topic.content}</p> : 
+              <a className="simple-thread-url" href={topic.content} target="_blank" rel="noreferrer" onClick={e => avoidPropagation(e)}>{topic.content}</a>) : 
+              <img className="simple-thread-image" src={topic.url} alt="Topic image is missing :(" />} 
+            </div>
+            <div className="simple-thread-right-side-bottom">
+              <div>
+                {user && (
+                  <div className="simple-thread-like-wrapper">
+                    <button onClick={e => avoidPropagation(e, topicLike(userData.handle, topic.id))}>
+                      Like
+                    </button>
+                    {topic.likedBy &&
+                      (topic.likedBy.length === 1 ? (
+                        <p className="simple-thread-like-count">{topic.likedBy.length} like</p>
+                      ) : (
+                        <p className="simple-thread-like-count">{topic.likedBy.length} likes</p>
+                      ))}
+                    <button onClick={e => avoidPropagation(e, topicDislike(userData.handle, topic.id))}>
+                      Dislike
+                    </button>
+                  </div>
                 )}
-              </>
-            )}
-          </p>
-          {topic.comments ? (
-            Object.keys(topic.comments).length === 1 ? (
-              <p>{Object.keys(topic.comments).length} comment</p>
-            ) : (
-              <p>{Object.keys(topic.comments).length} comments</p>
-            )
-          ) : (
-            <p>0 comments</p>
-          )}
+              </div>
+              {topic.comments ?
+                (Object.keys(topic.comments).length === 1 ? (
+                  <p>{Object.keys(topic.comments).length} comment</p>
+                ) : (
+                  <p>{Object.keys(topic.comments).length} comments</p>
+                  ))
+                  : <p>0 comments</p>
+                }
+              <span>
+                <b>Created: </b>
+                {new Date (topic.createdOn).toLocaleString()}
+              </span>
+              {userData.handle === topic.author && <button className="edit-thread-button" onClick={e => avoidPropagation(e, navigate(`/edit-thread/${topic.id}`))}>Edit</button>}
+            </div>
+          </div>
         </div>
       )}
     </>
