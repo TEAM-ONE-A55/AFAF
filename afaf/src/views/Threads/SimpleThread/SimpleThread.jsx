@@ -16,6 +16,7 @@ import {
   STYLE_VOTES_EMPTY,
   STYLE_VOTES_FILL,
 } from "../../../constants/constants";
+import toast from "react-hot-toast";
 
 export default function SimpleThread({ topic, topicLike, topicDislike }) {
   const { user, userData } = useContext(AppContext);
@@ -69,6 +70,12 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
     return likes - dislikes;
   };
 
+  const isBlocked = () => {
+    return toast.error(
+      "Oops! You're Blocked: Rule Break Detected. Admin's put you on pause"
+    );
+  };
+
   return (
     <>
       {author.username && (
@@ -76,7 +83,11 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
           className="simple-thread-container"
           style={{ cursor: "pointer" }}
           onClick={(e) =>
-            avoidPropagation(e, () => navigate(`/single-thread/${topic.id}`))
+            userData.blocked === false
+              ? avoidPropagation(e, () =>
+                  navigate(`/single-thread/${topic.id}`)
+                )
+              : isBlocked()
           }
         >
           <div className="simple-thread-left-side">
@@ -145,11 +156,15 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
             </div>
             <div className="simple-thread-right-side-bottom">
               <div>
-                {user ? (
+                {user && userData.blocked === false ? (
                   <div className="simple-thread-like-wrapper">
                     {topic.likedBy.includes(userData.handle) ? (
                       <span
-                        onClick={(e) => avoidPropagation(e, toggleUpvotes)}
+                        onClick={(e) =>
+                          userData.blocked === false
+                            ? avoidPropagation(e, toggleUpvotes)
+                            : toast
+                        }
                         className="material-symbols-outlined"
                         style={STYLE_VOTES_FILL}
                       >

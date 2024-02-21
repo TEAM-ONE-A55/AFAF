@@ -12,10 +12,6 @@ export default function Comment({ thread, setThread }) {
   const [id, setId] = useState(v4());
   const [commentsData, setCommentsData] = useState(thread.comments || {});
 
-  const handleTextAreaToggle = () => {
-    setTextArea(prev => !prev);
-  };
-
   useEffect(() => {
     updateTopic(thread.id, "comments", commentsData);
     thread.comments = commentsData;
@@ -37,6 +33,7 @@ export default function Comment({ thread, setThread }) {
     setComment("");
     setTextArea(false);
     setId(v4());
+    console.log("add");
   };
 
   const handleOnKeyDown = (e) => {

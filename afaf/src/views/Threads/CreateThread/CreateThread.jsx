@@ -155,6 +155,12 @@ export default function CreateThread() {
     }
   };
 
+  const isBlocked = () => {
+    return toast.error(
+      "Oops! You're Blocked: Rule Break Detected. Admin's put you on pause"
+    );
+  };
+
   if (user) {
     return (
       <div className="create-thread-container">
@@ -199,7 +205,7 @@ export default function CreateThread() {
                 </span>
               </nav>
               {getThreadTypeInput()}
-              <button className="post-button" onClick={postThread}>
+              <button className="post-button" onClick={() => userData.bloked === false ? postThread() : isBlocked()}>
                 Create Thread
               </button>
             </div>
