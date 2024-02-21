@@ -177,7 +177,7 @@ export default function CreateThread() {
                 Width="40px"
                 Height="40px"
                 url={userData.avatar}
-                onClick={() => navigate("/profile")}
+                onClick={() => navigate(`/profile/${userData.handle}`)}
               />
               <h3>{userData.handle}</h3>
             </div>

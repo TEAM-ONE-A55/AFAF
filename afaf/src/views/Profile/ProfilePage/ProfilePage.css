@@ -56,3 +56,14 @@
     border-radius: 5px;
     text-align: center;
 }
+
+.public-profile-buttons-wrapper {
+    display: flex;
+    gap: .5em;
+    margin: 1em
+  }
+  
+  .public-profile-buttons-wrapper > button {
+    font-size: .9rem;
+    padding: 0.3em 1.2em;
+  }

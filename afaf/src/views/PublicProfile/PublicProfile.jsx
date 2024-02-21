@@ -4,7 +4,6 @@ import { deleteUser, getUserByHandle } from "../../services/users.service";
 import Avatar from "../../components/Avatar/Avatar";
 import "./PublicProfile.css";
 import { AppContext } from "../../context/AppContext";
-import Button from "../../components/Button/Button";
 import toast from "react-hot-toast";
 import {
   dislikeTopic,
@@ -87,56 +86,55 @@ export default function PublicProfile() {
 
   return (
     <div className="public-profile-container">
-      {userData && userData.role === "admin" && (
-        <>
-          <Button onClick={() => blockUser(user, setUser)}>
-            {" "}
-            {!user.blocked ? "Ban user" : "Unblock user"}
-          </Button>
-          <Button onClick={() => removeUser(user.handle)}>Delete user</Button>
-        </>
-      )}
-      <br />
-      <hr />
+      <h3>@{user.handle}</h3>
       <Avatar
-        Width="150px"
-        Height="150px"
+        Width="200px"
+        Height="200px"
         url={user.avatar}
         onClick={() => {}}
-      />
-      <h3>@{user.handle}</h3>
-      <p>
+        />
+        {userData && userData.role === "admin" && (
+          <div className="public-profile-buttons-wrapper">
+            <button onClick={() => blockUser(user, setUser)}>
+              {!user.blocked ? "Ban user" : "Unblock user"}
+            </button>
+            <button className="delete-user-button" onClick={() => removeUser(user.handle)}>Delete user</button>
+          </div>
+        )}
+      <div className="public-profile-role-wrapper">
         <b>Role: </b>
         {user.role === "admin" ? (
-          <span style={{ color: "pink" }}>{user.role}</span>
+          <span style={{ color: "rgb(255, 82, 82)" }}>{user.role}</span>
         ) : (
           user.role
         )}{" "}
+        <br />
         <span>
-          {userData.role === 'admin' && <Link onClick={() => changeRole(user, setUser)}>
+          {userData.role === 'admin' && <Link className="register-now" onClick={() => changeRole(user, setUser)}>
             {user.role === "admin" ? "Downgrade to User" : "Upgrade to Admin"}
           </Link>}
         </span>
-      </p>
-      <p>
-        <b>Full name: </b>
-        {user.name}
-      </p>
+      </div>
+      <div className="public-profile-info-wrapper">
+        <p>
+          <b>Full name: </b>
+          {user.name}
+        </p>
 
-      <p>
-        <b>Member since: </b>
-        {user.createdOn}
-      </p>
-      <p>
-        <b>Bio: </b>
-      </p>
-      <p className="bio-info">{user.bio || "Nothing shared"}</p>
-      <p>
-        <b>Total threads: </b>
-        {user.threads || "Nothing shared"}
-      </p>
-      <Link onClick={() => setHasTopics(!hasTopics)}>
-        {" "}
+        <p>
+          <b>Member since: </b>
+          {user.createdOn}
+        </p>
+        <p>
+          <b>Total threads: </b>
+          {user.threads || "Nothing shared"}
+        </p>
+        <p>
+          <b>Bio: </b>
+        </p>
+        <p className="bio-info">{user.bio || "Nothing shared"}</p>
+      </div>
+      <Link className="register-now" onClick={() => setHasTopics(!hasTopics)}>
         {hasTopics ? <h3>Hide all threads</h3> : <h3>Show all threads</h3>}
       </Link>
       {hasTopics && (
