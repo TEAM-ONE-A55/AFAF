@@ -91,14 +91,18 @@ export default function CreateThread() {
               onChange={(e) => updateThread("title", e.target.value)}
             />
             <input
+              id="upload-photo-input"
               type="file"
               onChange={(e) => setAttachedImg(e.target.files[0])}
             />
+            {!attachedImg && <label className="upload-photo-input-button" htmlFor="upload-photo-input">Upload an image</label>}
             {loading && <p>Uploading...</p>}
-            {imageUrl && <img src={imageUrl} alt="Attached" />}
-            {imageUrl && (
-              <button onClick={removeAttachedImg}>Remove</button>
-            )}
+            <div className="attached-thread-image-container">
+              {imageUrl && <img className="attached-thread-image" src={imageUrl} alt="Attached" />}
+              {imageUrl && (
+                <button className="attached-thread-image-remove-button" onClick={removeAttachedImg}>Remove</button>
+              )}
+            </div>
           </div>
         );
       case "url":
@@ -205,12 +209,16 @@ export default function CreateThread() {
             </div>
           </div>
           <div className="create-thread-right-side">
-          <h4>We value your courteus language!</h4>
+            <h4>We appreciate your courteus language!</h4>
             <ol>
               <li>Conversate thoughtfully and considerately. Neither hatred nor discrimination will be tolerated.</li>
+              <br />
               <li>Welcome all perspectives - tolerance is key to a thriving community.</li>
+              <br />
               <li>Respect others&apos; privacy. Threat others the way you&apos;d like to be treated.</li>
+              <br />
               <li>Avoid indecent language - although we strongly advocate for displaying your good sense of humor, please don&apos;t take it too far.</li>
+              <br />
               <li>Have fun!</li>
             </ol>
           </div>

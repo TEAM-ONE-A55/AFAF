@@ -108,15 +108,19 @@ export default function EditThread() {
               value={threadTitle}
               onChange={(e) => updateThread("title", e.target.value)}
             />
-            {!oldImageUrl && <input
+            <input
+              id="upload-photo-input"
               type="file"
               onChange={(e) => setAttachedImg(e.target.files[0])}
-            />}
+            />
+            {!attachedImg && !oldImageUrl && <label className="upload-photo-input-button" htmlFor="upload-photo-input">Upload an image</label>}
             {loading && <p>Uploading...</p>}
-            {(oldImageUrl || newImageUrl) && <img src={oldImageUrl || newImageUrl} alt="Attached" />}
-            {(oldImageUrl || newImageUrl) && (
-              <button onClick={removeAttachedImg}>Remove</button>
-            )}
+            <div className="attached-thread-image-container">
+              {(oldImageUrl || newImageUrl) && <img className="attached-thread-image" src={oldImageUrl || newImageUrl} alt="Attached" />}
+              {(oldImageUrl || newImageUrl) && (
+                <button className="attached-thread-image-remove-button" onClick={removeAttachedImg}>Remove</button>
+              )}
+            </div>
           </div>
         );
       case "url":
@@ -166,6 +170,7 @@ export default function EditThread() {
         content: threadContent
       });
       navigate("/threads/newest");
+      toast.success("Thread has been successfully updated");
     }
      catch (e) {
       toast.error("Could not update thread.");
@@ -177,14 +182,14 @@ export default function EditThread() {
   if (user) {
     return (
       <div className="create-thread-container">
-        <h2>Edit Thread</h2>
         <hr />
+        <h2>Edit Thread</h2>
         <div className="create-thread-container-content">
           <div className="create-thread-left-side">
             <div className="create-thread-user">
               <Avatar
-                Width="50px"
-                Height="50px"
+                Width="40px"
+                Height="40px"
                 url={userData.avatar}
                 onClick={() => navigate("/profile")}
               />
@@ -192,26 +197,33 @@ export default function EditThread() {
             </div>
             <div className="create-thread-type">
               {thread && getThreadTypeInput()}
-              <button
-                onClick={() => {
-                deleteThread(thread.author, thread.id, thread.uuid, thread.url, "Thread has been successfully deleted");
-                setTimeout(() => {
-                    navigate(-1);
-                }, 1000);
-                }}
-                >
-                Delete thread
-              </button>
-              <button className="post-button" onClick={submitThread}>Submit changes</button>
+              <div className="edit-thread-buttons">
+                <button
+                  className="delete-thread-button"
+                  onClick={() => {
+                  deleteThread(thread.author, thread.id, thread.uuid, thread.url, "Thread has been successfully deleted");
+                  setTimeout(() => {
+                      navigate(-1);
+                  }, 1000);
+                  }}
+                  >
+                  Delete thread
+                </button>
+                <button className="" onClick={submitThread}>Submit changes</button>
+              </div>
             </div>
           </div>
           <div className="create-thread-right-side">
-            <h4>We value your courteus language!</h4>
+            <h4>We appreciate your courteus language!</h4>
             <ol>
               <li>Conversate thoughtfully and considerately. Neither hatred nor discrimination will be tolerated.</li>
+              <br />
               <li>Welcome all perspectives - tolerance is key to a thriving community.</li>
+              <br />
               <li>Respect others&apos; privacy. Threat others the way you&apos;d like to be treated.</li>
+              <br />
               <li>Avoid indecent language - although we strongly advocate for displaying your good sense of humor, please don&apos;t take it too far.</li>
+              <br />
               <li>Have fun!</li>
             </ol>
           </div>

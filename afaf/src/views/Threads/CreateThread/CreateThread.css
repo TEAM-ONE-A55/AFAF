@@ -6,7 +6,6 @@
 
 .create-thread-container-content {
     display: flex;
-    /* border: red 1px solid; */
 }
 
 .create-thread-left-side {
@@ -14,12 +13,19 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    margin-top: -67px;
 }
 
 .create-thread-right-side {
     flex: 4;
-    /* border-left: white solid 2px; */
+    text-align: left;
+    color: rgb(143, 143, 143);
+}
+
+.create-thread-right-side > h4 {
+    margin-top: 0;
+    padding-left: 1.6em;
 }
 
 .create-thread-user {
@@ -27,6 +33,8 @@
     align-items: center;
     justify-content: center;
     max-width: fit-content;
+    align-self: flex-start;
+    margin-left: 195px;
 }
 
 .create-thread-user > img {
@@ -40,9 +48,7 @@
 }
 
 .create-thread-type > nav {
-    /* border: 1px solid #e0e0e0; */
     display: flex;
-    /* border: yellow 1px solid; */
 }
 
 .create-thread-type > nav > span {
@@ -53,10 +59,12 @@
     font-weight: 500;
     font-size: 1.5rem;
     flex: 1;
+    color: rgb(185, 185, 185);
 }
 
 .create-thread-nav-active {
     border-bottom: white 3px solid;
+    color: white !important;
 }
 
 .create-thread-type input, textarea {
@@ -67,13 +75,65 @@
     outline: none;
     background-color: rgb(20, 20, 20);
     padding: 15px 20px;
-    border-radius: 5px;
+    border-radius: 10px;
     color: white;
+}
+
+.create-thread-type input:focus, textarea:focus {
+    transition: 50ms ease-in-out;
+    background-color: rgb(17, 17, 17);
+
+}
+
+.create-thread-type input#upload-photo-input {
+    display: none;
+}
+
+.upload-photo-input-button {
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: rgb(20, 20, 20);
+    display: inline-block;
+    width: 92%;
+    padding: 35px 10px;
+    font-size: 1.2rem;
+    color: rgb(110, 110, 110);
+    font-weight: 500;
+    text-align: center;
+    transition: 50ms ease-in-out;
+}
+
+.upload-photo-input-button:hover {
+    background-color: rgb(17, 17, 17);
+    transition: 50ms ease-in-out;
+}
+
+.attached-thread-image-container {
+    position: relative;
+}
+
+.attached-thread-image {
+    max-width: 93.1%;
+    border-radius: 15px;
+    margin: 2em;
+    align-self: flex-start;
+    opacity: 0.5;
+}
+
+
+.attached-thread-image-remove-button {
+    align-self: flex-start;
+    margin-left: 34px;
+    position: absolute;
+    top: 50%;
+    left: 46%;
+    transform: translate(-50%, -50%);
 }
 
 .create-thread-type textarea {
     font-size: 1.2rem;
     min-height: 250px;
+    resize: none;
 } 
 
 .create-thread-type-inputs {
@@ -91,7 +151,7 @@
 }
 
 .thread-type-url {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
 }
 
 .post-button {
