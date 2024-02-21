@@ -137,7 +137,7 @@ export function Admin() {
                         <td>{user.name}</td>
                         <td>
                           {user.role === "admin" ? (
-                            <span style={{ color: "pink" }}>{user.role}</span>
+                            <span style={{ color: "rgb(255, 45, 45)" }}>{user.role}</span>
                           ) : (
                             user.role
                           )}
