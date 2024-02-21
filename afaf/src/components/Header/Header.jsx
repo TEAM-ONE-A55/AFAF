@@ -43,7 +43,7 @@ export default function Header() {
       ) : (
         <>
           <NavLink to="/create-thread" className="navlink">New Thread</NavLink>
-          <NavLink to="/login" className="navlink m-subtr-left">Login</NavLink>
+          <NavLink to="/login" className="navlink m-subtr-left">Sign in</NavLink>
         </>
       )}
     </header>

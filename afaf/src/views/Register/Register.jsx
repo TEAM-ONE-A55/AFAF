@@ -87,8 +87,9 @@ export default function Register() {
   };
 
   return (
-    <div className="registration">
-      <div className="registration-form">
+    <div className="register-container">
+      <h1>Sign up</h1>
+      <div className="register-inputs-wrapper">
         <label htmlFor="registration-name">Name: </label>
         <input
           type="text"
@@ -108,7 +109,7 @@ export default function Register() {
           name="registration-username"
           value={form.username}
           onChange={updateForm("username")}
-          placeholder="Enter username"
+          placeholder="Enter a username"
           onKeyDown={handleOnKeyDown}
         />
         <br />
@@ -137,8 +138,8 @@ export default function Register() {
         />
         <br />
         <br />
-        <Button onClick={register}>Sign up</Button>
       </div>
+        <Button onClick={register}>Sign up</Button>
     </div>
   );
 }

@@ -59,32 +59,34 @@ export default function Login() {
 
   return (
     <div className="login-container">
-      <h1>Login</h1>
-      <label htmlFor="login-email">Email: </label>
-      <input
-        id="login-email"
-        name="login-email"
-        type="text"
-        placeholder="Enter your email"
-        onChange={(e) => setEmail(e.target.value)}
-        value={email}
-        onKeyDown={handleOnKeyDown}
-      />
-      <br />
-      <label htmlFor="login-password">Password: </label>
-      <input
-        id="login-password"
-        name="login-password"
-        type="password"
-        placeholder="Enter your password"
-        onChange={(e) => setPassword(e.target.value)}
-        value={password}
-        onKeyDown={handleOnKeyDown}
-      />
-      <br />
-      <Button onClick={login}>Login</Button>
+      <h1>Sign in</h1>
+      <div className="login-inputs-wrapper">
+        <label htmlFor="login-email">Email: </label>
+        <input
+          id="login-email"
+          name="login-email"
+          type="text"
+          placeholder="Enter your email"
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
+          onKeyDown={handleOnKeyDown}
+        />
+        <br />
+        <label htmlFor="login-password">Password: </label>
+        <input
+          id="login-password"
+          name="login-password"
+          type="password"
+          placeholder="Enter your password"
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          onKeyDown={handleOnKeyDown}
+        />
+        <br />
+      </div>
+      <Button onClick={login}>Sign in</Button>
       <p>
-        No account yet? <NavLink to="/register">Register now</NavLink>
+        Don&apos;t have an account? <NavLink className="navlink register-now" to="/register">Sign up</NavLink>
       </p>
     </div>
   );

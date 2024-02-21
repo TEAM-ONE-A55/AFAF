@@ -1,9 +1,38 @@
-.registration {
-  border-radius: 20px;
-  border: 1px solid white;
-  display: grid;
-  place-items: center;
-  height: 500px;
-  margin: 50px;
-  width: 500px;
+.register-container, .login-container {
+  max-width: 400px;
+  margin: 0 auto;
+  margin-top: 8em;
+  background-color: rgb(17, 17, 17);
+  padding: 2em;
+  text-align: center;
+  border-radius: 25px;
+  color: rgb(219, 219, 219);
+}
+
+.register-container input {
+  font-family: "Lexend", sans-serif;
+  display: block;
+  width: 90%;
+  border: none;
+  outline: none;
+  background-color: rgb(20, 20, 20);
+  padding: 15px 20px;
+  border-radius: 10px;
+  color: white;
+}
+
+.register-container > h1 {
+  margin-top: 0;
+}
+
+.register-inputs-wrapper {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.register-container input:focus {
+  transition: 50ms ease-in-out;
+  background-color: rgb(17, 17, 17);
 }
