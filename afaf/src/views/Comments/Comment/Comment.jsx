@@ -36,11 +36,7 @@ export default function Comment({ thread, setThread }) {
     setComment("");
     setTextArea(false);
     setId(v4());
-<<<<<<< HEAD
-    console.log("add");
-=======
     return toast.success("Comment added!");
->>>>>>> 497bffde44716f168dcecd78388fc2bee580c6df
   };
 
   const handleOnKeyDown = (e) => {

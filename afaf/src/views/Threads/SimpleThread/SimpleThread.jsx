@@ -160,17 +160,8 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
                   <div className="simple-thread-like-wrapper">
                     {topic.likedBy.includes(userData.handle) ? (
                       <span
-<<<<<<< HEAD
-                        onClick={(e) =>
-                          userData.blocked === false
-                            ? avoidPropagation(e, toggleUpvotes)
-                            : toast
-                        }
-                        className="material-symbols-outlined"
-=======
                         onClick={(e) => avoidPropagation(e, toggleUpvotes)}
                         className="material-symbols-outlined thumb-icon"
->>>>>>> 497bffde44716f168dcecd78388fc2bee580c6df
                         style={STYLE_VOTES_FILL}
                       >
                         thumb_up
