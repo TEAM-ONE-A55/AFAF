@@ -160,12 +160,17 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
                   <div className="simple-thread-like-wrapper">
                     {topic.likedBy.includes(userData.handle) ? (
                       <span
+<<<<<<< HEAD
                         onClick={(e) =>
                           userData.blocked === false
                             ? avoidPropagation(e, toggleUpvotes)
                             : toast
                         }
                         className="material-symbols-outlined"
+=======
+                        onClick={(e) => avoidPropagation(e, toggleUpvotes)}
+                        className="material-symbols-outlined thumb-icon"
+>>>>>>> 497bffde44716f168dcecd78388fc2bee580c6df
                         style={STYLE_VOTES_FILL}
                       >
                         thumb_up
@@ -173,7 +178,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
                     ) : (
                       <span
                         onClick={(e) => avoidPropagation(e, toggleUpvotes)}
-                        className="material-symbols-outlined"
+                        className="material-symbols-outlined thumb-icon"
                         style={STYLE_VOTES_EMPTY}
                       >
                         thumb_up
@@ -191,7 +196,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
                     {topic.dislikedBy.includes(userData.handle) ? (
                       <span
                         onClick={(e) => avoidPropagation(e, toggleDownVotes)}
-                        className="material-symbols-outlined"
+                        className="material-symbols-outlined thumb-icon"
                         style={STYLE_VOTES_FILL}
                       >
                         thumb_down
@@ -199,7 +204,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
                     ) : (
                       <span
                         onClick={(e) => avoidPropagation(e, toggleDownVotes)}
-                        className="material-symbols-outlined"
+                        className="material-symbols-outlined thumb-icon"
                         style={STYLE_VOTES_EMPTY}
                       >
                         thumb_down
@@ -236,7 +241,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
                 <b>Created: </b>
                 {new Date(topic.createdOn).toLocaleString()}
               </span>
-              {userData && userData.handle === topic.author && (
+              {userData && (userData.handle === topic.author || userData.role==="admin") && (
                 <button
                   className="edit-thread-button"
                   onClick={(e) =>

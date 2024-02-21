@@ -91,7 +91,7 @@ export default function SimpleComment({ comment, setThread, thread }) {
             <p className="apply-transition-50ms">{editedComment}</p>
           )}
           <div className="simple-comment-buttons-wrapper">
-            {userData.handle === comment.author && (
+            {(userData.handle === comment.author || userData.role === "admin") && (
               <button onClick={() => setOnEditing(!onEditing)}>
                 {onEditing ? "Back" : "Edit"}
               </button>

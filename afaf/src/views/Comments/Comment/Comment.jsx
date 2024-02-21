@@ -4,6 +4,8 @@ import { AppContext } from "../../../context/AppContext";
 import PropTypes from "prop-types";
 import { updateTopic } from "../../../services/threads.service";
 import { v4 } from "uuid";
+import { avoidPropagation } from "../../../functions/other-functions";
+import { toast } from "react-hot-toast";
 
 export default function Comment({ thread, setThread }) {
   const { userData } = useContext(AppContext);
@@ -21,6 +23,7 @@ export default function Comment({ thread, setThread }) {
   }, [commentsData, thread.id]);
 
   const addComment = () => {
+    if (!comment) return toast.error("Comment can't be empty!");
     setCommentsData({
       ...commentsData,
       [id]: {
@@ -33,7 +36,11 @@ export default function Comment({ thread, setThread }) {
     setComment("");
     setTextArea(false);
     setId(v4());
+<<<<<<< HEAD
     console.log("add");
+=======
+    return toast.success("Comment added!");
+>>>>>>> 497bffde44716f168dcecd78388fc2bee580c6df
   };
 
   const handleOnKeyDown = (e) => {
@@ -45,7 +52,6 @@ export default function Comment({ thread, setThread }) {
         className="textarea-comment"
         placeholder="Add a comment"
         onFocus={() => setTextArea(true)}
-        onBlur={() => setTextArea(false)}
         onChange={() => {}}
         value=""
       />
@@ -55,13 +61,13 @@ export default function Comment({ thread, setThread }) {
       <textarea
         className="textarea-comment-onAction"
         placeholder="Add a comment"
-        onBlur={() => setTextArea(false)}
+        onBlur={() => setTimeout(() => setTextArea(false), 80) }
         onChange={(e) => setComment(e.target.value)}
         value={comment}
         onKeyDown={handleOnKeyDown}
       />
       <span
-        onClick={addComment}
+        onClick={(e) => avoidPropagation(e, addComment)}
         className="material-symbols-outlined comment-btn"
       >
         send
