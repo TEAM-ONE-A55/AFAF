@@ -44,7 +44,7 @@ npm run dev
 7. Open your browser and navigate to `http://localhost:5173/` to view the application.
 
 ## Scheme (structure) of the documents in the database
-```json
+```js
 {
   topics: {
     -Nr8FYCMmSu3IlBT1iGL: {
