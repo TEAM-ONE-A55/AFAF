@@ -46,9 +46,9 @@ export function Admin() {
     getAllTopics().then((topicData) => setTopics(topicData));
   }, []);
 
-  // useEffect(() => {}, [user]);
+  useEffect(() => {}, [user]);
 
-  // useEffect(() => {}, [topic]);
+  useEffect(() => {}, [topic]);
 
   const getUser = async (handle) => {
     const user = await getUserByHandle(handle);
