@@ -278,7 +278,7 @@ export default function SingleThread() {
                   {new Date(thread.createdOn).toLocaleString()}
                 </span>
                 <div className="delete-edit-wrapper">
-                  {userData && userData.handle === thread.author && (
+                  {userData && (userData.handle === thread.author || userData.role==="admin") && (
                     <button
                       className="edit-thread-button"
                       onClick={(e) =>

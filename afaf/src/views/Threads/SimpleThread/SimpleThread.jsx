@@ -221,7 +221,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
                 <b>Created: </b>
                 {new Date(topic.createdOn).toLocaleString()}
               </span>
-              {userData && userData.handle === topic.author && (
+              {userData && (userData.handle === topic.author || userData.role==="admin") && (
                 <button
                   className="edit-thread-button"
                   onClick={(e) =>
