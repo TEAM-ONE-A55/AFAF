@@ -46,7 +46,7 @@ export default function SearchResults() {
     <div className="search-results-container">
       {query ? (
         <>
-          <h3>Search results for {query}</h3>
+          <h3>Search results for {`"${query}"`}</h3>
           <SortingDropdown
             options={threadsFilterOptions}
             defaultOption={filterBy}

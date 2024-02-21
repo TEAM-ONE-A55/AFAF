@@ -1,3 +1,5 @@
 .search-results-container {
-    margin-top: 3em;
+  margin: 0 auto;
+  margin-top: 8em;
+  max-width: 1200px;
 }
