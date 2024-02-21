@@ -209,7 +209,7 @@ export default function CreateThread() {
                 </span>
               </nav>
               {getThreadTypeInput()}
-              <button className="post-button" onClick={() => userData.bloked === false ? postThread() : isBlocked()}>
+              <button className="post-button" onClick={() => userData.blocked === false ? postThread() : isBlocked()}>
                 Create Thread
               </button>
             </div>
