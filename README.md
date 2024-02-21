@@ -18,6 +18,7 @@ This is a forum web application built with React.js for the frontend and Firebas
 ```js
 git clone <repository-url>
 ```
+- Team One - Forum Project AFAF's Repo - [GitHub repository](https://github.com/TEAM-ONE-A55/AFAF.git)
 
 
 2. Navigate into the project directory:
