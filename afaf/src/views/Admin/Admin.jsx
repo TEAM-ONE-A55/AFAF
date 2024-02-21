@@ -129,7 +129,8 @@ export function Admin() {
                   </tr>
                 </thead>
                 <tbody>
-                  {sortUsers(users, usersSortBy).map((user) => {
+                  {users && sortUsers(users, usersSortBy).map((user) => {
+                    if (user)
                     return (
                       <tr key={user.handle}>
                         <td>{user.handle}</td>
@@ -141,7 +142,7 @@ export function Admin() {
                             user.role
                           )}
                         </td>
-                        <td>{new Date(user.createdOn).toLocaleDateString()}</td>
+                        <td>{user.createdOn && new Date(user.createdOn).toLocaleDateString()}</td>
                         <td>
                           {(user.createdTopics &&
                             Object.keys(user.createdTopics).length) ||
@@ -215,7 +216,7 @@ export function Admin() {
                   </tr>
                 </thead>
                 <tbody>
-                  {sortThreads(topics, threadSortBy).map((topic) => (
+                  {topics && sortThreads(topics, threadSortBy).map((topic) => (
                     <tr key={topic.id}>
                       <td
                         id="table-thread-title"

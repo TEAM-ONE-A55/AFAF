@@ -70,11 +70,19 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
     return likes - dislikes;
   };
 
-  const isBlocked = () => {
-    return toast.error(
-      "Oops! You're Blocked: Rule Break Detected. Admin's put you on pause!"
-    );
-  };
+  const onClickThread = (e) => {
+    if (userData) {
+      if (userData.blocked === false) {
+        avoidPropagation(e, () =>
+                  navigate(`/single-thread/${topic.id}`)
+                )
+      } else {
+        return toast.error(
+          "Oops! You're Blocked: Rule Break Detected. Admin's put you on pause!"
+        );
+      }
+    }
+  }
 
   return (
     <>
@@ -82,13 +90,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
         <div
           className="simple-thread-container"
           style={{ cursor: "pointer" }}
-          onClick={(e) =>
-            userData.blocked === false
-              ? avoidPropagation(e, () =>
-                  navigate(`/single-thread/${topic.id}`)
-                )
-              : isBlocked()
-          }
+          onClick={(e) =>onClickThread(e) }
         >
           <div className="simple-thread-left-side">
             <Avatar
