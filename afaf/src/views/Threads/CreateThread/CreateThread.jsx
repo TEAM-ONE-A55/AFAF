@@ -161,7 +161,7 @@ export default function CreateThread() {
 
   const isBlocked = () => {
     return toast.error(
-      "Oops! You're Blocked: Rule Break Detected. Admin's put you on pause"
+      "Oops! You're Blocked: Rule Break Detected. Admin's put you on pause!"
     );
   };
 

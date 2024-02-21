@@ -72,7 +72,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
 
   const isBlocked = () => {
     return toast.error(
-      "Oops! You're Blocked: Rule Break Detected. Admin's put you on pause"
+      "Oops! You're Blocked: Rule Break Detected. Admin's put you on pause!"
     );
   };
 
@@ -232,18 +232,20 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
                 <b>Created: </b>
                 {new Date(topic.createdOn).toLocaleString()}
               </span>
-              {userData && (userData.handle === topic.author || userData.role==="admin") && (
-                <button
-                  className="edit-thread-button"
-                  onClick={(e) =>
-                    avoidPropagation(e, () =>
-                      navigate(`/edit-thread/${topic.id}`)
-                    )
-                  }
-                >
-                  Edit
-                </button>
-              )}
+              {userData &&
+                (userData.handle === topic.author ||
+                  userData.role === "admin") && (
+                  <button
+                    className="edit-thread-button"
+                    onClick={(e) =>
+                      avoidPropagation(e, () =>
+                        navigate(`/edit-thread/${topic.id}`)
+                      )
+                    }
+                  >
+                    Edit
+                  </button>
+                )}
             </div>
           </div>
         </div>
