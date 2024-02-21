@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { updateTopic } from "../../../services/threads.service";
 import { v4 } from "uuid";
 import { avoidPropagation } from "../../../functions/other-functions";
+import { toast } from "react-hot-toast";
 
 export default function Comment({ thread, setThread }) {
   const { userData } = useContext(AppContext);
@@ -22,6 +23,7 @@ export default function Comment({ thread, setThread }) {
   }, [commentsData, thread.id]);
 
   const addComment = () => {
+    if (!comment) return toast.error("Comment can't be empty!");
     setCommentsData({
       ...commentsData,
       [id]: {
@@ -34,6 +36,7 @@ export default function Comment({ thread, setThread }) {
     setComment("");
     setTextArea(false);
     setId(v4());
+    return toast.success("Comment added!");
   };
 
   const handleOnKeyDown = (e) => {
