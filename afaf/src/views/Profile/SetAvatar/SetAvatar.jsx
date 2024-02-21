@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { updateUserData } from "../../../services/users.service";
 import { deleteAvatar, uploadAvatar } from "../../../services/storage.service";
 import { defaultAvatar } from "../../../constants/constants";
+import "./SetAvatar.css";
 
 export default function SetAvatar() {
   const { userData, setContext } = useContext(AppContext);
@@ -60,22 +61,24 @@ export default function SetAvatar() {
         url={userData.avatar}
         onClick={() => {}}
       />
-      <input type="file" onChange={(e) => setAttachImg(e.target.files[0])} />
-      {attachImg ? (
-        <button onClick={uploadImg}>Upload</button>
-      ) : (
-        <button
-          onClick={() =>
-            toast.error("Please select a file to upload before proceeding.")
-          }
-        >
-          Upload
-        </button>
-      )}
-
+      <div className="setavatar-buttons-wrapper">
+        <label className="attach-profile-pic" htmlFor="attach-profile-pic">Choose...</label>
+        <input id="attach-profile-pic" type="file" onChange={(e) => setAttachImg(e.target.files[0])} />
+        {attachImg ? (
+          <button onClick={uploadImg}>Upload</button>
+        ) : (
+          <button
+            onClick={() =>
+              toast.error("Please select a file to upload before proceeding.")
+            }
+          >
+            Upload
+          </button>
+        )}
       {userData.avatar !== defaultAvatar && (
-        <button onClick={deleteImg}>Delete</button>
+        <button className="delete-button" onClick={deleteImg}>Delete</button>
       )}
+      </div>
     </div>
   );
 }

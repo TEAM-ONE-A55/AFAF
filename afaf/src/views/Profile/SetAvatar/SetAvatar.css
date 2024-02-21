@@ -1,0 +1,44 @@
+.attach-profile-pic {
+    border: 1px solid rgb(107, 107, 107);
+    color: rgb(107, 107, 107);
+    font-weight: 500;
+    border-radius: 5px;
+    padding: 0.4em 1em !important;
+    cursor: pointer;
+}
+
+.attach-profile-pic:hover {
+    background-color: rgb(107, 107, 107);
+    color: white;
+    transition: 50ms;
+}
+
+#attach-profile-pic {
+    display: none;
+}
+
+.setavatar-buttons-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .2em;
+
+}
+
+.setavatar-buttons-wrapper > button, .setavatar-buttons-wrapper > label {
+    font-size: 0.8rem;
+    padding: 0.3em 1em;
+    max-width: 90px;
+}
+
+.delete-button {
+    font-size: .82rem;
+    padding: 0.3em 1.2em;
+    background-color: rgb(255, 45, 45);
+    color: white;
+  }
+  
+  .delete-button:hover {
+    background-color: rgb(235, 42, 42);
+    transition: 50ms;
+  }

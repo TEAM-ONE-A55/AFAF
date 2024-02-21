@@ -21,7 +21,7 @@ export default function Bio() {
   };
 
   const formBio = (
-    <>
+    <div className="bio-container">
       <textarea
         name="profile-bio"
         id="profile-bio"
@@ -33,7 +33,7 @@ export default function Bio() {
         }}
         placeholder="Zombie ipsum brains reversus..."
       ></textarea>
-    </>
+    </div>
   );
 
   const updateButtonText = (inputText) => {
@@ -77,7 +77,7 @@ export default function Bio() {
             ) : (
               <>
                 <p >
-                  <b>Bio</b> <Link onClick={handleEditLinkBio}>Edit</Link>
+                  <b>Bio</b> <Link className="register-now" onClick={handleEditLinkBio}>Edit</Link>
                 </p>
                 <p className="bio-info">{userData.bio}</p>
                 <br />
