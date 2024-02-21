@@ -77,6 +77,8 @@
 .simple-thread-like-wrapper{
     display: flex;
     align-items: center;
+    width: 100px;
+    justify-content: space-between;
 }
 
 .simple-thread-like-count {
@@ -114,4 +116,9 @@
 
 .edit-thread-button {
     max-height: 2.5em;
+}
+
+.thumb-icon {
+    cursor: pointer !important;
+    user-select: none;
 }

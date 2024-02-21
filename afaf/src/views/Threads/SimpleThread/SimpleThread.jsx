@@ -150,7 +150,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
                     {topic.likedBy.includes(userData.handle) ? (
                       <span
                         onClick={(e) => avoidPropagation(e, toggleUpvotes)}
-                        className="material-symbols-outlined"
+                        className="material-symbols-outlined thumb-icon"
                         style={STYLE_VOTES_FILL}
                       >
                         thumb_up
@@ -158,7 +158,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
                     ) : (
                       <span
                         onClick={(e) => avoidPropagation(e, toggleUpvotes)}
-                        className="material-symbols-outlined"
+                        className="material-symbols-outlined thumb-icon"
                         style={STYLE_VOTES_EMPTY}
                       >
                         thumb_up
@@ -176,7 +176,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
                     {topic.dislikedBy.includes(userData.handle) ? (
                       <span
                         onClick={(e) => avoidPropagation(e, toggleDownVotes)}
-                        className="material-symbols-outlined"
+                        className="material-symbols-outlined thumb-icon"
                         style={STYLE_VOTES_FILL}
                       >
                         thumb_down
@@ -184,7 +184,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
                     ) : (
                       <span
                         onClick={(e) => avoidPropagation(e, toggleDownVotes)}
-                        className="material-symbols-outlined"
+                        className="material-symbols-outlined thumb-icon"
                         style={STYLE_VOTES_EMPTY}
                       >
                         thumb_down

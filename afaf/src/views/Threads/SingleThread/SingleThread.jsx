@@ -208,7 +208,7 @@ export default function SingleThread() {
                               toggleUpvotes(thread, userData.handle)
                             )
                           }
-                          className="material-symbols-outlined"
+                          className="material-symbols-outlined thumb-icon"
                           style={STYLE_VOTES_FILL}
                         >
                           thumb_up
@@ -220,7 +220,7 @@ export default function SingleThread() {
                               toggleUpvotes(thread, userData.handle)
                             )
                           }
-                          className="material-symbols-outlined"
+                          className="material-symbols-outlined thumb-icon"
                           style={STYLE_VOTES_EMPTY}
                         >
                           thumb_up
@@ -243,7 +243,7 @@ export default function SingleThread() {
                               toggleDownVotes(thread, userData.handle)
                             )
                           }
-                          className="material-symbols-outlined"
+                          className="material-symbols-outlined thumb-icon"
                           style={STYLE_VOTES_FILL}
                         >
                           thumb_down
@@ -255,7 +255,7 @@ export default function SingleThread() {
                               toggleDownVotes(thread, userData.handle)
                             )
                           }
-                          className="material-symbols-outlined"
+                          className="material-symbols-outlined thumb-icon"
                           style={STYLE_VOTES_EMPTY}
                         >
                           thumb_down
