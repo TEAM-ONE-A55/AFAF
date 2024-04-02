@@ -4,6 +4,7 @@ import { AppContext } from "../../context/AppContext";
 import Avatar from "../Avatar/Avatar";
 import "./Header.css";
 import Search from "../Search/Search";
+import LOGO from "../../../img/LOGO.png"
 
 export default function Header() {
   const { user, userData } = useContext(AppContext);
@@ -12,7 +13,7 @@ export default function Header() {
   return (
     <header>
       <span onClick={() => navigate("/")} className="logo-img">
-        <img className="header-logo" src="../../img/LOGO.png" alt="logo" />
+        <img className="header-logo" src={LOGO} alt="logo" />
       </span>
 
       <Search />
