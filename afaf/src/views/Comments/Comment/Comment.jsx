@@ -43,28 +43,28 @@ export default function Comment({ thread, setThread }) {
     if (e.key === "Enter") addComment();
   };
   return !textArea ? (
-    <div className="textarea-container">
+    <div className='textarea-container'>
       <textarea
-        className="textarea-comment"
-        placeholder="Add a comment"
+        className='textarea-comment'
+        placeholder='Add a comment'
         onFocus={() => setTextArea(true)}
         onChange={() => {}}
-        value=""
+        value=''
       />
     </div>
   ) : (
-    <div className="textarea-container">
+    <div className='textarea-container'>
       <textarea
-        className="textarea-comment-onAction"
-        placeholder="Add a comment"
-        onBlur={() => setTimeout(() => setTextArea(false), 80) }
+        className='textarea-comment-onAction'
+        placeholder='Add a comment'
+        onBlur={() => setTimeout(() => setTextArea(false), 80)}
         onChange={(e) => setComment(e.target.value)}
         value={comment}
         onKeyDown={handleOnKeyDown}
       />
       <span
         onClick={(e) => avoidPropagation(e, addComment)}
-        className="material-symbols-outlined comment-btn"
+        className='material-symbols-outlined comment-btn'
       >
         send
       </span>

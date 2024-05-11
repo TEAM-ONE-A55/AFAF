@@ -12,5 +12,12 @@ export default function Logout() {
     navigate("/");
   };
 
-  return <button className="logout-button" onClick={logout}>Sign Out</button>;
+  return (
+    <button
+      className='logout-button'
+      onClick={logout}
+    >
+      Sign Out
+    </button>
+  );
 }

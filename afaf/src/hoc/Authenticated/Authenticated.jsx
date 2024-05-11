@@ -8,7 +8,13 @@ export default function Authenticated({ children }) {
   const location = useLocation();
 
   if (!user) {
-    return <Navigate replace to="/login" state={{ from: location }} />;
+    return (
+      <Navigate
+        replace
+        to='/login'
+        state={{ from: location }}
+      />
+    );
   }
   return <div>{children}</div>;
 }

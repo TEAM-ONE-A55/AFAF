@@ -1,13 +1,4 @@
-import {
-  ref,
-  push,
-  get,
-  query,
-  orderByChild,
-  update,
-  equalTo,
-  remove,
-} from "firebase/database";
+import { ref, push, get, query, orderByChild, update, equalTo, remove } from "firebase/database";
 import { db } from "../config/firebase-config";
 
 const fromTopicsDocument = (snapshot) => {
@@ -38,7 +29,7 @@ export const addThread = async (title, content, author, url, uuid, type) => {
       type,
       createdOn: Date.now(),
       likedBy: {},
-      dislikedBy: {}
+      dislikedBy: {},
     });
 
     const threadId = thread.key;
@@ -60,21 +51,13 @@ export const getAllTopics = async (key = "createdOn") => {
   const topics = Object.keys(snapshot.val()).map((key) => ({
     id: key,
     ...snapshot.val()[key],
-    likedBy: snapshot.val()[key].likedBy
-      ? Object.keys(snapshot.val()[key].likedBy)
-      : [],
-    dislikedBy: snapshot.val()[key].dislikedBy
-      ? Object.keys(snapshot.val()[key].dislikedBy)
-      : [],
+    likedBy: snapshot.val()[key].likedBy ? Object.keys(snapshot.val()[key].likedBy) : [],
+    dislikedBy: snapshot.val()[key].dislikedBy ? Object.keys(snapshot.val()[key].dislikedBy) : [],
   }));
   return topics;
 };
 
-export const getAllTopicsBySearch = async (
-  search,
-  searchByKey = "title",
-  key = "createdOn"
-) => {
+export const getAllTopicsBySearch = async (search, searchByKey = "title", key = "createdOn") => {
   const snapshot = await get(query(ref(db, "topics"), orderByChild(key)));
   if (!snapshot.exists()) {
     return [];
@@ -84,16 +67,10 @@ export const getAllTopicsBySearch = async (
       id: key,
       ...snapshot.val()[key],
       createdOn: new Date(snapshot.val()[key].createdOn),
-      likedBy: snapshot.val()[key].likedBy
-        ? Object.keys(snapshot.val()[key].likedBy)
-        : [],
-      dislikedBy: snapshot.val()[key].dislikedBy
-        ? Object.keys(snapshot.val()[key].dislikedBy)
-        : [],
+      likedBy: snapshot.val()[key].likedBy ? Object.keys(snapshot.val()[key].likedBy) : [],
+      dislikedBy: snapshot.val()[key].dislikedBy ? Object.keys(snapshot.val()[key].dislikedBy) : [],
     }))
-    .filter((topic) =>
-      topic[searchByKey].toLowerCase().includes(search.toLowerCase())
-    );
+    .filter((topic) => topic[searchByKey].toLowerCase().includes(search.toLowerCase()));
 
   return topics;
 };
@@ -107,9 +84,7 @@ export const getTopicById = async (id) => {
     ...snapshot.val(),
     createdOn: new Date(snapshot.val().createdOn),
     likedBy: snapshot.val().likedBy ? Object.keys(snapshot.val().likedBy) : [],
-    dislikedBy: snapshot.val().dislikedBy
-      ? Object.keys(snapshot.val().dislikedBy)
-      : [],
+    dislikedBy: snapshot.val().dislikedBy ? Object.keys(snapshot.val().dislikedBy) : [],
   };
 
   return topic;
@@ -141,9 +116,7 @@ export const getLikedTopics = async (handle) => {
 };
 
 export const getTopicsByAuthor = async (handle) => {
-  const snapshot = await get(
-    query(ref(db, "topics"), orderByChild("author"), equalTo(handle))
-  );
+  const snapshot = await get(query(ref(db, "topics"), orderByChild("author"), equalTo(handle)));
   if (!snapshot.exists()) return [];
   return fromTopicsDocument(snapshot);
 };
@@ -165,7 +138,7 @@ export const dislikeTopic = (handle, topicId) => {
   updateLikes[`/topics/${topicId}/likedBy/${handle}`] = null;
   updateLikes[`/users/${handle}/likedTopics/${topicId}`] = null;
 
-  return update(ref(db), updateLikes); 
+  return update(ref(db), updateLikes);
 };
 
 export const undoLikeTopic = (handle, topicId) => {
@@ -174,7 +147,7 @@ export const undoLikeTopic = (handle, topicId) => {
   updateLikes[`/users/${handle}/likedTopics/${topicId}`] = null;
 
   return update(ref(db), updateLikes);
-}
+};
 
 export const undoDislikeTopic = (handle, topicId) => {
   const updateLikes = {};
@@ -182,7 +155,7 @@ export const undoDislikeTopic = (handle, topicId) => {
   updateLikes[`/users/${handle}/dislikedTopics/${topicId}`] = null;
 
   return update(ref(db), updateLikes);
-}
+};
 
 export const deleteTopic = async (handle, id) => {
   const topicsToRemove = await getTopicsByAuthor(handle);

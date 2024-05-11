@@ -18,16 +18,15 @@ export default function SetAvatar() {
   const uploadImg = async () => {
     try {
       const url = await uploadAvatar(attachImg, userData.handle, "avatar");
-      
-      setContext(prevState => ({
+
+      setContext((prevState) => ({
         ...prevState,
         userData: {
           ...prevState.userData,
-          avatar: url
-        }
+          avatar: url,
+        },
       }));
       toast.success("Avatar uploaded successfully.");
-
     } catch (error) {
       console.log(error.message);
       toast.error("Could not upload avatar.");
@@ -38,15 +37,14 @@ export default function SetAvatar() {
     try {
       deleteAvatar(userData.handle, "avatar");
 
-      setContext(prevState => ({
+      setContext((prevState) => ({
         ...prevState,
         userData: {
           ...prevState.userData,
-          avatar: defaultAvatar
-        }
+          avatar: defaultAvatar,
+        },
       }));
       toast.success("Avatar deleted successfully.");
-      
     } catch (error) {
       console.log(error.message);
       toast.error("Could not delete avatar.");
@@ -54,30 +52,40 @@ export default function SetAvatar() {
   };
 
   return (
-    <div className="profile-avatar-wrapper">
+    <div className='profile-avatar-wrapper'>
       <Avatar
-        Width="200px"
-        Height="200px"
+        Width='200px'
+        Height='200px'
         url={userData.avatar}
         onClick={() => {}}
       />
-      <div className="setavatar-buttons-wrapper">
-        <label className="attach-profile-pic" htmlFor="attach-profile-pic">Choose...</label>
-        <input id="attach-profile-pic" type="file" onChange={(e) => setAttachImg(e.target.files[0])} />
+      <div className='setavatar-buttons-wrapper'>
+        <label
+          className='attach-profile-pic'
+          htmlFor='attach-profile-pic'
+        >
+          Choose...
+        </label>
+        <input
+          id='attach-profile-pic'
+          type='file'
+          onChange={(e) => setAttachImg(e.target.files[0])}
+        />
         {attachImg ? (
           <button onClick={uploadImg}>Upload</button>
         ) : (
-          <button
-            onClick={() =>
-              toast.error("Please select a file to upload before proceeding.")
-            }
-          >
+          <button onClick={() => toast.error("Please select a file to upload before proceeding.")}>
             Upload
           </button>
         )}
-      {userData.avatar !== defaultAvatar && (
-        <button className="delete-button" onClick={deleteImg}>Delete</button>
-      )}
+        {userData.avatar !== defaultAvatar && (
+          <button
+            className='delete-button'
+            onClick={deleteImg}
+          >
+            Delete
+          </button>
+        )}
       </div>
     </div>
   );

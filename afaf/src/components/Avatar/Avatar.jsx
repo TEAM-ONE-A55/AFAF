@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 export default function Avatar({ Width, Height, url, onClick }) {
   return (
     <img
-      className="avatar-img"
+      className='avatar-img'
       onClick={(e) => onClick(e)}
-      style={{ width: Width, height: Height, cursor: "pointer"}}
+      style={{ width: Width, height: Height, cursor: "pointer" }}
       src={url}
-      alt="avatar-default"
+      alt='avatar-default'
     />
   );
 }

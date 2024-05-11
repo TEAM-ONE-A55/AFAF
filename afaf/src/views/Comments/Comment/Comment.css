@@ -17,12 +17,14 @@
   transition: 50ms;
 }
 
-.textarea-comment-onAction, .textarea-comment {
+.textarea-comment-onAction,
+.textarea-comment {
   font-size: 1rem;
   width: 96.4%;
 }
 
-.textarea-comment-onAction:focus, .textarea-comment:focus {
+.textarea-comment-onAction:focus,
+.textarea-comment:focus {
   background-color: rgb(22, 22, 22);
   transition: 50ms;
 }
@@ -41,13 +43,9 @@
 }
 
 .comment-btn:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 1,
-  'wght' 300,
-  'GRAD' 0,
-  'opsz' 48
+  font-variation-settings: "FILL" 1, "wght" 300, "GRAD" 0, "opsz" 48;
 }

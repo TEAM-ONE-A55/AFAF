@@ -1,38 +1,38 @@
 header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    z-index: 100;
-    white-space: nowrap;
-    padding: 1em 0;
-    background: rgb(0,0,0);
-    background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(116,0,173,0) 100%);
-    min-width: 100%;
-    padding-bottom: 25px;
-    /* background: white; */
-    /* border: red 1px solid; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  white-space: nowrap;
+  padding: 1em 0;
+  background: rgb(0, 0, 0);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(116, 0, 173, 0) 100%);
+  min-width: 100%;
+  padding-bottom: 25px;
+  /* background: white; */
+  /* border: red 1px solid; */
 }
 
 header img {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .header-logo {
-    height: 44px;
-    margin-right: 1em;
-    margin-top: 5px;
+  height: 44px;
+  margin-right: 1em;
+  margin-top: 5px;
 }
 
 .admin-navlink {
-    color: rgb(255, 82, 82);
+  color: rgb(255, 82, 82);
 }
 
 .m-subtr-left {
-    margin-left: -5px;
+  margin-left: -5px;
 }
 
 .header-avatar {
-    margin-top: 3px;
+  margin-top: 3px;
 }

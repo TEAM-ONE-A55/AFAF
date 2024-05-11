@@ -15,10 +15,7 @@ import Comments from "../../Comments/RenderComments/RenderComments";
 import { getUserByHandle } from "../../../services/users.service";
 import Avatar from "../../../components/Avatar/Avatar";
 import { avoidPropagation } from "../../../functions/other-functions";
-import {
-  STYLE_VOTES_EMPTY,
-  STYLE_VOTES_FILL,
-} from "../../../constants/constants";
+import { STYLE_VOTES_EMPTY, STYLE_VOTES_FILL } from "../../../constants/constants";
 
 export default function SingleThread() {
   const { user, userData } = useContext(AppContext);
@@ -53,8 +50,7 @@ export default function SingleThread() {
             username: snapshot.val().handle,
             createdOn: new Date(snapshot.val().createdOn).toLocaleDateString(),
             threads:
-              snapshot.val().createdTopics &&
-              Object.keys(snapshot.val().createdTopics).length,
+              snapshot.val().createdTopics && Object.keys(snapshot.val().createdTopics).length,
             role: snapshot.val().role,
             uid: snapshot.val().uid,
           });
@@ -127,11 +123,11 @@ export default function SingleThread() {
   };
 
   return (
-    <div className="single-thread-component-wrapper">
+    <div className='single-thread-component-wrapper'>
       {thread && (
         <>
-          <div className="single-thread-container">
-            <div className="single-thread-left-side">
+          <div className='single-thread-container'>
+            <div className='single-thread-left-side'>
               <Avatar
                 onClick={(e) =>
                   avoidPropagation(e, () => {
@@ -142,7 +138,7 @@ export default function SingleThread() {
                 Height={"100px"}
                 url={author.avatar}
               />
-              <p className="single-thread-left-side-handle">
+              <p className='single-thread-left-side-handle'>
                 <a
                   onClick={(e) =>
                     avoidPropagation(e, () => {
@@ -156,9 +152,7 @@ export default function SingleThread() {
               <p>
                 <b>Role: </b>
                 {author.role === "admin" ? (
-                  <span style={{ color: "rgb(255, 82, 82)" }}>
-                    {author.role}
-                  </span>
+                  <span style={{ color: "rgb(255, 82, 82)" }}>{author.role}</span>
                 ) : (
                   author.role
                 )}
@@ -172,18 +166,18 @@ export default function SingleThread() {
                 {author.createdOn}
               </p>
             </div>
-            <div className="single-thread-right-side">
-              <div className="single-thread-right-side-top">
+            <div className='single-thread-right-side'>
+              <div className='single-thread-right-side-top'>
                 <h3>{thread.title}</h3>
                 {thread.content ? (
                   thread.type === "post" ? (
-                    <p className="single-thread-content">{thread.content}</p>
+                    <p className='single-thread-content'>{thread.content}</p>
                   ) : (
                     <a
-                      className="single-thread-url"
+                      className='single-thread-url'
                       href={thread.content}
-                      target="_blank"
-                      rel="noreferrer"
+                      target='_blank'
+                      rel='noreferrer'
                       onClick={(e) => avoidPropagation(e)}
                     >
                       {thread.content}
@@ -191,24 +185,22 @@ export default function SingleThread() {
                   )
                 ) : (
                   <img
-                    className="single-thread-image"
+                    className='single-thread-image'
                     src={thread.url}
-                    alt="Topic image is missing :("
+                    alt='Topic image is missing :('
                   />
                 )}
               </div>
-              <div className="single-thread-right-side-bottom">
+              <div className='single-thread-right-side-bottom'>
                 <div>
                   {user && (
-                    <div className="single-thread-like-wrapper">
+                    <div className='single-thread-like-wrapper'>
                       {thread.likedBy.includes(userData.handle) ? (
                         <span
                           onClick={(e) =>
-                            avoidPropagation(e, () =>
-                              toggleUpvotes(thread, userData.handle)
-                            )
+                            avoidPropagation(e, () => toggleUpvotes(thread, userData.handle))
                           }
-                          className="material-symbols-outlined thumb-icon"
+                          className='material-symbols-outlined thumb-icon'
                           style={STYLE_VOTES_FILL}
                         >
                           thumb_up
@@ -216,11 +208,9 @@ export default function SingleThread() {
                       ) : (
                         <span
                           onClick={(e) =>
-                            avoidPropagation(e, () =>
-                              toggleUpvotes(thread, userData.handle)
-                            )
+                            avoidPropagation(e, () => toggleUpvotes(thread, userData.handle))
                           }
-                          className="material-symbols-outlined thumb-icon"
+                          className='material-symbols-outlined thumb-icon'
                           style={STYLE_VOTES_EMPTY}
                         >
                           thumb_up
@@ -228,22 +218,17 @@ export default function SingleThread() {
                       )}
 
                       {thread.likedBy && thread.dislikedBy && (
-                        <p className="simple-thread-like-count">
-                          {renderVotes(
-                            thread.likedBy.length,
-                            thread.dislikedBy.length
-                          )}
+                        <p className='simple-thread-like-count'>
+                          {renderVotes(thread.likedBy.length, thread.dislikedBy.length)}
                         </p>
                       )}
 
                       {thread.dislikedBy.includes(userData.handle) ? (
                         <span
                           onClick={(e) =>
-                            avoidPropagation(e, () =>
-                              toggleDownVotes(thread, userData.handle)
-                            )
+                            avoidPropagation(e, () => toggleDownVotes(thread, userData.handle))
                           }
-                          className="material-symbols-outlined thumb-icon"
+                          className='material-symbols-outlined thumb-icon'
                           style={STYLE_VOTES_FILL}
                         >
                           thumb_down
@@ -251,11 +236,9 @@ export default function SingleThread() {
                       ) : (
                         <span
                           onClick={(e) =>
-                            avoidPropagation(e, () =>
-                              toggleDownVotes(thread, userData.handle)
-                            )
+                            avoidPropagation(e, () => toggleDownVotes(thread, userData.handle))
                           }
-                          className="material-symbols-outlined thumb-icon"
+                          className='material-symbols-outlined thumb-icon'
                           style={STYLE_VOTES_EMPTY}
                         >
                           thumb_down
@@ -277,10 +260,10 @@ export default function SingleThread() {
                   <b>Created: </b>
                   {new Date(thread.createdOn).toLocaleString()}
                 </span>
-                <div className="delete-edit-wrapper">
-                  {userData && (userData.handle === thread.author || userData.role==="admin") && (
+                <div className='delete-edit-wrapper'>
+                  {userData && (userData.handle === thread.author || userData.role === "admin") && (
                     <button
-                      className="edit-thread-button"
+                      className='edit-thread-button'
                       onClick={(e) =>
                         avoidPropagation(e, () => {
                           navigate(`/edit-thread/${thread.id}`);
@@ -290,11 +273,10 @@ export default function SingleThread() {
                       Edit
                     </button>
                   )}
-                  {(userData?.handle === thread?.author ||
-                    userData?.role === "admin") &&
+                  {(userData?.handle === thread?.author || userData?.role === "admin") &&
                     thread && (
                       <button
-                        className="delete-thread-button"
+                        className='delete-thread-button'
                         onClick={() => {
                           deleteThread(
                             thread.author,
@@ -315,10 +297,16 @@ export default function SingleThread() {
               </div>
             </div>
           </div>
-          <div className="single-thread-comment-section">
-            <Comment thread={thread} setThread={setThread} />
+          <div className='single-thread-comment-section'>
+            <Comment
+              thread={thread}
+              setThread={setThread}
+            />
             {thread.comments && (
-              <Comments thread={thread} setThread={setThread} />
+              <Comments
+                thread={thread}
+                setThread={setThread}
+              />
             )}
           </div>
         </>

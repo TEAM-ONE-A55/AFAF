@@ -1,42 +1,42 @@
 .login-container {
-    max-width: 400px;
-    margin: 0 auto;
-    margin-top: 8em;
-    background-color: rgb(17, 17, 17);
-    padding: 2em;
-    text-align: center;
-    border-radius: 25px;
+  max-width: 400px;
+  margin: 0 auto;
+  margin-top: 8em;
+  background-color: rgb(17, 17, 17);
+  padding: 2em;
+  text-align: center;
+  border-radius: 25px;
 }
 
 .login-container input {
-    font-family: "Lexend", sans-serif;
-    display: block;
-    width: 90%;
-    border: none;
-    outline: none;
-    background-color: rgb(20, 20, 20);
-    padding: 15px 20px;
-    border-radius: 10px;
-    color: white;
+  font-family: "Lexend", sans-serif;
+  display: block;
+  width: 90%;
+  border: none;
+  outline: none;
+  background-color: rgb(20, 20, 20);
+  padding: 15px 20px;
+  border-radius: 10px;
+  color: white;
 }
 
 .login-container > h1 {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 .login-inputs-wrapper {
-    text-align: left;
+  text-align: left;
 }
 
 .login-container input:focus {
-    transition: 50ms ease-in-out;
-    background-color: rgb(17, 17, 17);
+  transition: 50ms ease-in-out;
+  background-color: rgb(17, 17, 17);
 }
 .register-now {
-    color: rgb(157, 72, 255)
+  color: rgb(157, 72, 255);
 }
 
 .register-now:hover {
-    color: rgb(129, 58, 211);
-    transition: 50ms;
+  color: rgb(129, 58, 211);
+  transition: 50ms;
 }

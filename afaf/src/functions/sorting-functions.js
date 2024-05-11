@@ -1,27 +1,19 @@
 export const sortUsers = (users, sortBy) => {
   if (users) {
-    console.log(users)
+    console.log(users);
     switch (sortBy) {
       case "dateAscending":
         return users
           .slice()
-          .sort(
-            (a, b) =>
-              (a ? new Date(a.createdOn) : 0) -
-              (b ? new Date(b.createdOn) : 0)
-          );
+          .sort((a, b) => (a ? new Date(a.createdOn) : 0) - (b ? new Date(b.createdOn) : 0));
       case "usernameAscending":
         return users
           .slice()
-          .sort(
-            (a, b) => a.handle && a.handle.localeCompare(b.handle && b.handle)
-          );
+          .sort((a, b) => a.handle && a.handle.localeCompare(b.handle && b.handle));
       case "usernameDescending":
         return users
           .slice()
-          .sort(
-            (a, b) => b.handle && b.handle.localeCompare(a.handle && a.handle)
-          );
+          .sort((a, b) => b.handle && b.handle.localeCompare(a.handle && a.handle));
       case "userActivityAscending":
         return users
           .slice()
@@ -41,11 +33,7 @@ export const sortUsers = (users, sortBy) => {
       default:
         return users
           .slice()
-          .sort(
-            (a, b) =>
-              (b ? new Date(b.createdOn) : 0) -
-              (a ? new Date(a.createdOn) : 0)
-          );
+          .sort((a, b) => (b ? new Date(b.createdOn) : 0) - (a ? new Date(a.createdOn) : 0));
     }
   }
 };
@@ -64,15 +52,11 @@ export const sortThreads = (threads, sortBy) => {
       case "authorAscending":
         return threads
           .slice()
-          .sort(
-            (a, b) => a.author && a.author.localeCompare(b.author && b.author)
-          );
+          .sort((a, b) => a.author && a.author.localeCompare(b.author && b.author));
       case "authorDescending":
         return threads
           .slice()
-          .sort(
-            (a, b) => b.author && b.author.localeCompare(a.author && a.author)
-          );
+          .sort((a, b) => b.author && b.author.localeCompare(a.author && a.author));
       case "mostLikedAscending":
         return threads
           .slice()
@@ -109,11 +93,7 @@ export const sortThreads = (threads, sortBy) => {
       default:
         return threads
           .slice()
-          .sort(
-            (a, b) =>
-              (b ? new Date(b.createdOn) : 0) -
-              (a ? new Date(a.createdOn) : 0)
-          ); // Default to date descending
+          .sort((a, b) => (b ? new Date(b.createdOn) : 0) - (a ? new Date(a.createdOn) : 0)); // Default to date descending
     }
   }
 };

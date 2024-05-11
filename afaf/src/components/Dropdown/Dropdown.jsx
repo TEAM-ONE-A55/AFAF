@@ -1,31 +1,36 @@
 import { useState } from "react";
-import PropTypes from 'prop-types'
-import "./Dropdown.css"
+import PropTypes from "prop-types";
+import "./Dropdown.css";
 
 export default function SortingDropdown({ options, defaultOption, onChange }) {
-    const [selectedOption, setSelectedOption] = useState(defaultOption)
+  const [selectedOption, setSelectedOption] = useState(defaultOption);
 
-    const handleOptionChange = (e) => {
-        setSelectedOption(e.target.value);
-        onChange(e.target.value);
-    };
+  const handleOptionChange = (e) => {
+    setSelectedOption(e.target.value);
+    onChange(e.target.value);
+  };
 
-    return (
-        <div className="select-container">
-        <select value={selectedOption} onChange={handleOptionChange}>
-            {options.map((option) => (
-                <option key={option.value} value={option.value}>
-                    {option.label}
-                </option>
-            ))}
-        </select>
-        </div>
-    );
+  return (
+    <div className='select-container'>
+      <select
+        value={selectedOption}
+        onChange={handleOptionChange}
+      >
+        {options.map((option) => (
+          <option
+            key={option.value}
+            value={option.value}
+          >
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
 }
-
 
 SortingDropdown.propTypes = {
-    options: PropTypes.array.isRequired,
-    defaultOption: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired
-}
+  options: PropTypes.array.isRequired,
+  defaultOption: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};

@@ -1,124 +1,123 @@
 .simple-thread-container {
-    min-height: 300px;
-    margin: 30px;
-    border-radius: 15px;
-    background: rgb(16, 16, 16);
-    filter: drop-shadow(15px 25px 15px #0a0a0a);
-    transition: 100ms;
-    display: flex;
-    margin-bottom: 40px;
-    color: rgb(218, 218, 218);
+  min-height: 300px;
+  margin: 30px;
+  border-radius: 15px;
+  background: rgb(16, 16, 16);
+  filter: drop-shadow(15px 25px 15px #0a0a0a);
+  transition: 100ms;
+  display: flex;
+  margin-bottom: 40px;
+  color: rgb(218, 218, 218);
 }
 
 .simple-thread-container:hover {
-    background: rgb(17, 17, 17);
-    transition: 100ms;
+  background: rgb(17, 17, 17);
+  transition: 100ms;
 }
 
 .simple-thread-container button {
-    font-size: .9rem;
-    max-height: 2em;
-    padding: 0.4em 1.2em;
+  font-size: 0.9rem;
+  max-height: 2em;
+  padding: 0.4em 1.2em;
 }
 
 .simple-thread-right-side {
-    flex: 11;
-    /* border: red 1px solid; */
-    padding: 1.2em 2em;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  flex: 11;
+  /* border: red 1px solid; */
+  padding: 1.2em 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .simple-thread-right-side-top {
-    flex: 4;
-    padding-top: 3px;
+  flex: 4;
+  padding-top: 3px;
 }
 
 .simple-thread-right-side-top > h3 {
-    margin: 0;
-    font-size: 1.3rem;
-    color: rgb(255, 255, 255);
+  margin: 0;
+  font-size: 1.3rem;
+  color: rgb(255, 255, 255);
 }
 
 .simple-thread-content {
-    font-size: .9rem;
+  font-size: 0.9rem;
 }
 
 .simple-thread-url {
-    color: rgb(157, 72, 255);
-    font-size: 1.3rem;
-    display: inline-block;
-    margin-top: 1em;
+  color: rgb(157, 72, 255);
+  font-size: 1.3rem;
+  display: inline-block;
+  margin-top: 1em;
 }
 
 .simple-thread-url:hover {
-    color: rgb(129, 58, 211);
-    transition: 50ms;
+  color: rgb(129, 58, 211);
+  transition: 50ms;
 }
 
 .simple-thread-image {
-    display: inline-block;
-    max-width: 100%;
-    max-height: 500px;
-    margin: 1.5em 0;
-    border-radius: 15px;
+  display: inline-block;
+  max-width: 100%;
+  max-height: 500px;
+  margin: 1.5em 0;
+  border-radius: 15px;
 }
 
 .simple-thread-right-side-bottom {
-    flex: 1;
-    display: flex;
-    /* border: red 1px solid; */
-    align-items: center;
-    justify-content: space-between;
-    font-size: 0.9rem;
+  flex: 1;
+  display: flex;
+  /* border: red 1px solid; */
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.9rem;
 }
 
-.simple-thread-like-wrapper{
-    display: flex;
-    align-items: center;
-    width: 100px;
-    justify-content: space-between;
+.simple-thread-like-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100px;
+  justify-content: space-between;
 }
 
 .simple-thread-like-count {
-    margin: 0 1em;
+  margin: 0 1em;
 }
 
 .simple-thread-left-side {
-    flex: 3;
-    /* border: yellow 1px solid; */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    line-height: 0;
-    font-size: .9rem;
-    background-color: #181818;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
-    ;
+  flex: 3;
+  /* border: yellow 1px solid; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 0;
+  font-size: 0.9rem;
+  background-color: #181818;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
 }
 
 .simple-thread-left-side-handle {
-    font-size: 1.1rem;
-    color: rgb(157, 72, 255);
+  font-size: 1.1rem;
+  color: rgb(157, 72, 255);
 }
 
 .simple-thread-left-side-handle:hover {
-    color: rgb(129, 58, 211);
-    transition: 50ms;
+  color: rgb(129, 58, 211);
+  transition: 50ms;
 }
 
 .simple-thread-container img {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 .edit-thread-button {
-    max-height: 2.5em;
+  max-height: 2.5em;
 }
 
 .thumb-icon {
-    cursor: pointer !important;
-    user-select: none;
+  cursor: pointer !important;
+  user-select: none;
 }

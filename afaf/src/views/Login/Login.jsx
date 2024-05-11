@@ -26,10 +26,7 @@ export default function Login() {
 
       setContext({ user: credentials.user, userData: null });
       navigate(location.state?.from.pathname || "/");
-      toast.success(
-        "Welcome back! You've successfully logged in. Enjoy your experience!"
-      );
-
+      toast.success("Welcome back! You've successfully logged in. Enjoy your experience!");
     } catch (e) {
       if (e.message === "Firebase: Error (auth/invalid-email).") {
         return toast.error(
@@ -58,26 +55,26 @@ export default function Login() {
   };
 
   return (
-    <div className="login-container">
+    <div className='login-container'>
       <h1>Sign in</h1>
-      <div className="login-inputs-wrapper">
-        <label htmlFor="login-email">Email: </label>
+      <div className='login-inputs-wrapper'>
+        <label htmlFor='login-email'>Email: </label>
         <input
-          id="login-email"
-          name="login-email"
-          type="text"
-          placeholder="Enter your email"
+          id='login-email'
+          name='login-email'
+          type='text'
+          placeholder='Enter your email'
           onChange={(e) => setEmail(e.target.value)}
           value={email}
           onKeyDown={handleOnKeyDown}
         />
         <br />
-        <label htmlFor="login-password">Password: </label>
+        <label htmlFor='login-password'>Password: </label>
         <input
-          id="login-password"
-          name="login-password"
-          type="password"
-          placeholder="Enter your password"
+          id='login-password'
+          name='login-password'
+          type='password'
+          placeholder='Enter your password'
           onChange={(e) => setPassword(e.target.value)}
           value={password}
           onKeyDown={handleOnKeyDown}
@@ -86,7 +83,13 @@ export default function Login() {
       </div>
       <Button onClick={login}>Sign in</Button>
       <p>
-        Don&apos;t have an account? <NavLink className="navlink register-now" to="/register">Sign up</NavLink>
+        Don&apos;t have an account?{" "}
+        <NavLink
+          className='navlink register-now'
+          to='/register'
+        >
+          Sign up
+        </NavLink>
       </p>
     </div>
   );

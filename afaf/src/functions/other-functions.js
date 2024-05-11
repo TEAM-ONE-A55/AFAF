@@ -1,4 +1,4 @@
 export const avoidPropagation = (event, func = () => {}) => {
-    event.stopPropagation();
-    func();
-}
+  event.stopPropagation();
+  func();
+};

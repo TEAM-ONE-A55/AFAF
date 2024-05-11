@@ -11,15 +11,15 @@ export default function Search() {
   };
 
   const keyDown = (event) => {
-    if (event.key === 'Enter') navigate(`/search/${search}`)
-}
+    if (event.key === "Enter") navigate(`/search/${search}`);
+  };
   return (
-    <div className="search-container">
+    <div className='search-container'>
       <input
-        className="search-input"
-        type="text"
-        name="text"
-        placeholder="Search AFAF"
+        className='search-input'
+        type='text'
+        name='text'
+        placeholder='Search AFAF'
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         onKeyDown={keyDown}

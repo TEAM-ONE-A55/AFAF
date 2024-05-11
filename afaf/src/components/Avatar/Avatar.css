@@ -1,8 +1,8 @@
 .avatar-img {
-    object-fit: cover;
-    border-radius: 50%;
-    border: 2px solid white;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid white;
 }
 .avatar-container {
   border-radius: 50%;
-} 
+}

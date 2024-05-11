@@ -1,13 +1,4 @@
-import {
-  get,
-  set,
-  ref,
-  query,
-  equalTo,
-  orderByChild,
-  update,
-  remove
-} from "firebase/database";
+import { get, set, ref, query, equalTo, orderByChild, update, remove } from "firebase/database";
 import { db } from "../config/firebase-config";
 import { defaultAvatar } from "../constants/constants";
 import { getTopicsByAuthor } from "./threads.service";
@@ -29,7 +20,7 @@ export const createUserHandle = (handle, uid, email, name) => {
     postReplies: {},
     avatar: defaultAvatar,
     role: "user",
-    blocked: false
+    blocked: false,
   });
 };
 
@@ -49,22 +40,19 @@ export const getAllUsers = async () => {
     return [];
   }
 
-  const users = Object.keys(snapshot.val()).map(
-    async (key) => await getUserByHandle(key)
-  );
+  const users = Object.keys(snapshot.val()).map(async (key) => await getUserByHandle(key));
 
   return Promise.all(users);
 };
 
-
 export const deleteUser = async (handle) => {
-  const topics = await getTopicsByAuthor(handle)
-  topics.map(async topic => {
-    await remove(ref(db, `topics/${topic.id}`))
-  })
-  return remove(ref(db, `users/${handle}`))
-}
+  const topics = await getTopicsByAuthor(handle);
+  topics.map(async (topic) => {
+    await remove(ref(db, `topics/${topic.id}`));
+  });
+  return remove(ref(db, `users/${handle}`));
+};
 
 export const deleteUserTopic = async (handle, value) => {
-  return remove(ref(db, `users/${handle}/createdTopics/${value}`))
-}
+  return remove(ref(db, `users/${handle}/createdTopics/${value}`));
+};

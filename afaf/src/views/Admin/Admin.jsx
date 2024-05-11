@@ -10,10 +10,7 @@ import { sortThreads, sortUsers } from "../../functions/sorting-functions";
 import "./Admin.css";
 import toast from "react-hot-toast";
 import SortingDropdown from "../../components/Dropdown/Dropdown";
-import {
-  threadsSortingOptions,
-  usersSortingOptions,
-} from "../../constants/constants";
+import { threadsSortingOptions, usersSortingOptions } from "../../constants/constants";
 
 export function Admin() {
   const { userData } = useContext(AppContext);
@@ -83,7 +80,7 @@ export function Admin() {
     try {
       getTopic(topic.id);
       deleteThread(topic.author, topic.id, topic.uuid, topic.url);
-      setTopics(topics.filter(t => t.id !== topic.id))
+      setTopics(topics.filter((t) => t.id !== topic.id));
     } catch (error) {
       console.log(error.message);
       toast.error(`Could not delete the thread`);
@@ -91,7 +88,7 @@ export function Admin() {
   };
 
   return (
-    <div className="admin-container">
+    <div className='admin-container'>
       {userData && userData.role === "admin" ? (
         <>
           <h2>Dashboard</h2>
@@ -100,7 +97,10 @@ export function Admin() {
           <h3>Total users: {users.length}</h3>
           <h3>Total threads: {topics.length}</h3>
           <br />
-          <h3 className="admin-data" onClick={() => setData(!data)}>
+          <h3
+            className='admin-data'
+            onClick={() => setData(!data)}
+          >
             {!data ? "See all users" : "See all threads"}
           </h3>
           <hr />
@@ -116,7 +116,7 @@ export function Admin() {
                   />
                 }
               </h3>
-              <table className="table">
+              <table className='table'>
                 <thead>
                   <tr>
                     <th>User</th>
@@ -129,66 +129,65 @@ export function Admin() {
                   </tr>
                 </thead>
                 <tbody>
-                  {users && sortUsers(users, usersSortBy).map((user) => {
-                    if (user)
-                    return (
-                      <tr key={user.handle}>
-                        <td>{user.handle}</td>
-                        <td>{user.name}</td>
-                        <td>
-                          {user.role === "admin" ? (
-                            <span style={{ color: "rgb(255, 45, 45)" }}>{user.role}</span>
-                          ) : (
-                            user.role
-                          )}
-                        </td>
-                        <td>{user.createdOn && new Date(user.createdOn).toLocaleDateString()}</td>
-                        <td>
-                          {(user.createdTopics &&
-                            Object.keys(user.createdTopics).length) ||
-                            0}
-                        </td>
-                        <td>
-                          {user.blocked === true ? (
-                            <span style={{ color: "red" }}>Blocked</span>
-                          ) : (
-                            "Active"
-                          )}
-                        </td>
-                        <td>
-                          <button
-                            onClick={() => navigate(`/profile/${user.handle}`)}
-                          >
-                            See Profile
-                          </button>
-                          <button
-                            onClick={() => {
-                              getUser(user.handle);
-                              user.handle && removeUser(user.handle);
-                            }}
-                          >
-                            Delete
-                          </button>
-                          <button
-                            onClick={() => {
-                              getUser(user.handle);
-                              blockUser(user, setUser);
-                            }}
-                          >
-                            Ban
-                          </button>
-                          <button
-                            onClick={() => {
-                              getUser(user.handle);
-                              changeRole(user, setUser);
-                            }}
-                          >
-                            Change Role
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                  {users &&
+                    sortUsers(users, usersSortBy).map((user) => {
+                      if (user)
+                        return (
+                          <tr key={user.handle}>
+                            <td>{user.handle}</td>
+                            <td>{user.name}</td>
+                            <td>
+                              {user.role === "admin" ? (
+                                <span style={{ color: "rgb(255, 45, 45)" }}>{user.role}</span>
+                              ) : (
+                                user.role
+                              )}
+                            </td>
+                            <td>
+                              {user.createdOn && new Date(user.createdOn).toLocaleDateString()}
+                            </td>
+                            <td>
+                              {(user.createdTopics && Object.keys(user.createdTopics).length) || 0}
+                            </td>
+                            <td>
+                              {user.blocked === true ? (
+                                <span style={{ color: "red" }}>Blocked</span>
+                              ) : (
+                                "Active"
+                              )}
+                            </td>
+                            <td>
+                              <button onClick={() => navigate(`/profile/${user.handle}`)}>
+                                See Profile
+                              </button>
+                              <button
+                                onClick={() => {
+                                  getUser(user.handle);
+                                  user.handle && removeUser(user.handle);
+                                }}
+                              >
+                                Delete
+                              </button>
+                              <button
+                                onClick={() => {
+                                  getUser(user.handle);
+                                  blockUser(user, setUser);
+                                }}
+                              >
+                                Ban
+                              </button>
+                              <button
+                                onClick={() => {
+                                  getUser(user.handle);
+                                  changeRole(user, setUser);
+                                }}
+                              >
+                                Change Role
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                    })}
                 </tbody>
               </table>
             </>
@@ -204,7 +203,7 @@ export function Admin() {
                   />
                 }
               </h3>
-              <table className="table">
+              <table className='table'>
                 <thead>
                   <tr>
                     <th>Title</th>
@@ -216,42 +215,35 @@ export function Admin() {
                   </tr>
                 </thead>
                 <tbody>
-                  {topics && sortThreads(topics, threadSortBy).map((topic) => (
-                    <tr key={topic.id}>
-                      <td
-                        id="table-thread-title"
-                        onClick={() => navigate(`/single-thread/${topic.id}`)}
-                      >
-                        {topic.title}
-                      </td>
-                      <td>
-                        <Link to={`/profile/${topic.author}`}>
-                          {topic.author}
-                        </Link>
-                      </td>
-                      <td>{new Date(topic.createdOn).toLocaleString()}</td>
-                      <td>{Object.keys(topic.likedBy).length}</td>
-                      <td>
-                        {topic.comments
-                          ? Object.keys(topic.comments).length
-                          : 0}
-                      </td>
-                      <td>
-                        <button
+                  {topics &&
+                    sortThreads(topics, threadSortBy).map((topic) => (
+                      <tr key={topic.id}>
+                        <td
+                          id='table-thread-title'
                           onClick={() => navigate(`/single-thread/${topic.id}`)}
                         >
-                          See Thread
-                        </button>
-                        <button
-                          onClick={() => {
-                            handleDeleteThread(topic);
-                          }}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                          {topic.title}
+                        </td>
+                        <td>
+                          <Link to={`/profile/${topic.author}`}>{topic.author}</Link>
+                        </td>
+                        <td>{new Date(topic.createdOn).toLocaleString()}</td>
+                        <td>{Object.keys(topic.likedBy).length}</td>
+                        <td>{topic.comments ? Object.keys(topic.comments).length : 0}</td>
+                        <td>
+                          <button onClick={() => navigate(`/single-thread/${topic.id}`)}>
+                            See Thread
+                          </button>
+                          <button
+                            onClick={() => {
+                              handleDeleteThread(topic);
+                            }}
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </>

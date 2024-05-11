@@ -3,9 +3,7 @@ import { getTopicsByAuthor } from "../services/threads.service";
 export const popularByLikes = (topics) => {
   return topics
     .slice()
-    .sort(
-      (a, b) => Object.keys(b.likedBy).length - Object.keys(a.likedBy).length
-    )
+    .sort((a, b) => Object.keys(b.likedBy).length - Object.keys(a.likedBy).length)
     .slice(0, 10);
 };
 
@@ -24,16 +22,12 @@ export const popularByComments = (topics) => {
     .slice()
     .sort(
       (a, b) =>
-      (b.comments ?
-        Object.keys(b.comments).length : 0) - (a.comments ? Object.keys(a.comments).length : 0)
+        (b.comments ? Object.keys(b.comments).length : 0) -
+        (a.comments ? Object.keys(a.comments).length : 0)
     )
     .slice(0, 10);
 };
 
-
 export const getByAuthor = (handle, setTopics) => {
-  getTopicsByAuthor(handle)
-  .then(setTopics)
-}
-
-
+  getTopicsByAuthor(handle).then(setTopics);
+};

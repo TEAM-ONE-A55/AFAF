@@ -1,15 +1,15 @@
 .edit-thread-buttons {
-    display: flex;
-    gap: .5em;
-    flex-direction: row;
-    /* border: red 1px solid; */
-    align-items: center;
-    max-width: fit-content;
-    margin-top: 1em;
-    align-self: flex-end;
-    margin-right: 29px;
+  display: flex;
+  gap: 0.5em;
+  flex-direction: row;
+  /* border: red 1px solid; */
+  align-items: center;
+  max-width: fit-content;
+  margin-top: 1em;
+  align-self: flex-end;
+  margin-right: 29px;
 }
 
 .edit-thread-buttons > * {
-    max-height: 2.5em;
+  max-height: 2.5em;
 }

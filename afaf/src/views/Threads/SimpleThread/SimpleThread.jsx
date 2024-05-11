@@ -12,10 +12,7 @@ import {
   undoDislikeTopic,
   undoLikeTopic,
 } from "../../../services/threads.service";
-import {
-  STYLE_VOTES_EMPTY,
-  STYLE_VOTES_FILL,
-} from "../../../constants/constants";
+import { STYLE_VOTES_EMPTY, STYLE_VOTES_FILL } from "../../../constants/constants";
 import toast from "react-hot-toast";
 
 export default function SimpleThread({ topic, topicLike, topicDislike }) {
@@ -39,9 +36,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
           avatar: snapshot.val().avatar,
           username: snapshot.val().handle,
           createdOn: new Date(snapshot.val().createdOn).toLocaleDateString(),
-          threads:
-            snapshot.val().createdTopics &&
-            Object.keys(snapshot.val().createdTopics).length,
+          threads: snapshot.val().createdTopics && Object.keys(snapshot.val().createdTopics).length,
           role: snapshot.val().role,
           uid: snapshot.val().uid,
         });
@@ -73,43 +68,31 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
   const onClickThread = (e) => {
     if (userData) {
       if (userData.blocked === false) {
-        avoidPropagation(e, () =>
-                  navigate(`/single-thread/${topic.id}`)
-                )
+        avoidPropagation(e, () => navigate(`/single-thread/${topic.id}`));
       } else {
-        return toast.error(
-          "Oops! You're Blocked: Rule Break Detected. Admin's put you on pause!"
-        );
+        return toast.error("Oops! You're Blocked: Rule Break Detected. Admin's put you on pause!");
       }
     }
-  }
+  };
 
   return (
     <>
       {author.username && (
         <div
-          className="simple-thread-container"
+          className='simple-thread-container'
           style={{ cursor: "pointer" }}
-          onClick={(e) =>onClickThread(e) }
+          onClick={(e) => onClickThread(e)}
         >
-          <div className="simple-thread-left-side">
+          <div className='simple-thread-left-side'>
             <Avatar
-              onClick={(e) =>
-                avoidPropagation(e, () =>
-                  navigate(`/profile/${author.username}`)
-                )
-              }
+              onClick={(e) => avoidPropagation(e, () => navigate(`/profile/${author.username}`))}
               Width={"100px"}
               Height={"100px"}
               url={author.avatar}
             />
-            <p className="simple-thread-left-side-handle">
+            <p className='simple-thread-left-side-handle'>
               <a
-                onClick={(e) =>
-                  avoidPropagation(e, () =>
-                    navigate(`/profile/${author.username}`)
-                  )
-                }
+                onClick={(e) => avoidPropagation(e, () => navigate(`/profile/${author.username}`))}
               >
                 @{author.username}
               </a>
@@ -131,18 +114,18 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
               {author.createdOn}
             </p>
           </div>
-          <div className="simple-thread-right-side">
-            <div className="simple-thread-right-side-top">
+          <div className='simple-thread-right-side'>
+            <div className='simple-thread-right-side-top'>
               <h3>{topic.title}</h3>
               {topic.content ? (
                 topic.type === "post" ? (
-                  <p className="simple-thread-content">{topic.content}</p>
+                  <p className='simple-thread-content'>{topic.content}</p>
                 ) : (
                   <a
-                    className="simple-thread-url"
+                    className='simple-thread-url'
                     href={topic.content}
-                    target="_blank"
-                    rel="noreferrer"
+                    target='_blank'
+                    rel='noreferrer'
                     onClick={(e) => avoidPropagation(e)}
                   >
                     {topic.content}
@@ -150,20 +133,20 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
                 )
               ) : (
                 <img
-                  className="simple-thread-image"
+                  className='simple-thread-image'
                   src={topic.url}
-                  alt="Topic image is missing :("
+                  alt='Topic image is missing :('
                 />
               )}
             </div>
-            <div className="simple-thread-right-side-bottom">
+            <div className='simple-thread-right-side-bottom'>
               <div>
                 {user && userData.blocked === false ? (
-                  <div className="simple-thread-like-wrapper">
+                  <div className='simple-thread-like-wrapper'>
                     {topic.likedBy.includes(userData.handle) ? (
                       <span
                         onClick={(e) => avoidPropagation(e, toggleUpvotes)}
-                        className="material-symbols-outlined thumb-icon"
+                        className='material-symbols-outlined thumb-icon'
                         style={STYLE_VOTES_FILL}
                       >
                         thumb_up
@@ -171,25 +154,22 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
                     ) : (
                       <span
                         onClick={(e) => avoidPropagation(e, toggleUpvotes)}
-                        className="material-symbols-outlined thumb-icon"
+                        className='material-symbols-outlined thumb-icon'
                         style={STYLE_VOTES_EMPTY}
                       >
                         thumb_up
                       </span>
                     )}
                     {topic.likedBy && topic.dislikedBy && (
-                      <p className="simple-thread-like-count">
-                        {renderVotes(
-                          topic.likedBy.length,
-                          topic.dislikedBy.length
-                        )}
+                      <p className='simple-thread-like-count'>
+                        {renderVotes(topic.likedBy.length, topic.dislikedBy.length)}
                       </p>
                     )}
 
                     {topic.dislikedBy.includes(userData.handle) ? (
                       <span
                         onClick={(e) => avoidPropagation(e, toggleDownVotes)}
-                        className="material-symbols-outlined thumb-icon"
+                        className='material-symbols-outlined thumb-icon'
                         style={STYLE_VOTES_FILL}
                       >
                         thumb_down
@@ -197,7 +177,7 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
                     ) : (
                       <span
                         onClick={(e) => avoidPropagation(e, toggleDownVotes)}
-                        className="material-symbols-outlined thumb-icon"
+                        className='material-symbols-outlined thumb-icon'
                         style={STYLE_VOTES_EMPTY}
                       >
                         thumb_down
@@ -207,16 +187,10 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
                 ) : (
                   topic.likedBy &&
                   topic.dislikedBy && (
-                    <p className="simple-thread-like-count">
-                      {renderVotes(
-                        topic.likedBy.length,
-                        topic.dislikedBy.length
-                      ) === 1
+                    <p className='simple-thread-like-count'>
+                      {renderVotes(topic.likedBy.length, topic.dislikedBy.length) === 1
                         ? "1 vote"
-                        : `${renderVotes(
-                            topic.likedBy.length,
-                            topic.dislikedBy.length
-                          )} votes`}
+                        : `${renderVotes(topic.likedBy.length, topic.dislikedBy.length)} votes`}
                     </p>
                   )
                 )}
@@ -234,20 +208,14 @@ export default function SimpleThread({ topic, topicLike, topicDislike }) {
                 <b>Created: </b>
                 {new Date(topic.createdOn).toLocaleString()}
               </span>
-              {userData &&
-                (userData.handle === topic.author ||
-                  userData.role === "admin") && (
-                  <button
-                    className="edit-thread-button"
-                    onClick={(e) =>
-                      avoidPropagation(e, () =>
-                        navigate(`/edit-thread/${topic.id}`)
-                      )
-                    }
-                  >
-                    Edit
-                  </button>
-                )}
+              {userData && (userData.handle === topic.author || userData.role === "admin") && (
+                <button
+                  className='edit-thread-button'
+                  onClick={(e) => avoidPropagation(e, () => navigate(`/edit-thread/${topic.id}`))}
+                >
+                  Edit
+                </button>
+              )}
             </div>
           </div>
         </div>

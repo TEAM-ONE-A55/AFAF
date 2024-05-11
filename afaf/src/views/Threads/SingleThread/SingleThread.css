@@ -132,11 +132,11 @@
   gap: 0.5em;
 }
 
-.single-thread-like-wrapper{
-    display: flex;
-    align-items: center;
-    width: 100px;
-    justify-content: space-between;
+.single-thread-like-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100px;
+  justify-content: space-between;
 }
 
 .delete-thread-button {

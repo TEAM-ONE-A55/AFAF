@@ -1,16 +1,9 @@
 import { useEffect, useState } from "react";
 import "./SearchResults.css";
 import SortingDropdown from "../../components/Dropdown/Dropdown";
-import {
-  threadsFilterOptions,
-  threadsSortingOptions,
-} from "../../constants/constants";
+import { threadsFilterOptions, threadsSortingOptions } from "../../constants/constants";
 import { useParams } from "react-router-dom";
-import {
-  dislikeTopic,
-  getAllTopicsBySearch,
-  likeTopic,
-} from "../../services/threads.service";
+import { dislikeTopic, getAllTopicsBySearch, likeTopic } from "../../services/threads.service";
 import SimpleThread from "../Threads/SimpleThread/SimpleThread";
 import { sortThreads } from "../../functions/sorting-functions";
 
@@ -43,7 +36,7 @@ export default function SearchResults() {
   };
 
   return (
-    <div className="search-results-container">
+    <div className='search-results-container'>
       {query ? (
         <>
           <h3>Search results for {`"${query}"`}</h3>
@@ -71,8 +64,8 @@ export default function SearchResults() {
             </>
           ) : (
             <p>
-              The specified {query} was not found. Try refining your search
-              terms or adjusting the filters for better results.
+              The specified {query} was not found. Try refining your search terms or adjusting the
+              filters for better results.
             </p>
           )}
         </>

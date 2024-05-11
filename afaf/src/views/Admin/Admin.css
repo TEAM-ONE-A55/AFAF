@@ -27,7 +27,7 @@
 }
 
 #table-thread-title {
-    text-align: left;
+  text-align: left;
 }
 
 .admin-data {
@@ -40,7 +40,7 @@
 }
 
 .table button {
-  font-size: .7rem;
+  font-size: 0.7rem;
   white-space: nowrap;
-  margin: 0 .2em;
+  margin: 0 0.2em;
 }
